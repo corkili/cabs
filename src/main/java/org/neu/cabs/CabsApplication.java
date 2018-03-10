@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
  * @author 李浩然
  */
 @SpringBootApplication
-@Log4j
 public class CabsApplication {
 
 	public static void main(String[] args) {

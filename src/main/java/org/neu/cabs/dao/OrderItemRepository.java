@@ -2,6 +2,7 @@ package org.neu.cabs.dao;
 
 import org.neu.cabs.orm.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author 李浩然
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
+@Transactional(rollbackFor = Exception.class)
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     /**
      * 根据旅客的证件号查找订单项

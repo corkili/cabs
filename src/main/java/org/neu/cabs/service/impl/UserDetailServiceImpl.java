@@ -1,6 +1,6 @@
-package org.neu.cabs.service;
+package org.neu.cabs.service.impl;
 
-import org.neu.cabs.dao.UserRepository;
+import org.neu.cabs.dao.BaseUserRepository;
 import org.neu.cabs.orm.BaseUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,16 +15,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private BaseUserRepository baseUserRepository;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setBaseUserRepository(BaseUserRepository baseUserRepository) {
+        this.baseUserRepository = baseUserRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        BaseUser baseUser = userRepository.findByUsername(username);
+        BaseUser baseUser = baseUserRepository.findByUsername(username);
         if (baseUser == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }

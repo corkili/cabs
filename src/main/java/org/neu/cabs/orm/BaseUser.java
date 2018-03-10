@@ -61,13 +61,6 @@ public abstract class BaseUser implements UserDetails{
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date lastLoginTime;
 
-    @Column
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date verificationTime;
-
-    @Column
-    private String verificationCode;
-
     /**
      * 是否可用
      */

@@ -86,6 +86,19 @@ public class User extends BaseUser {
     private Address address;
 
     /**
+     * 验证码发送时间
+     */
+    @Column
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date verificationTime;
+
+    /**
+     * 验证码
+     */
+    @Column
+    private String verificationCode;
+
+    /**
      * 所有订单
      */
     @OneToMany(mappedBy = "buyer", fetch = FetchType.EAGER,

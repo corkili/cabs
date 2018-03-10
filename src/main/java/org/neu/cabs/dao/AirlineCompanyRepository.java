@@ -12,4 +12,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(rollbackFor = Exception.class)
 public interface AirlineCompanyRepository extends JpaRepository<AirlineCompany, Integer> {
+
 }

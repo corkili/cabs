@@ -105,4 +105,9 @@ public class UserServiceImpl implements UserService {
     public ServiceResult createAdmin(Admin admin) {
         return null;
     }
+
+    @Override
+    public ServiceResult batchModifyUser(List<User> users) {
+        return null;
+    }
 }

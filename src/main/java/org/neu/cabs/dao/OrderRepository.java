@@ -16,8 +16,21 @@ import java.util.List;
  */
 @Transactional(rollbackFor = Exception.class)
 public interface OrderRepository extends JpaRepository<Order, Long> {
+    /**
+     * 查询时间范围内的订单
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return 订单列表
+     */
     List<Order> findAllByCreateTimeBetween(Date start, Date end);
 
-    List<Order> findAllByCreateTimeBetween(Date start, Date end, Pageable pageable);
+    /**
+     * 分页查询时间范围内的订单
+     * @param start 开始时间
+     * @param end 结束时间
+     * @param pageable 分页信息
+     * @return 分页订单
+     */
+    Page<Order> findAllByCreateTimeBetween(Date start, Date end, Pageable pageable);
 
 }

@@ -27,9 +27,14 @@ public class Flight {
     /**
      * 航班号
      */
-    @Column
+    @Column(unique = true)
     @NotNull
     private String flightNumber;
+
+    @Column
+    @Temporal(TemporalType.DATE)
+    @NotNull
+    private Date takeoffDate;
 
     /**
      * 计划起飞时间
@@ -145,6 +150,28 @@ public class Flight {
     @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "AIRPLANE_ID")
     private Airplane airplane;
+
+    /**
+     * 出发城市
+     */
+
+    @AttributeOverrides(value = {
+            @AttributeOverride(
+                    name = "name",
+                    column = @Column(name = "DEPARTURE_CITY"))
+    })
+    private City departureCity;
+
+    /**
+     * 到达城市
+     */
+
+    @AttributeOverrides(value = {
+            @AttributeOverride(
+                    name = "name",
+                    column = @Column(name = "ARRIVAL_CITY"))
+    })
+    private City arrivalCity;
 
     /**
      * 出发机场

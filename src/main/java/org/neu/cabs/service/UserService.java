@@ -109,4 +109,10 @@ public interface UserService {
      */
     ServiceResult createAdmin(Admin admin);
 
+    /**
+     * 批量修改用户信息
+     * @param users 用户列表
+     * @return 服务结果
+     */
+    ServiceResult batchModifyUser(List<User> users);
 }

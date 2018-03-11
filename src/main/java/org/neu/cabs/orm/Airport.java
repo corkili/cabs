@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 /**
  * 机场实体类
@@ -39,14 +40,14 @@ public class Airport {
     /**
      * 机场IATA代码
      */
-    @Column(length = 5)
+    @Column(length = 5, unique = true)
     @NotNull
     private String iataCode;
 
     /**
      * 机场ICAO代码
      */
-    @Column(length = 5)
+    @Column(length = 5, unique = true)
     @NotNull
     private String icaoCode;
 
@@ -69,4 +70,10 @@ public class Airport {
      */
     @NotNull
     private Address address;
+
+    /**
+     * 拥有的航站楼
+     */
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    private Set<Terminal> terminals;
 }

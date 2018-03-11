@@ -97,4 +97,9 @@ public class FlightServiceImpl implements FlightService {
     public ServiceResult deleteFlightById(Long id) {
         return null;
     }
+
+    @Override
+    public ServiceResult batchCreateFlight(List<Flight> flights) {
+        return null;
+    }
 }

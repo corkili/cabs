@@ -48,4 +48,9 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
     public ServiceResult modifyAirlineCompany(AirlineCompany airlineCompany) {
         return null;
     }
+
+    @Override
+    public ServiceResult batchCreateAirlineCompany(List<AirlineCompany> airlineCompanies) {
+        return null;
+    }
 }

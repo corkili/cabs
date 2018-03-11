@@ -186,4 +186,18 @@ public class Flight {
     @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
     @JoinColumn(name = "ARRIVAL_AIRPORT_ID")
     private Airport arrivalAirport;
+
+    /**
+     * 出发航站楼
+     */
+    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @JoinColumn(name = "DEPARTURE_TERMINAL_ID")
+    private Terminal departureTerminal;
+
+    /**
+     * 到达航站楼
+     */
+    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @JoinColumn(name = "ARRIVAL_TERMINAL_ID")
+    private Terminal arrivalTerminal;
 }

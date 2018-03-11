@@ -55,4 +55,11 @@ public interface AirlineCompanyService {
      */
     ServiceResult modifyAirlineCompany(AirlineCompany airlineCompany);
 
+    /**
+     * 批量创建航空公司
+     * @param airlineCompanies 航空公司列表
+     * @return 服务结果
+     */
+    ServiceResult batchCreateAirlineCompany(List<AirlineCompany> airlineCompanies);
+
 }

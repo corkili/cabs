@@ -140,4 +140,11 @@ public interface FlightService {
      * @return 服务结果
      */
     ServiceResult deleteFlightById(Long id);
+
+    /**
+     * 批量创建航班
+     * @param flights 航班列表
+     * @return 服务结果
+     */
+    ServiceResult batchCreateFlight(List<Flight> flights);
 }

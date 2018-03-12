@@ -2,11 +2,12 @@ package org.neu.cabs.service;
 
 import org.neu.cabs.dto.ServiceResult;
 import org.neu.cabs.orm.Order;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Pageable;
 import java.util.Date;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public interface OrderService {
      * @return 订单列表
      */
     @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
-    List<Order> getOrderByDateRange(Date start, Date end, Pageable pageable);
+    Page<Order> getOrderByDateRange(Date start, Date end, Pageable pageable);
 
     /**
      * 修改订单信息

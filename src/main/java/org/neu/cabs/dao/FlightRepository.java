@@ -86,6 +86,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             Pageable pageable
     );
 
+
     /**
      * 获取时间范围内,从出发机场到到达机场的航班
      * @param start 开始时间
@@ -117,4 +118,11 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             Airport arrivalAirport,
             Pageable pageable
     );
+
+    /**
+     * 通过航班号获取航班
+     * @param flightNumber 航班号
+     * @return 航班
+     */
+    Flight findByFlightNumber(String flightNumber);
 }

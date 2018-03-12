@@ -1,10 +1,12 @@
 package org.neu.cabs.service.impl;
 
+import org.hibernate.event.service.internal.EventListenerServiceInitiator;
 import org.neu.cabs.dao.AdminRepository;
 import org.neu.cabs.dao.BaseUserRepository;
 import org.neu.cabs.dao.UserRepository;
 import org.neu.cabs.dto.ServiceResult;
 import org.neu.cabs.orm.Admin;
+import org.neu.cabs.orm.BaseUser;
 import org.neu.cabs.orm.User;
 import org.neu.cabs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
@@ -48,66 +51,131 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
     public Page<User> getUserPage(Pageable pageable) {
-        return null;
+
+        return userRepository.findAll(pageable);
     }
 
     @Override
     public List<Admin> getAllAdmin() {
-        return null;
+        return adminRepository.findAll();
     }
 
     @Override
     public Page<Admin> getAdminPage(Pageable pageable) {
-        return null;
+        return adminRepository.findAll(pageable);
     }
 
     @Override
     public User getUserById(Long id) {
-        return null;
+
+        return userRepository.findOne(id);
     }
 
     @Override
     public Admin getAdminById(Long id) {
-        return null;
+
+        return adminRepository.findOne(id);
     }
 
     @Override
     public ServiceResult disableUserById(Long id) {
-        return null;
+
+        ServiceResult serviceResult ;
+        BaseUser baseUser = baseUserRepository.findOne(id);
+        if(null!=baseUser){
+            baseUser.setAvailable(false);
+            baseUserRepository.save(baseUser);
+            serviceResult = new ServiceResult(true,"禁止成功！");
+        }else {
+            serviceResult = new ServiceResult(false,"禁止失败！");
+        }
+        return serviceResult;
     }
 
     @Override
     public ServiceResult enableUserById(Long id) {
-        return null;
+        ServiceResult serviceResult ;
+        BaseUser baseUser = baseUserRepository.findOne(id);
+        if(null!=baseUser){
+            baseUser.setAvailable(true);
+            baseUserRepository.save(baseUser);
+            serviceResult = new ServiceResult(true,"解封成功！");
+        }else {
+            serviceResult = new ServiceResult(false,"解封失败！");
+        }
+        return serviceResult;
     }
 
     @Override
     public ServiceResult modifyPassword(Long id, String password) {
-        return null;
+        ServiceResult serviceResult;
+        BaseUser baseUser = baseUserRepository.findOne(id);
+        if(null!=baseUser){
+            baseUser.setPassword(password);
+            baseUserRepository.save(baseUser);
+            serviceResult = new ServiceResult(true,"密码修改成功！");
+
+        }else{
+            serviceResult = new ServiceResult(false,"密码修改失败！");
+        }
+        return serviceResult;
     }
 
     @Override
     public ServiceResult modifyUserInformation(User user) {
-        return null;
+        ServiceResult serviceResult;
+        User user_t = userRepository.save(user);
+        if (null!=user_t){
+            serviceResult = new ServiceResult(true,"信息修改成功！");
+        }else{
+            serviceResult = new ServiceResult(false,"信息修改失败！");
+        }
+        return serviceResult;
+
     }
 
     @Override
     public ServiceResult registryUser(User user) {
-        return null;
+        ServiceResult serviceResult;
+        long count = baseUserRepository.countByUsername(user.getUsername());
+        if (count==0){// 为0，则不存在该用户
+            baseUserRepository.save(user);
+            serviceResult = new ServiceResult(true,"注册成功!");
+        }else{
+            serviceResult = new ServiceResult(false,"该账号已经存在!");
+        }
+        return serviceResult;
     }
 
     @Override
     public ServiceResult createAdmin(Admin admin) {
-        return null;
+        ServiceResult serviceResult;
+        long count = baseUserRepository.countByUsername(admin.getUsername());
+        if (count==0){// 为0，则不存在该用户
+            baseUserRepository.save(admin);
+            serviceResult = new ServiceResult(true,"管理员账号注册成功!");
+        }else{
+            serviceResult = new ServiceResult(false,"该管理员账号已经存在!");
+        }
+        return serviceResult;
     }
 
     @Override
     public ServiceResult batchModifyUser(List<User> users) {
-        return null;
+        ServiceResult serviceResult;
+        List<User> users_t = userRepository.save(users);
+        if (users_t.isEmpty()){
+            serviceResult = new ServiceResult(false,"修改失败");
+        }else if(users_t.size()!=users.size()){
+            serviceResult = new ServiceResult(true,"部分修改成功！");
+        }else{
+            serviceResult = new ServiceResult(true,"全部修改成功！");
+        }
+        return serviceResult;
     }
 }

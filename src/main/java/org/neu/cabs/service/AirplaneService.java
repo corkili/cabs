@@ -62,7 +62,7 @@ public interface AirplaneService {
      * @param id airplane 飞机
      * @return 服务结果
      */
-    ServiceResult deleteAirplaneById(Long id);
+    ServiceResult deleteAirplaneById(Integer id);
 
     /**
      * 修改飞机信息

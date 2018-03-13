@@ -27,7 +27,7 @@ public class Flight {
     /**
      * 航班号
      */
-    @Column(unique = true)
+    @Column
     @NotNull
     private String flightNumber;
 

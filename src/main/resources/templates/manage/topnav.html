@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<div class="top_nav" th:fragment="topnav">
+    <form id="logoutForm" style="display: none" th:action="@{../logout}" method="post"></form>
+    <div class="nav_menu">
+        <nav>
+            <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                    <a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span sec:authentication="name"></span>
+                        <span class=" fa fa-angle-down"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right">
+                        <li><a onclick="logout();"><i class="fa fa-sign-out pull-right"></i>注销</a></li>
+                        <script type="text/javascript">
+                            function logout() {
+                                document.getElementById('logoutForm').submit();
+                            }
+                        </script>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

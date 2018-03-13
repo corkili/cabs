@@ -33,6 +33,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      */
     Page<Order> findAllByCreateTimeBetween(Date start, Date end, Pageable pageable);
 
-
-
 }

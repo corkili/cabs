@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**
@@ -17,10 +16,6 @@ import java.util.List;
  */
 @Transactional(rollbackFor = Exception.class)
 public interface AirportRepository extends JpaRepository<Airport, Long> {
-
-
-
-
     /**
      * 根据地址获取机场
      * @param province 机场所在省份
@@ -37,12 +32,4 @@ public interface AirportRepository extends JpaRepository<Airport, Long> {
      * @return 分页机场信息
      */
     Page<Airport> findAllByAddress_ProvinceAndAddress_City(String province, String city, Pageable pageable);
-
-    /**
-     * 通过ID，获取机场
-     * @param id
-     * @return
-     */
-    Airport findAirportById(Integer id);
-
 }

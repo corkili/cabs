@@ -22,6 +22,9 @@
     <!-- bootstrap-daterangepicker -->
     <link rel="stylesheet" th:href="@{../vendors/bootstrap-daterangepicker/daterangepicker.css}"/>
 
+    <!-- dataTable -->
+    <link th:href="@{../vendors/dataTables/css/dataTables.bootstrap.min.css}" rel="stylesheet"/>
+
     <!-- Custom Theme Style -->
     <link rel="stylesheet" th:href="@{../css/custom.min.css}"/>
 </head>
@@ -59,45 +62,8 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
                         <div class="x_title">
-                            <h2>我的信息</h2>
+                            <h2>欢迎使用后台管理系统</h2>
                             <div class="clearfix"></div>
-                        </div>
-
-                        <div class="col-md-12 col-sm-12 col-xs-6">
-                            <div>
-                                <p>综合</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <p>课程</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="60"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-6">
-                            <div>
-                                <p>作业</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <p>考务</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -129,6 +95,10 @@
 <!-- bootstrap-daterangepicker -->
 <script th:src="@{../vendors/moment/moment.min.js}"></script>
 <script th:src="@{../vendors/bootstrap-daterangepicker/daterangepicker.js}"></script>
+
+<!-- dataTable -->
+<script th:src="@{../vendors/dataTables/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{../vendors/dataTables/js/dataTables.bootstrap.min.js}"></script>
 
 <!-- Custom Theme Scripts -->
 <script th:src="@{../js/custom.min.js}"></script>

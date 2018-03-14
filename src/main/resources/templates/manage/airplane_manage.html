@@ -62,21 +62,22 @@
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
                         <div class="x_title">
-                            <h2>订单信息</h2>
+                            <h2>飞机信息</h2>
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="x_content">
-                            <table id="orderTable" class="table table-bordered jambo_table">
+                            <table id="airplaneTable" class="table table-bordered jambo_table">
                                 <thead>
                                 <tr>
-                                    <th>订单流水号</th>
-                                    <th>订单创建时间</th>
-                                    <th>下单用户</th>
-                                    <th>订单总金额</th>
-                                    <th>订单状态</th>
-                                    <th>订单条目</th>
-                                    <th>操作</th>
+                                    <th>飞机名称</th>
+                                    <th>座位数</th>
+                                    <th>飞机状态</th>
+                                    <th>所属公司</th>
+                                    <th>停靠机场</th>
+                                    <th>执飞排班</th>
+                                    <th>编辑</th>
+                                    <th>删除</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -86,16 +87,17 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td>
                                         <form method="post">
-                                            <input type="hidden" name="orderId" value=""/>
-                                            <input class="btn btn-primary btn-xs btn-edit" type="submit" value="查看"/>
+                                            <input type="hidden" name="airplaneId" value=""/>
+                                            <input class="btn btn-primary btn-xs btn-edit" type="submit" value="编辑"/>
                                         </form>
                                     </td>
                                     <td>
                                         <form method="post">
-                                            <input type="hidden" name="orderId" value=""/>
-                                            <input class="btn btn-danger btn-xs btn-delete" type="submit" value="编辑"/>
+                                            <input type="hidden" name="airplaneId" value=""/>
+                                            <input class="btn btn-danger btn-xs btn-delete" type="submit" value="删除"/>
                                         </form>
                                     </td>
                                 </tr>
@@ -142,7 +144,7 @@
 
 <script type="text/javascript">
     $(function () {
-        $("#orderTable").DataTable();
+        $("#airplaneTable").DataTable();
     })
 </script>
 

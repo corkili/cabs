@@ -23,14 +23,16 @@ public class ServiceResult {
         }
     }
 
-    public void putExtra(String name, Object value) {
+    public ServiceResult putExtra(String name, Object value) {
         this.extra.put(name, value);
+        return this;
     }
 
-    public void putExtras(Object... extras) {
+    public ServiceResult putExtras(Object... extras) {
         for (int i = 0; i < extras.length; i += 2) {
             this.extra.put(extras[i].toString(), extras[i + 1]);
         }
+        return this;
     }
 
     public Object getExtra(String name) {

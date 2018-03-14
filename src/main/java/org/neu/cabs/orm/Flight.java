@@ -31,6 +31,9 @@ public class Flight {
     @NotNull
     private String flightNumber;
 
+    /**
+     * 起飞日期
+     */
     @Column
     @Temporal(TemporalType.DATE)
     @NotNull

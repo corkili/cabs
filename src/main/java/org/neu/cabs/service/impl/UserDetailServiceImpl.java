@@ -7,12 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Security用户服务自定义实现类
- * @author 李浩然
+ * @author 李浩然 谭湖东
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class UserDetailServiceImpl implements UserDetailsService {
 
     private BaseUserRepository baseUserRepository;

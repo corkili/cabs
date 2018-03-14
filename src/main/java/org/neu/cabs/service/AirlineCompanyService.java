@@ -51,7 +51,7 @@ public interface AirlineCompanyService {
     /**
      * 修改航空公司信息
      * @param airlineCompany 航空公司实体
-     * @return 服务结果
+     * @return 服务结果，包含修改成功的航空公司实体(airlineCompany: AirlineCompany)
      */
     ServiceResult modifyAirlineCompany(AirlineCompany airlineCompany);
 

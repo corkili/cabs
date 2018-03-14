@@ -15,21 +15,23 @@ import java.util.List;
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
 @Transactional(rollbackFor = Exception.class)
-public interface AirportRepository extends JpaRepository<Airport, Long> {
+public interface AirportRepository extends JpaRepository<Airport, Integer> {
+
     /**
      * 根据地址获取机场
-     * @param province 机场所在省份
-     * @param city 机场所在城市
+     * @param address 机场地址
      * @return 机场列表
      */
-    List<Airport> findAllByAddress_ProvinceAndAddress_City(String province, String city);
+    List<Airport> findAllByAddress(Address address);
 
     /**
      * 根据地址，分页获取机场
-     * @param province 机场所在省份
-     * @param city 机场所在城市
+     * @param address 机场地址
      * @param pageable 分页信息
-     * @return 分页机场信息
+     * @return 机场列表
      */
-    Page<Airport> findAllByAddress_ProvinceAndAddress_City(String province, String city, Pageable pageable);
+    Page<Airport> findAllByAddress(Address address, Pageable pageable);
+
+
+
 }

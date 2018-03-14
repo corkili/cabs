@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login", "/css/**/*", "/js/**/*", "/images/**/*", "/vendors/**/*").permitAll()
-                .antMatchers("/manage/**").hasAnyRole(RoleType.ROLE_ADMIN.getRole(), RoleType.ROLE_ROOT.getRole())
+                .antMatchers("/manage/**/*").hasAnyRole(RoleType.ROLE_ADMIN.getRole(), RoleType.ROLE_ROOT.getRole())
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").successHandler(successHandler)
                 .failureUrl("/login?error").permitAll()

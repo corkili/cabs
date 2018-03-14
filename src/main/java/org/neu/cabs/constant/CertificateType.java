@@ -37,6 +37,9 @@ public enum CertificateType {
      * 外国人永久居留身份证
      */
     FOREIGNERS_ID_CARD("外国人永久居留身份证"),
+    /**
+     * 其他
+     */
     OTHER("其他");
 
     private String name;

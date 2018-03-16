@@ -18,7 +18,6 @@ import java.util.List;
  * @author 李浩然 谭湖东
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class AirplaneServiceImpl implements AirplaneService {
 
     private AirplaneRepository airplaneRepository;
@@ -56,9 +55,9 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     public ServiceResult createAirplane(Airplane airplane) {
         ServiceResult serviceResult;
-        Airplane airplaneT = airplaneRepository.save(airplane);
-        if (null!=airplaneT){
-            serviceResult = new ServiceResult(true,"飞机信息录入成功！");
+        Airplane savedAirplane = airplaneRepository.save(airplane);
+        if (null != savedAirplane){
+            serviceResult = new ServiceResult(true,"飞机信息录入成功！", "airplane", savedAirplane);
         }else {
             serviceResult = new ServiceResult(false,"飞机信息录入失败！");
         }
@@ -68,9 +67,8 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     public ServiceResult deleteAirplaneById(Long id) {
         ServiceResult serviceResult;
-
-        if (null!=airplaneRepository.findOne(id)){
-            airplaneRepository.delete(id);
+        airplaneRepository.delete(id);
+        if (null == airplaneRepository.findOne(id)){
             serviceResult = new ServiceResult(true,"飞机信息删除成功！");
         }else {
             serviceResult = new ServiceResult(false,"飞机信息删除失败！");
@@ -81,9 +79,9 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     public ServiceResult modifyAirplane(Airplane airplane) {
         ServiceResult serviceResult;
-        Airplane airplaneT = airplaneRepository.save(airplane);
-        if (null!=airplaneT){
-            serviceResult = new ServiceResult(true,"飞机信息修改成功！");
+        Airplane savedAirplane = airplaneRepository.save(airplane);
+        if (null != savedAirplane){
+            serviceResult = new ServiceResult(true,"飞机信息修改成功！", "airplane", savedAirplane);
         }else {
             serviceResult = new ServiceResult(false,"飞机信息修改失败！");
         }

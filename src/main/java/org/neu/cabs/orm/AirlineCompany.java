@@ -1,7 +1,7 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +14,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "AIRLINE_COMPANY")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class AirlineCompany {
 
@@ -49,8 +50,8 @@ public class AirlineCompany {
     /**
      * 拥有飞机
      */
-    @OneToMany(mappedBy = "belongToCompany", fetch = FetchType.EAGER,
-            cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE })
+    @OneToMany(mappedBy = "belongToCompany", cascade = { CascadeType.MERGE, CascadeType.REMOVE })
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Set<Airplane> airplanes;
 
 

@@ -14,7 +14,6 @@ import java.util.List;
  * @author 李浩然
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
-@Transactional(rollbackFor = Exception.class)
 public interface AirplaneRepository extends JpaRepository<Airplane, Long> {
     /**
      * 查询某航空公司的所有飞机

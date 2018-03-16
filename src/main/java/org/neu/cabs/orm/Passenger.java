@@ -1,7 +1,6 @@
 package org.neu.cabs.orm;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import org.neu.cabs.constant.CertificateType;
 
 import javax.persistence.*;
@@ -14,7 +13,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "PASSENGER")
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @AllArgsConstructor
 public class Passenger {
 

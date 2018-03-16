@@ -1,7 +1,6 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -13,7 +12,9 @@ import javax.persistence.Embeddable;
  * @author 李浩然
  */
 @Embeddable
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class Address {
 

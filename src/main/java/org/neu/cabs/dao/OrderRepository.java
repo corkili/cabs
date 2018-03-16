@@ -14,7 +14,6 @@ import java.util.List;
  * @author 李浩然
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
-@Transactional(rollbackFor = Exception.class)
 public interface OrderRepository extends JpaRepository<Order, Long> {
     /**
      * 查询时间范围内的订单

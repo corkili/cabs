@@ -15,7 +15,6 @@ import java.util.List;
  * @see org.neu.cabs.service.OrderItemService
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class OrderItemServiceImpl implements OrderItemService {
 
     private OrderItemRepository orderItemRepository;

@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author 李浩然
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
-@Transactional(rollbackFor = Exception.class)
 public interface AirlineCompanyRepository extends JpaRepository<AirlineCompany, Integer> {
 
 }

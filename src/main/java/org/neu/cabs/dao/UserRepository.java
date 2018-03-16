@@ -8,6 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
  * 用户数据持久化接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface UserRepository extends JpaRepository<User, Long> {
 }

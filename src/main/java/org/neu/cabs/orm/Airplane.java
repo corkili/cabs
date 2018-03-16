@@ -1,7 +1,7 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.FetchMode;
 import org.neu.cabs.constant.AirplaneState;
 
 import javax.persistence.*;
@@ -14,7 +14,8 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "AIRPLANE")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Airplane {
     /**
@@ -25,11 +26,18 @@ public class Airplane {
     private Long id;
 
     /**
+     * 飞机编号（唯一）
+     */
+    @Column(length = 20)
+    @NotNull
+    private String airplaneSerialNumber;
+
+    /**
      * 飞机名称
      */
     @Column(length = 50)
     @NotNull
-    private String planeName;
+    private String airplaneName;
 
     /**
      * 座位数
@@ -43,29 +51,31 @@ public class Airplane {
      */
     @Column
     @NotNull
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private AirplaneState state;
 
     /**
      * 所属公司
      */
-    @ManyToOne(cascade = { CascadeType.MERGE })
+    @ManyToOne
     @JoinColumn(name = "COMPANY_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     @NotNull
     private AirlineCompany belongToCompany;
 
     /**
      * 当前停靠机场
      */
-    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @ManyToOne
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     @JoinColumn(name = "CURRENT_AIRPORT_ID")
-    @NotNull
     private Airport currentAirport;
 
     /**
      * 待执飞航班
      */
-    @OneToMany(mappedBy = "airplane", cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @OneToMany(mappedBy = "airplane", cascade = { CascadeType.MERGE })
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Set<Flight> flights;
 
 }

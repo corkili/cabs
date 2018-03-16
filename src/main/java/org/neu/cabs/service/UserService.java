@@ -15,7 +15,6 @@ import java.util.List;
  * 系统核心逻辑，用户服务接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface UserService {
     /**
      * 获取所有的用户，只允许管理员调用

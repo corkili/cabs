@@ -13,7 +13,6 @@ import java.util.List;
  * 航班数据持久化接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface FlightRepository extends JpaRepository<Flight, Long> {
     /**
      * 查询某天从出发城市到目的地城市的航班

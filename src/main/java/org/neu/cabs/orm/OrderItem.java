@@ -1,7 +1,8 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
+import org.hibernate.annotations.FetchMode;
 import org.neu.cabs.constant.CabinType;
 
 import javax.persistence.*;
@@ -13,7 +14,9 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "ORDER_ITEM")
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class OrderItem {
 
@@ -49,8 +52,9 @@ public class OrderItem {
     /**
      * 航班
      */
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "FLIGHT_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Flight flight;
 
     /**
@@ -58,13 +62,15 @@ public class OrderItem {
      */
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Order order;
 
     /**
      * 乘客
      */
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "PASSENGER_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Passenger passenger;
 
     public Double getCost() {

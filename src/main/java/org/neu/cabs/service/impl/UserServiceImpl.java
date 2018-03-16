@@ -22,7 +22,6 @@ import java.util.List;
  * @see org.neu.cabs.service.UserService
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
     private BaseUserRepository baseUserRepository;
@@ -82,7 +81,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ServiceResult disableUserById(Long id) {
 
-        ServiceResult serviceResult ;
+        ServiceResult serviceResult;
         BaseUser baseUser = baseUserRepository.findOne(id);
         if(null!=baseUser){
             baseUser.setAvailable(false);
@@ -96,7 +95,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ServiceResult enableUserById(Long id) {
-        ServiceResult serviceResult ;
+        ServiceResult serviceResult;
         BaseUser baseUser = baseUserRepository.findOne(id);
         if(null!=baseUser){
             baseUser.setAvailable(true);

@@ -19,7 +19,6 @@ import java.util.List;
  * @see org.neu.cabs.service.AirportService
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class AirportServiceImpl implements AirportService {
 
     private AirportRepository airportRepository;

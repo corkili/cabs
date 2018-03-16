@@ -22,7 +22,6 @@ import java.util.List;
  * @see org.neu.cabs.service.FlightService
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class FlightServiceImpl implements FlightService {
 
     private FlightRepository flightRepository;
@@ -115,7 +114,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public ServiceResult modifyFlight(Flight flight) {
-        ServiceResult serviceResult ;
+        ServiceResult serviceResult;
         Flight flightT = flightRepository.save(flight);
         if (null!=flightT){
             serviceResult = new ServiceResult(true,"航班修改成功！");

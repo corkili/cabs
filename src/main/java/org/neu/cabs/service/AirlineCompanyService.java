@@ -12,7 +12,6 @@ import java.util.List;
  * 系统核心逻辑，航空公司服务接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface AirlineCompanyService {
     /**
      * 获取所有的航空公司

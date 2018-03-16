@@ -16,7 +16,11 @@ public enum AirplaneState {
     /**
      * 正在飞行
      */
-    FLYING("飞机正在飞行");
+    FLYING("飞机正在飞行"),
+    /**
+     * 无
+     */
+    NONE("无");
 
     private String state;
 

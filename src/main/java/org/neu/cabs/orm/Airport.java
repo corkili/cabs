@@ -1,7 +1,7 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,7 +13,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "AIRPORT")
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class Airport {
     /**
@@ -74,6 +76,7 @@ public class Airport {
     /**
      * 拥有的航站楼
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @OneToMany(cascade = { CascadeType.ALL })
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Set<Terminal> terminals;
 }

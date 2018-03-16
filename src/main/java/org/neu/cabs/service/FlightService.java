@@ -16,7 +16,6 @@ import java.util.List;
  * 系统核心逻辑，游客服务接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface FlightService {
     /**
      * 搜索航班（条件搜索）

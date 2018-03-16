@@ -25,7 +25,6 @@ import static org.neu.cabs.constant.OrderState.UNPAID;
  * @see org.neu.cabs.service.OrderService
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class OrderServiceImpl implements OrderService {
 
     private OrderRepository orderRepository;
@@ -44,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
         if (null==orderT){
             // 不存在
             orderRepository.save(order);
-            serviceResult  = new ServiceResult(true,"创建订单成功！");
+            serviceResult = new ServiceResult(true,"创建订单成功！");
         }else{ //存在
             serviceResult = new ServiceResult(false,"该订单已经存在！");
         }

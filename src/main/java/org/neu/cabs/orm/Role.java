@@ -1,7 +1,6 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,7 +10,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ROLE")
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class Role {
 

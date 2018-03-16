@@ -1,7 +1,6 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -14,7 +13,9 @@ import java.util.Set;
  * @author 李浩然
  */
 @Embeddable
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class Province {
 

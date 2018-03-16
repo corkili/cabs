@@ -1,9 +1,6 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -16,7 +13,8 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @DiscriminatorValue("admin")
-@Data
+@Setter
+@Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor

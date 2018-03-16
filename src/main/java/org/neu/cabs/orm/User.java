@@ -1,9 +1,6 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import org.neu.cabs.constant.CertificateType;
 import org.neu.cabs.constant.Sex;
@@ -20,7 +17,8 @@ import java.util.Set;
  */
 @Entity
 @DiscriminatorValue("user")
-@Data
+@Setter
+@Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @NoArgsConstructor

@@ -15,7 +15,6 @@ import java.util.List;
  * 系统核心逻辑，订单服务接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface OrderService {
     /**
      * 创建订单

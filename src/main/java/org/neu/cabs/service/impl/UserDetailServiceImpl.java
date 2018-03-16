@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author 李浩然 谭湖东
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class UserDetailServiceImpl implements UserDetailsService {
 
     private BaseUserRepository baseUserRepository;

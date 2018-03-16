@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author 李浩然
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
-@Transactional(rollbackFor = Exception.class)
 public interface BaseUserRepository extends JpaRepository<BaseUser, Long> {
     /**
      * 根据用户名查找用户

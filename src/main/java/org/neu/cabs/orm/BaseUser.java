@@ -19,7 +19,7 @@ import java.util.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "D_TYPE")
 @Setter
-@ToString
+@Getter
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor

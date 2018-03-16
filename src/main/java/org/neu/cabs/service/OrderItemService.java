@@ -9,7 +9,6 @@ import java.util.List;
  * 系统核心逻辑，订单项（机票）服务接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface OrderItemService {
     /**
      * 根据乘客证件号搜索机票（游客可使用）

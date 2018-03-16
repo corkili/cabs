@@ -13,7 +13,6 @@ import java.util.List;
  * 系统核心逻辑，飞机服务接口
  * @author 李浩然
  */
-@Transactional(rollbackFor = Exception.class)
 public interface AirplaneService {
     /**
      * 获取所有飞机

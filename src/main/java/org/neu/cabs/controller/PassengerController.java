@@ -19,7 +19,6 @@ import java.util.Set;
  * @author 李浩然
  */
 @Controller
-@Transactional(rollbackFor = Exception.class)
 public class PassengerController {
 
     @RequestMapping(value = { "/", "index" })

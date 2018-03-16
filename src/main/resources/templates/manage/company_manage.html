@@ -58,8 +58,8 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="companyCode">公司代码 <span class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="companyCode" name="companyCode" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="公司代码不能为空"/>
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="companyCode" name="companyCode" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="公司代码不能为空" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -107,7 +107,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="editCompanyCode">公司代码 <span class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="editCompanyCode" name="companyCode" required="required"
+                                <input type="text" maxlength="3" class="form-control" id="editCompanyCode" name="companyCode" required="required"
                                        data-toggle="tooltip" data-placement="right" title="公司代码不能为空"/>
                             </div>
                         </div>
@@ -272,6 +272,7 @@
 
 <!-- Custom Theme Scripts -->
 <script th:src="@{../js/custom.min.js}"></script>
+<script th:src="@{../js/manage.js}"></script>
 
 <script th:inline="javascript">
 
@@ -310,40 +311,40 @@
             var companyName = $companyName.val();
             var companyCode = $companyCode.val();
             var establishTime = $establishTime.val();
-            var result = true;
+            var serviceResult = true;
             if (companyName == "" || companyName == null) {
                 $companyName.tooltip('show');
-                result = false;
+                serviceResult = false;
             }
             if (companyCode == "" || companyCode == null) {
                 $companyCode.tooltip('show');
-                result = false;
+                serviceResult = false;
             }
             if (establishTime == "" || establishTime == null) {
                 $establishTime.tooltip('show');
-                result = false;
+                serviceResult = false;
             }
-            return result;
+            return serviceResult;
         }
 
         function checkEditCompanyForm () {
             var companyName = $editCompanyName.val();
             var companyCode = $editCompanyCode.val();
             var establishTime = $editEstablishTime.val();
-            var result = true;
+            var serviceResult = true;
             if (companyName == "" || companyName == null) {
                 $editCompanyName.tooltip('show');
-                result = false;
+                serviceResult = false;
             }
             if (companyCode == "" || companyCode == null) {
                 $editCompanyCode.tooltip('show');
-                result = false;
+                serviceResult = false;
             }
             if (establishTime == "" || establishTime == null) {
                 $editEstablishTime.tooltip('show');
-                result = false;
+                serviceResult = false;
             }
-            return result;
+            return serviceResult;
         }
 
         function getFormJson(frm) {  //frm：form表单的id
@@ -366,8 +367,8 @@
             table.row.add([
                 data.companyName,
                 data.companyCode,
-                data.establishTime,
-                data.airplaneNumber
+                formatDate(data.establishTime),
+                data.airplanes.length
             ]).draw();
             $("#companyTable tbody td:contains('"+ data.companyName + "')").parent().attr('value', data.id);
         }
@@ -407,9 +408,9 @@
                 success: function (data) {
                     console.log(data);
                     $loadingModal.modal('toggle');
-                    if (data.result == "successful") {
+                    if (data.successful == true) {
                         $createCompanyModal.modal('hide');
-                        addRow(data);
+                        addRow(data.object);
                         $tip.text(data.msg);
                         $tipModal.modal('toggle');
                     } else {
@@ -418,8 +419,9 @@
                     }
                 },
                 error: function (data) {
+                    console.log(data);
                     $loadingModal.modal('toggle');
-                    $tip.text(data.message);
+                    $tip.text('信息有误');
                     $tipModal.modal('toggle');
                 }
             });
@@ -449,12 +451,12 @@
                 success: function (data) {
                     console.log(data);
                     $loadingModal.modal('toggle');
-                    if (data.result == "successful") {
+                    if (data.successful == true) {
                         $editCompanyModal.modal('hide');
                         $editCompanyBtn.attr('disabled', 'true');
                         $deleteCompanyBtn.attr('disabled', 'true');
                         table.row('.selected').remove().draw(false);
-                        addRow(data);
+                        addRow(data.object);
                         $tip.text('航空公司信息修改成功');
                         $tipModal.modal('toggle');
                     } else {
@@ -464,13 +466,13 @@
                 },
                 error: function (data) {
                     $loadingModal.modal('toggle');
-                    $tip.text(data.message);
+                    $tip.text('信息有误');
                     $tipModal.modal('toggle');
                 }
             });
         });
 
-        $("#companyTable tbody").on( 'click', 'tr', function () {
+        $("#companyTable tbody").on( 'click', 'tr[value]', function () {
             if ( $(this).hasClass('selected') ) {
                 $(this).removeClass('selected');
                 $editCompanyBtn.attr('disabled', 'true');
@@ -499,7 +501,7 @@
                     },
                     success: function (data) {
                         console.log(data);
-                        if (data.result == "successful") {
+                        if (data.successful == true) {
                             table.row('.selected').remove().draw(false);
                             $editCompanyBtn.attr('disabled', 'true');
                             $deleteCompanyBtn.attr('disabled', 'true');
@@ -531,14 +533,6 @@
             });
         });
 
-        $tipModal.on('show.bs.modal', function () {
-            console.log('show:' + $tip.text());
-        })
-
-        $tipModal.on('hide.bs.modal', function () {
-            console.log('hide:' + $tip.text());
-        })
-
         $loadingModal.modal({
             show: false,
             keyboard: false,
@@ -546,7 +540,6 @@
         });
 
     });
-
 
 </script>
 

@@ -1,7 +1,7 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.FetchMode;
 import org.neu.cabs.constant.OrderState;
 
 import javax.persistence.*;
@@ -15,7 +15,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ORDERS")
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class Order {
     /**
@@ -58,13 +60,15 @@ public class Order {
     /**
      * 订单条目
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, mappedBy = "order")
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "order")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Set<OrderItem> orderItems;
 
     /**
      * 下单人
      */
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.MERGE})
     @JoinColumn(name = "BUYER_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private User buyer;
 }

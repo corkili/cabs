@@ -1,7 +1,6 @@
 package org.neu.cabs.controller;
 
 import org.neu.cabs.dto.AirlineCompanyForm;
-import org.neu.cabs.dto.AirlineCompanyResult;
 import org.neu.cabs.dto.ResponseResult;
 import org.neu.cabs.dto.ServiceResult;
 import org.neu.cabs.orm.AirlineCompany;
@@ -16,14 +15,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 航空公司管理控制器
  * @author 李浩然
  */
 @Controller
-@Transactional(rollbackFor = Exception.class)
 @RequestMapping(value = { "/manage/company" })
 public class CompanyManageController {
 
@@ -50,43 +47,26 @@ public class CompanyManageController {
 
     @RequestMapping(value = { "/createCompany" }, method = { RequestMethod.POST })
     @ResponseBody
-    public AirlineCompanyResult createCompany(@RequestBody AirlineCompanyForm airlineCompanyForm) throws ParseException {
+    public ResponseResult<AirlineCompany> createCompany(@RequestBody AirlineCompanyForm airlineCompanyForm) throws ParseException {
         AirlineCompany airlineCompany = new AirlineCompany();
         airlineCompany.setAirplanes(new HashSet<>());
         airlineCompany.setCompanyName(airlineCompanyForm.getCompanyName());
         airlineCompany.setCompanyCode(airlineCompanyForm.getCompanyCode());
         airlineCompany.setEstablishTime(dateFormat.parse(airlineCompanyForm.getEstablishTime()));
         ServiceResult serviceResult = airlineCompanyService.createAirlineCompany(airlineCompany);
-        AirlineCompanyResult result;
-        if (serviceResult.isSuccessful()) {
-            AirlineCompany savedAirlineCompany = (AirlineCompany)serviceResult.getExtra("airlineCompany");
-            result = new AirlineCompanyResult("successful", serviceResult.getMessage(),
-                    savedAirlineCompany.getId(), savedAirlineCompany.getCompanyName(),
-                    savedAirlineCompany.getCompanyCode(), dateFormat.format(savedAirlineCompany.getEstablishTime()),
-                    savedAirlineCompany.getAirplanes().size(), savedAirlineCompany.getAirplanes());
-        } else {
-            result = new AirlineCompanyResult("failed", serviceResult.getMessage());
-        }
-        return result;
+        return ResponseResult.from(serviceResult, "airlineCompany");
     }
 
     @RequestMapping(value = { "/deleteCompany" }, method = { RequestMethod.POST })
     @ResponseBody
-    public ResponseResult deleteCompany(@RequestParam("companyId") int companyId) throws ParseException {
-        ResponseResult result;
+    public ResponseResult<Object> deleteCompany(@RequestParam("companyId") int companyId) throws ParseException {
         ServiceResult serviceResult = airlineCompanyService.deleteAirlineCompanyById(companyId);
-        if (serviceResult.isSuccessful()) {
-            result = new ResponseResult("successful", serviceResult.getMessage());
-        } else {
-            result = new AirlineCompanyResult("failed", serviceResult.getMessage());
-        }
-        return result;
+        return ResponseResult.from(serviceResult);
     }
 
     @RequestMapping(value = { "/modifyCompany" }, method = { RequestMethod.POST })
     @ResponseBody
-    public AirlineCompanyResult modifyCompany(@RequestBody AirlineCompanyForm airlineCompanyForm) throws ParseException {
-        AirlineCompanyResult result;
+    public ResponseResult<AirlineCompany> modifyCompany(@RequestBody AirlineCompanyForm airlineCompanyForm) throws ParseException {
         AirlineCompany airlineCompany = new AirlineCompany();
         airlineCompany.setAirplanes(new HashSet<>());
         airlineCompany.setId(airlineCompanyForm.getId());
@@ -94,16 +74,7 @@ public class CompanyManageController {
         airlineCompany.setCompanyCode(airlineCompanyForm.getCompanyCode());
         airlineCompany.setEstablishTime(dateFormat.parse(airlineCompanyForm.getEstablishTime()));
         ServiceResult serviceResult = airlineCompanyService.modifyAirlineCompany(airlineCompany);
-        if (serviceResult.isSuccessful()) {
-            airlineCompany = (AirlineCompany) serviceResult.getExtra("airlineCompany");
-            result = new AirlineCompanyResult("successful", serviceResult.getMessage(),
-                    airlineCompany.getId(), airlineCompany.getCompanyName(),
-                    airlineCompany.getCompanyCode(), dateFormat.format(airlineCompany.getEstablishTime()),
-                    airlineCompany.getAirplanes().size(), airlineCompany.getAirplanes());
-        } else {
-            result = new AirlineCompanyResult("failed", serviceResult.getMessage());
-        }
-        return result;
+        return ResponseResult.from(serviceResult, "airlineCompany");
     }
 
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author 李浩然
  */
 @Controller
-@Transactional(rollbackFor = Exception.class)
 @RequestMapping(value = { "/manage/user" })
 public class UserManageController {
 

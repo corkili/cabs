@@ -1,7 +1,8 @@
 package org.neu.cabs.orm;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
+import org.hibernate.annotations.FetchMode;
 import org.neu.cabs.constant.FlightState;
 
 import javax.persistence.*;
@@ -14,7 +15,9 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "FLIGHT")
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 public class Flight {
     /**
@@ -143,15 +146,17 @@ public class Flight {
     /**
      * 所属航空公司
      */
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "COMPANY_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private AirlineCompany airlineCompany;
 
     /**
      * 执飞飞机
      */
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "AIRPLANE_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Airplane airplane;
 
     /**
@@ -179,28 +184,32 @@ public class Flight {
     /**
      * 出发机场
      */
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "DEPARTURE_AIRPORT_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Airport departureAirport;
 
     /**
      * 到达机场
      */
-    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH })
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "ARRIVAL_AIRPORT_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Airport arrivalAirport;
 
     /**
      * 出发航站楼
      */
-    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @ManyToOne
     @JoinColumn(name = "DEPARTURE_TERMINAL_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Terminal departureTerminal;
 
     /**
      * 到达航站楼
      */
-    @ManyToOne(cascade = { CascadeType.REFRESH })
+    @ManyToOne
     @JoinColumn(name = "ARRIVAL_TERMINAL_ID")
+    @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Terminal arrivalTerminal;
 }

@@ -11,7 +11,6 @@ import java.util.List;
  * @author 李浩然
  * @see org.springframework.data.jpa.repository.JpaRepository
  */
-@Transactional(rollbackFor = Exception.class)
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     /**
      * 根据旅客的证件号查找订单项

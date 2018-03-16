@@ -20,7 +20,6 @@ import java.util.List;
  * @see org.neu.cabs.service.AirlineCompanyService
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
 public class AirlineCompanyServiceImpl implements AirlineCompanyService {
 
     private AirlineCompanyRepository airlineCompanyRepository;
@@ -48,6 +47,7 @@ public class AirlineCompanyServiceImpl implements AirlineCompanyService {
     @Override
     public ServiceResult createAirlineCompany(AirlineCompany airlineCompany) {
         ServiceResult serviceResult;
+
         AirlineCompany savedAirlineCompany = airlineCompanyRepository.save(airlineCompany);
         if (savedAirlineCompany.getId() != null){
             serviceResult = new ServiceResult(true,"成功创建航空公司！", "airlineCompany", savedAirlineCompany);

@@ -42,9 +42,13 @@ public enum CertificateType {
      */
     OTHER("其他");
 
-    private String name;
+    private String typeName;
 
-    CertificateType(String name) {
-        this.name = name;
+    CertificateType(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getTypeName() {
+        return typeName;
     }
 }

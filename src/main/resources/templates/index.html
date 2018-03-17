@@ -37,7 +37,7 @@
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <p class="bg-info" th:text="${msg.extraInfo}"></p>
         </div>
-        <div sec:authorize="hasRole('ROLE_PASSENGER')">
+        <div sec:authorize="hasRole('ROLE_USER')">
             <p class="bg-info">无更多显示信息</p>
         </div>
         <form th:action="@{/logout}" method="post">

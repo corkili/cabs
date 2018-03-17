@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <title th:utext="#{app.management.title}"></title>
 
     <!-- Bootstrap -->
@@ -30,6 +33,141 @@
 </head>
 
 <body class="nav-md">
+
+<!-- create admin modal -->
+<div id="createAdminModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="createAdminModalLabel">新建管理员</h4>
+            </div>
+            <div class="modal-body">
+
+                <div style="padding: 5px 20px;">
+                    <form id="createAdminForm" method="post" th:action="@{admin/createAdmin}" data-parsley-validate=""
+                          class="form-horizontal form-label-left" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="username">用户名 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="username" name="username" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="用户名不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="password">密码 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="password" name="password" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="密码不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="confirmPassword">重复密码 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="confirmPassword" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="两次输入密码必须相同"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary antosubmit2" id="submitCreateAdminForm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /create admin modal-->
+
+<!-- edit admin modal -->
+<div id="editAdminModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editAdminModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="editAdminModalLabel">重置密码</h4>
+            </div>
+            <div class="modal-body">
+
+                <div style="padding: 5px 20px;">
+                    <form id="editAdminForm" method="post" th:action="@{admin/resetPwd}" data-parsley-validate=""
+                          class="form-horizontal form-label-left" role="form">
+                        <input type="hidden" id="editAdminId" name="id" value="" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editUsername">用户名 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <p class="form-control-static" id="editUsername"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editPassword">密码 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="editPassword" name="password" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="密码不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editConfirmPassword">重复密码 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" id="editConfirmPassword" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="两次输入密码必须相同"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary antosubmit2" id="submitEditAdminForm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /edit admin modal-->
+
+<!-- tip modal -->
+<div id="tipModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tipModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close close-tip" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="tipModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <span id="tip"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2 close-tip" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /tip modal-->
+
+<!-- loading modal -->
+<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="loadingModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <span id="loading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /loading modal-->
+
 <div class="container body">
     <div class="main_container">
         <div class="col-md-3 left_col">
@@ -60,12 +198,21 @@
                             <h3 th:utext="#{app.management.title}"></h3>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
+                    <div class="x_panel">
                         <div class="x_title">
                             <h2>管理员信息</h2>
+                            <div class="nav navbar-right panel_toolbox">
+                                <button id="disableAdminBtn" class="btn btn-danger" disabled="disabled">禁用</button>
+                                <button id="enableAdminBtn" class="btn btn-success" disabled="disabled">解禁</button>
+                                <button id="resetPasswordBtn" class="btn btn-primary" disabled="disabled" >重置密码</button>
+                                <button id="createAdminBtn" class="btn btn-dark">新建管理员</button>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
-
                         <div class="x_content">
                             <table id="adminTable" class="table table-bordered jambo_table">
                                 <thead>
@@ -74,37 +221,24 @@
                                     <th>创建时间</th>
                                     <th>上次登录时间</th>
                                     <th>是否可用</th>
-                                    <th>重置密码</th>
-                                    <th>禁用/解禁</th>
+                                    <th>是否是超级管理员</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <form method="post">
-                                            <input type="hidden" name="adminId" value=""/>
-                                            <input class="btn btn-primary btn-xs btn-edit" type="submit" value="编辑"/>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form method="post">
-                                            <input type="hidden" name="adminId" value=""/>
-                                            <input class="btn btn-danger btn-xs btn-delete" type="submit" value="删除"/>
-                                        </form>
-                                    </td>
+                                <!--/*@thymesVar id="admins" type="java.util.List<org.neu.cabs.orm.Admin>"*/-->
+                                <tr th:each="admin : ${admins}" th:value="${admin.id}">
+                                    <td th:text="${admin.username}"></td>
+                                    <td th:text="${#dates.format(admin.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${#dates.format(admin.lastLoginTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${admin.available} ? 可用 : 不可用"></td>
+                                    <td th:text="${admin.superManager} ? 是 : 否"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
-                    <div class="clearfix"></div>
-                </div>
 
+                </div>
             </div>
         </div>
         <!-- /page content -->
@@ -118,6 +252,7 @@
 
 <!-- jQuery -->
 <script th:src="@{../vendors/jquery/jquery.min.js}"></script>
+<script th:src="@{../vendors/jquery/jquery.form.js}"></script>
 <!-- Bootstrap -->
 <script th:src="@{../vendors/bootstrap/js/bootstrap.min.js}"></script>
 <!-- FastClick -->
@@ -137,11 +272,302 @@
 
 <!-- Custom Theme Scripts -->
 <script th:src="@{../js/custom.min.js}"></script>
+<script th:src="@{../js/manage.js}"></script>
 
-<script type="text/javascript">
+<script th:inline="javascript">
+
     $(function () {
-        $("#adminTable").DataTable();
-    })
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        console.log(header + '=' + token);
+
+        var $adminTable = $("#adminTable");
+        var $username = $("#username");
+        var $password = $("#password");
+        var $confirmPassword = $("#confirmPassword");
+        var $createAdminForm = $("#createAdminForm");
+        var $createAdminBtn = $("#createAdminBtn");
+        var $resetPasswordBtn = $("#resetPasswordBtn");
+        var $disableAdminBtn = $("#disableAdminBtn");
+        var $enableAdminBtn = $("#enableAdminBtn");
+        var $createAdminModal = $("#createAdminModal");
+        var $submitCreateAdminForm = $("#submitCreateAdminForm");
+        var $tipModal = $("#tipModal");
+        var $tip = $("#tip");
+        var $editAdminForm = $("#editAdminForm");
+        var $submitEditAdminForm = $("#submitEditAdminForm");
+        var $editAdminId = $("#editAdminId");
+        var $editUsername = $("#editUsername");
+        var $editPassword = $("#editPassword");
+        var $editConfirmPassword = $("#editConfirmPassword");
+        var $editAdminModal = $("#editAdminModal");
+        var $loadingModal = $("#loadingModal");
+        var $loading = $("#loading");
+
+        var table = $adminTable.DataTable();
+
+        function checkCreateAdminForm () {
+            var username = $username.val();
+            var password = $password.val();
+            var confirmPassword = $confirmPassword.val();
+            var serviceResult = true;
+            if (username == "" || username == null) {
+                $password.tooltip('show');
+                serviceResult = false;
+            }
+            if (password == "" || password == null) {
+                $password.tooltip('show');
+                serviceResult = false;
+            }
+            if (confirmPassword != password) {
+                $confirmPassword.tooltip('show');
+                serviceResult = false;
+            }
+            return serviceResult;
+        }
+
+        function checkEditAdminForm () {
+            var password = $editPassword.val();
+            var confirmPassword = $editConfirmPassword.val();
+            var serviceResult = true;
+            if (password == "" || password == null) {
+                $password.tooltip('show');
+                serviceResult = false;
+            }
+            if (confirmPassword != password) {
+                $confirmPassword.tooltip('show');
+                serviceResult = false;
+            }
+            return serviceResult;
+        }
+
+        function addRow(data) {
+
+            table.row.add([
+                data.username,
+                formatDateTime(data.createTime),
+                formatDateTime(data.lastLoginTime),
+                data.available ? '可用' : '不可用',
+                data.superManager ? '是' : '否'
+            ]).draw();
+            $("#adminTable tbody td:contains('"+ data.username + "')").parent().attr('value', data.id);
+        }
+
+        var createAdminUrl = $createAdminForm.attr("action");
+        var editAdminUrl = $editAdminForm.attr("action");
+
+        $createAdminBtn.on('click', function () {
+            $createAdminForm.resetForm();
+            $createAdminModal.modal({
+                keyboard: false,
+                backdrop: false
+            });
+        });
+
+        $submitCreateAdminForm.on("click", function () {
+            if (!checkCreateAdminForm()) {
+                return false;
+            }
+
+            $loading.text('正在创建管理员，请稍后...');
+            $loadingModal.modal('toggle');
+
+            var data = JSON.stringify(getFormJson("createAdminForm"));
+            console.log(data);
+            console.log(createAdminUrl);
+
+            $.ajax({
+                type: 'POST',
+                url: createAdminUrl,
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    if (data.successful == true) {
+                        $createAdminModal.modal('hide');
+                        addRow(data.object);
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    } else {
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    $tip.text('信息有误');
+                    $tipModal.modal('toggle');
+                }
+            });
+        });
+
+        $submitEditAdminForm.on('click', function () {
+            if (!checkEditAdminForm()) {
+                return false;
+            }
+
+            $loading.text('正在重置密码，请稍后...');
+            $loadingModal.modal('toggle');
+
+            var data = JSON.stringify(getFormJson("editAdminForm"));
+            console.log(data);
+            console.log(createAdminUrl);
+
+            $.ajax({
+                type: 'POST',
+                url: editAdminUrl,
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    if (data.successful == true) {
+                        $adminTable.find("tr.selected").removeClass("selected");
+                        $editAdminModal.modal('hide');
+                        $resetPasswordBtn.attr('disabled', 'true');
+                        $disableAdminBtn.attr('disabled', 'true');
+                        $enableAdminBtn.attr('disabled', 'true');
+                        $tip.text('重置密码成功');
+                        $tipModal.modal('toggle');
+                    } else {
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    }
+                },
+                error: function (data) {
+                    $loadingModal.modal('toggle');
+                    $tip.text('信息有误');
+                    $tipModal.modal('toggle');
+                }
+            });
+        });
+
+        $("#adminTable tbody").on( 'click', 'tr[value]', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+                $resetPasswordBtn.attr('disabled', 'true');
+                $disableAdminBtn.attr('disabled', 'true');
+                $enableAdminBtn.attr('disabled', 'true');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                $resetPasswordBtn.removeAttr('disabled');
+                if ($(this).find("td:eq(3)").text() == '可用') {
+                    $disableAdminBtn.removeAttr('disabled');
+                    $enableAdminBtn.attr('disabled', 'true');
+                } else {
+                    $enableAdminBtn.removeAttr('disabled');
+                    $disableAdminBtn.attr('disabled', 'true');
+                }
+            }
+        } );
+
+        $disableAdminBtn.on('click', function () {
+            if (confirm("确认禁用当前选中的管理员吗？")) {
+                var id = parseInt(table.$('tr.selected').attr('value'));
+                $.ajax({
+                    type: 'POST',
+                    url: 'admin/disableAdmin',
+                    data: {
+                        adminId: id
+                    },
+                    dataType: 'json',
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.successful == true) {
+                            $adminTable.find("tr.selected td:eq(3)").text("不可用");
+                            $adminTable.find("tr.selected").removeClass("selected");
+                            $resetPasswordBtn.attr('disabled', 'true');
+                            $disableAdminBtn.attr('disabled', 'true');
+                            $enableAdminBtn.attr('disabled', 'true');
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        } else {
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        }
+                    },
+                    error: function (data) {
+                        $tip.text(data.message);
+                        $tipModal.modal('toggle');
+                    }
+                });
+            }
+        });
+
+        $enableAdminBtn.on('click', function () {
+            if (confirm("确认解禁当前选中的管理员吗？")) {
+                var id = parseInt(table.$('tr.selected').attr('value'));
+                $.ajax({
+                    type: 'POST',
+                    url: 'admin/enableAdmin',
+                    data: {
+                        adminId: id
+                    },
+                    dataType: 'json',
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.successful == true) {
+                            $adminTable.find("tr.selected td:eq(3)").text("可用");
+                            $adminTable.find("tr.selected").removeClass("selected");
+                            $resetPasswordBtn.attr('disabled', 'true');
+                            $disableAdminBtn.attr('disabled', 'true');
+                            $enableAdminBtn.attr('disabled', 'true');
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        } else {
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        }
+                    },
+                    error: function (data) {
+                        $tip.text(data.message);
+                        $tipModal.modal('toggle');
+                    }
+                });
+            }
+        });
+
+        $resetPasswordBtn.on('click', function () {
+            $editAdminForm.resetForm();
+            $editAdminId.val(table.$('tr.selected').attr('value'));
+            $editUsername.text($adminTable.find("tr.selected td:eq(0)").text());
+
+            console.log($editAdminId.val());
+            $editAdminModal.modal({
+                keyboard: false,
+                backdrop: false
+            });
+        });
+
+        $loadingModal.modal({
+            show: false,
+            keyboard: false,
+            backdrop: false
+        });
+
+    });
+
+
 </script>
 
 </body>

@@ -20,7 +20,6 @@ public interface UserService {
      * 获取所有的用户，只允许管理员调用
      * @return 所有用户的列表
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
     List<User> getAllUsers();
 
     /**
@@ -28,14 +27,12 @@ public interface UserService {
      * @param pageable 分页信息
      * @return 分页的用户数据
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
     Page<User> getUserPage(Pageable pageable);
 
     /**
      * 获取所有的管理员，只允许超级管理员调用
      * @return 所有管理员的列表
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ROOT.name)")
     List<Admin> getAllAdmin();
 
     /**
@@ -43,7 +40,6 @@ public interface UserService {
      * @param pageable 分页信息
      * @return 分页的管理员数据
      */
-    @PreAuthorize("hasRole(T(org.neu.cabs.constant.RoleType).ROLE_ROOT.name)")
     Page<Admin> getAdminPage(Pageable pageable);
 
     /**
@@ -51,8 +47,6 @@ public interface UserService {
      * @param id 用户ID
      * @return ID为id的用户信息
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name, T(org.neu.cabs.constant.RoleType).ROLE_USER.name)")
-    @PostAuthorize("returnObject.id == id || hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
     User getUserById(Long id);
 
     /**
@@ -60,8 +54,6 @@ public interface UserService {
      * @param id 用户ID
      * @return ID为id的管理员信息
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
-    @PostAuthorize("returnObject.id == id || hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ROOT.name)")
     Admin getAdminById(Long id);
 
     /**
@@ -69,7 +61,6 @@ public interface UserService {
      * @param id 用户ID
      * @return 服务结果
      */
-    @PreAuthorize("NOT hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_PASSENGER.name)")
     ServiceResult disableUserById(Long id);
 
     /**
@@ -107,6 +98,12 @@ public interface UserService {
      * @return 服务结果
      */
     ServiceResult createAdmin(Admin admin);
+
+    /**
+     * 更新用户登录后的信息
+     * @param username 用户名
+     */
+    void login(String username);
 
     /**
      * 批量修改用户信息

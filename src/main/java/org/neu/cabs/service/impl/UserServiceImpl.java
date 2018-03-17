@@ -1,11 +1,14 @@
 package org.neu.cabs.service.impl;
 
+import org.neu.cabs.constant.RoleType;
 import org.neu.cabs.dao.AdminRepository;
 import org.neu.cabs.dao.BaseUserRepository;
+import org.neu.cabs.dao.RoleRepository;
 import org.neu.cabs.dao.UserRepository;
 import org.neu.cabs.dto.ServiceResult;
 import org.neu.cabs.orm.Admin;
 import org.neu.cabs.orm.BaseUser;
+import org.neu.cabs.orm.Role;
 import org.neu.cabs.orm.User;
 import org.neu.cabs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 系统核心逻辑，用户服务接口实现类
@@ -24,6 +30,8 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private RoleRepository roleRepository;
+
     private BaseUserRepository baseUserRepository;
 
     private UserRepository userRepository;
@@ -31,12 +39,17 @@ public class UserServiceImpl implements UserService {
     private AdminRepository adminRepository;
 
     @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
+
+    @Autowired
     public void setBaseUserRepository(BaseUserRepository baseUserRepository) {
         this.baseUserRepository = baseUserRepository;
     }
 
     @Autowired
-    public void setBaseUserRepository(UserRepository userRepository) {
+    public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -52,13 +65,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> getUserPage(Pageable pageable) {
-
         return userRepository.findAll(pageable);
     }
 
     @Override
     public List<Admin> getAllAdmin() {
-        return adminRepository.findAll();
+        return adminRepository.findAllBySuperManager(false);
     }
 
     @Override
@@ -86,9 +98,9 @@ public class UserServiceImpl implements UserService {
         if(null!=baseUser){
             baseUser.setAvailable(false);
             baseUserRepository.save(baseUser);
-            serviceResult = new ServiceResult(true,"禁止成功！");
+            serviceResult = new ServiceResult(true,"禁用成功！");
         }else {
-            serviceResult = new ServiceResult(false,"禁止失败！");
+            serviceResult = new ServiceResult(false,"禁用失败！");
         }
         return serviceResult;
     }
@@ -111,7 +123,7 @@ public class UserServiceImpl implements UserService {
     public ServiceResult modifyPassword(Long id, String password) {
         ServiceResult serviceResult;
         BaseUser baseUser = baseUserRepository.findOne(id);
-        if(null!=baseUser){
+        if(null != baseUser){
             baseUser.setPassword(password);
             baseUserRepository.save(baseUser);
             serviceResult = new ServiceResult(true,"密码修改成功！");
@@ -125,9 +137,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public ServiceResult modifyUserInformation(User user) {
         ServiceResult serviceResult;
-        User userT = userRepository.save(user);
-        if (null!=userT){
-            serviceResult = new ServiceResult(true,"信息修改成功！");
+        User modifiedUser = userRepository.save(user);
+        if (modifiedUser != null){
+            serviceResult = new ServiceResult(true,"信息修改成功！", "user", modifiedUser);
         }else{
             serviceResult = new ServiceResult(false,"信息修改失败！");
         }
@@ -141,8 +153,11 @@ public class UserServiceImpl implements UserService {
         long count = baseUserRepository.countByUsername(user.getUsername());
         if (count==0){
             // 为0，则不存在该用户
-            baseUserRepository.save(user);
-            serviceResult = new ServiceResult(true,"注册成功!");
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleRepository.findByName(RoleType.ROLE_USER.name()));
+            user.setRoles(roles);
+            User savedUser = baseUserRepository.save(user);
+            serviceResult = new ServiceResult(true,"注册成功!", "user", savedUser);
         }else{
             serviceResult = new ServiceResult(false,"该账号已经存在!");
         }
@@ -153,14 +168,24 @@ public class UserServiceImpl implements UserService {
     public ServiceResult createAdmin(Admin admin) {
         ServiceResult serviceResult;
         long count = baseUserRepository.countByUsername(admin.getUsername());
-        if (count==0){
+        if (count == 0){
             // 为0，则不存在该用户
-            baseUserRepository.save(admin);
-            serviceResult = new ServiceResult(true,"管理员账号注册成功!");
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleRepository.findByName(RoleType.ROLE_ADMIN.name()));
+            admin.setRoles(roles);
+            Admin savedAdmin = baseUserRepository.save(admin);
+            serviceResult = new ServiceResult(true,"管理员账号注册成功!", "admin", savedAdmin);
         }else{
             serviceResult = new ServiceResult(false,"该管理员账号已经存在!");
         }
         return serviceResult;
+    }
+
+    @Override
+    public void login(String username) {
+        BaseUser user = baseUserRepository.findByUsername(username);
+        user.setLastLoginTime(new Date());
+        baseUserRepository.save(user);
     }
 
     @Override

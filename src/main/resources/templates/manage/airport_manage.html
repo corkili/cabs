@@ -731,7 +731,10 @@
             addresses = [];
             var temp = {
                 name: "直辖市/特别行政区",
-                sub: [],
+                sub: [{
+                    name: "请选择",
+                    sub: []
+                }],
                 type: 1
             };
             $.each(data, function (index, content) {

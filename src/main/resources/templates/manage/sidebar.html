@@ -17,11 +17,13 @@
             </li>
             <li><a th:href="@{flight}"><i class="fa fa-paypal"></i> 航班管理 </a>
             </li>
-            <li><a><i class="fa fa-user-circle"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>
+            <li sec:authorize="hasRole('ROLE_ROOT')"><a><i class="fa fa-user-circle"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                     <li><a th:href="@{user}">用户信息</a></li>
                     <li><a th:href="@{admin}">管理员信息</a></li>
                 </ul>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN') and (not hasRole('ROLE_ROOT'))"><a th:href="@{user}"><i class="fa fa-user-circle"></i> 用户管理 </a>
             </li>
         </ul>
     </div>

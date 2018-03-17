@@ -1,5 +1,5 @@
-function formatDate(date) {
-    var d = new Date(date);
+function formatDate(timestamp) {
+    var d = new Date(timestamp);
     var month = '' + (d.getMonth() + 1);
     var day = '' + d.getDate();
     var year = d.getFullYear();
@@ -8,6 +8,22 @@ function formatDate(date) {
     if (day.length < 2) day = '0' + day;
 
     return [year, month, day].join('-');
+}
+
+function formatDateTime(timestamp) {
+    var d = new Date(timestamp);
+    var month = '' + (d.getMonth() + 1);
+    var day = '' + d.getDate();
+    var year = ''+ d.getFullYear();
+    var hours = '' + d.getHours();
+    var minutes = '' + d.getMinutes();
+    var seconds = '' + d.getSeconds();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    if (hours.length < 2) hours = '0' + hours;
+    if (minutes.length < 2) minutes = '0' + minutes;
+    if (seconds.length < 2) seconds = '0' + seconds;
+    return [year, month, day].join('-') + ' ' + [hours, minutes, seconds].join(':');
 }
 
 function getFormJson(frm) {  //frm：form表单的id
@@ -25,3 +41,4 @@ function getFormJson(frm) {  //frm：form表单的id
     });
     return o;
 }
+

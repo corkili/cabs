@@ -5,7 +5,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 机场实体类
@@ -79,4 +79,17 @@ public class Airport {
     @OneToMany(cascade = { CascadeType.ALL })
     @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Set<Terminal> terminals;
+
+    public String getTerminalString() {
+        List<Terminal> terminalList = new ArrayList<>(terminals);
+        Collections.sort(terminalList);
+        StringBuilder builder = new StringBuilder();
+        for (Iterator<Terminal> i = terminalList.iterator(); i.hasNext(); ) {
+            builder.append(i.next().getTerminalName());
+            if (i.hasNext()) {
+                builder.append(" ");
+            }
+        }
+        return builder.toString();
+    }
 }

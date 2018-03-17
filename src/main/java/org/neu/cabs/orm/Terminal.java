@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @EqualsAndHashCode
-public class Terminal {
+public class Terminal implements Comparable<Terminal> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,4 +23,9 @@ public class Terminal {
     @Column(length = 20)
     private String terminalName;
 
+
+    @Override
+    public int compareTo(Terminal o) {
+        return this.terminalName.compareTo(o.terminalName);
+    }
 }

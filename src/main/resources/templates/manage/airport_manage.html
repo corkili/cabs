@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <title th:utext="#{app.management.title}"></title>
 
     <!-- Bootstrap -->
@@ -30,6 +33,246 @@
 </head>
 
 <body class="nav-md">
+
+<!-- create airport modal -->
+<div id="createAirportModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createAirportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="createAirportModalLabel">新建机场</h4>
+            </div>
+            <div class="modal-body">
+
+                <div style="padding: 5px 20px;">
+                    <form id="createAirportForm" method="post" th:action="@{airport/createAirport}" data-parsley-validate=""
+                          class="form-horizontal form-label-left" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="chineseName">中文名 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="chineseName" name="chineseName" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="中文名不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="englishName">英文名 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="englishName" name="englishName" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="英文名不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="iataCode">IATA <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="iataCode" name="iataCode"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="IATA不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="icaoCode">ICAO <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="icaoCode" name="icaoCode"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="ICAO不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="flightLevel">飞行区等级 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="flightLevel" name="flightLevel"
+                                        title="飞行区等级不能为空" data-toggle="tooltip" data-placement="right">
+                                    <option value="" selected="selected">----请选择----</option>
+                                    <option value="3C">3C</option>
+                                    <option value="4C">4C</option>
+                                    <option value="4D">4D</option>
+                                    <option value="4E">4E</option>
+                                    <option value="4F">4F</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="seatOfPlane">机位数 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="seatOfPlane" name="seatOfPlane"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="机位数不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="terminalNumber">航站楼数量 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="terminalNumber" name="terminalNumber"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="航站楼数量不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="province">省份 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="province" name="province"
+                                        title="省份不能为空" data-toggle="tooltip" data-placement="right">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="city">城市 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="city" name="city"
+                                        title="城市不能为空" data-toggle="tooltip" data-placement="right">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary antosubmit2" id="submitCreateAirportForm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /create airport modal-->
+
+<!-- edit airport modal -->
+<div id="editAirportModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editAirportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="editAirportModalLabel">编辑机场信息</h4>
+            </div>
+            <div class="modal-body">
+
+                <div style="padding: 5px 20px;">
+                    <form id="editAirportForm" method="post" th:action="@{airport/modifyAirport}" data-parsley-validate=""
+                          class="form-horizontal form-label-left" role="form">
+                        <input type="hidden" id="editAirportId" name="id" value="" />
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editChineseName">中文名 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editChineseName" name="chineseName" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="中文名不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editEnglishName">英文名 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editEnglishName" name="englishName" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="英文名不能为空"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editIataCode">IATA <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="editIataCode" name="iataCode"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="IATA不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editIcaoCode">ICAO <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="editIcaoCode" name="icaoCode"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="ICAO不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editFlightLevel">飞行区等级 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="editFlightLevel" name="flightLevel"
+                                        title="飞行区等级不能为空" data-toggle="tooltip" data-placement="right">
+                                    <option value="" selected="selected">----请选择----</option>
+                                    <option value="3C">3C</option>
+                                    <option value="4C">4C</option>
+                                    <option value="4D">4D</option>
+                                    <option value="4E">4E</option>
+                                    <option value="4F">4F</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editSeatOfPlane">机位数 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="editSeatOfPlane" name="seatOfPlane"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="机位数不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editTerminalNumber">航站楼数量 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" style="text-transform: uppercase" class="form-control" id="editTerminalNumber" name="terminalNumber"
+                                       required="required" data-toggle="tooltip" data-placement="right" title="航站楼数量不能为空" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editProvince">省份 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="editProvince" name="province"
+                                        title="省份不能为空" data-toggle="tooltip" data-placement="right">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label" for="editCity">城市 <span class="required">*</span></label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="editCity" name="city"
+                                        title="城市不能为空" data-toggle="tooltip" data-placement="right">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary antosubmit2" id="submitEditAirportForm">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /edit airport modal-->
+
+<!-- tip modal -->
+<div id="tipModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tipModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close close-tip" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="tipModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <span id="tip"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2 close-tip" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /tip modal-->
+
+<!-- loading modal -->
+<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="loadingModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <span id="loading"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /loading modal-->
+
 <div class="container body">
     <div class="main_container">
         <div class="col-md-3 left_col">
@@ -60,12 +303,20 @@
                             <h3 th:utext="#{app.management.title}"></h3>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
+                    <div class="x_panel">
                         <div class="x_title">
                             <h2>机场信息</h2>
+                            <div class="nav navbar-right panel_toolbox">
+                                <button id="editAirportBtn" class="btn btn-primary" disabled="disabled">编辑</button>
+                                <button id="deleteAirportBtn" class="btn btn-danger" disabled="disabled">删除</button>
+                                <button id="createAirportBtn" class="btn btn-dark">新建机场</button>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
-
                         <div class="x_content">
                             <table id="airportTable" class="table table-bordered jambo_table">
                                 <thead>
@@ -78,41 +329,26 @@
                                     <th>机位数</th>
                                     <th>航站楼</th>
                                     <th>地址</th>
-                                    <th>编辑</th>
-                                    <th>删除</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <form method="post">
-                                            <input type="hidden" name="airportId" value=""/>
-                                            <input class="btn btn-primary btn-xs btn-edit" type="submit" value="编辑"/>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form method="post">
-                                            <input type="hidden" name="airportId" value=""/>
-                                            <input class="btn btn-danger btn-xs btn-delete" type="submit" value="删除"/>
-                                        </form>
-                                    </td>
+                                <!--/*@thymesVar id="airports" type="java.util.List<org.neu.cabs.orm.Airport>"*/-->
+                                <tr th:each="airport : ${airports}" th:value="${airport.id}">
+                                    <td th:text="${airport.chineseName}"></td>
+                                    <td th:text="${airport.englishName}"></td>
+                                    <td th:text="${airport.iataCode}"></td>
+                                    <td th:text="${airport.icaoCode}"></td>
+                                    <td th:text="${airport.flightLevel}"></td>
+                                    <td th:text="${airport.seatOfPlane}"></td>
+                                    <td th:text="${airport.getTerminalString()}"></td>
+                                    <td th:text="${airport.address.province.name + '-' + airport.address.city.name}"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
-                    <div class="clearfix"></div>
-                </div>
 
+                </div>
             </div>
         </div>
         <!-- /page content -->
@@ -126,6 +362,7 @@
 
 <!-- jQuery -->
 <script th:src="@{../vendors/jquery/jquery.min.js}"></script>
+<script th:src="@{../vendors/jquery/jquery.form.js}"></script>
 <!-- Bootstrap -->
 <script th:src="@{../vendors/bootstrap/js/bootstrap.min.js}"></script>
 <!-- FastClick -->
@@ -145,11 +382,412 @@
 
 <!-- Custom Theme Scripts -->
 <script th:src="@{../js/custom.min.js}"></script>
+<script th:src="@{../js/manage.js}"></script>
 
-<script type="text/javascript">
+<script th:inline="javascript">
+
     $(function () {
-        $("#airportTable").DataTable();
-    })
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        console.log(header + '=' + token);
+
+        var addresses = {};
+
+        var $airportTable = $("#airportTable");
+        var $chineseName = $("#chineseName");
+        var $englishName = $("#englishName");
+        var $iataCode = $("#iataCode");
+        var $icaoCode = $("#icaoCode");
+        var $flightLevel = $("#flightLevel");
+        var $seatOfPlane = $("#seatOfPlane");
+        var $terminalNumber = $("#terminalNumber");
+        var $province = $("#province");
+        var $city = $("#city");
+        var $createAirportForm = $("#createAirportForm");
+        var $createAirportBtn = $("#createAirportBtn");
+        var $editAirportBtn = $("#editAirportBtn");
+        var $deleteAirportBtn = $("#deleteAirportBtn");
+        var $createAirportModal = $("#createAirportModal");
+        var $submitCreateAirportForm = $("#submitCreateAirportForm");
+        var $tipModal = $("#tipModal");
+        var $tip = $("#tip");
+        var $editAirportForm = $("#editAirportForm");
+        var $submitEditAirportForm = $("#submitEditAirportForm");
+        var $editAirportId = $("#editAirportId");
+        var $editChineseName = $("#editChineseName");
+        var $editEnglishName = $("#editEnglishName");
+        var $editIataCode = $("#editIataCode");
+        var $editIcaoCode = $("#editIcaoCode");
+        var $editFlightLevel = $("#editFlightLevel");
+        var $editSeatOfPlane = $("#editSeatOfPlane");
+        var $editTerminalNumber = $("#editTerminalNumber");
+        var $editProvince = $("#editProvince");
+        var $editCity = $("#editCity");
+        var $editAirportModal = $("#editAirportModal");
+        var $loadingModal = $("#loadingModal");
+        var $loading = $("#loading");
+
+        var table = $airportTable.DataTable();
+
+        function checkCreateAirportForm () {
+            var chineseName = $chineseName.val();
+            var englishName = $englishName.val();
+            var iataCode = $iataCode.val();
+            var icaoCode = $icaoCode.val();
+            var flightLevel = $flightLevel.val();
+            var seatOfPlane = $seatOfPlane.val();
+            var terminalNumber = $terminalNumber.val();
+            var province = $province.val();
+            var city = $city.val();
+            var serviceResult = true;
+            if (chineseName == "" || chineseName == null) {
+                $chineseName.tooltip('show');
+                serviceResult = false;
+            }
+            if (englishName == "" || englishName == null) {
+                $englishName.tooltip('show');
+                serviceResult = false;
+            }
+            if (iataCode == "" || iataCode == null) {
+                $iataCode.tooltip('show');
+                serviceResult = false;
+            }
+            if (icaoCode == "" || icaoCode == null) {
+                $icaoCode.tooltip('show');
+                serviceResult = false;
+            }
+            if (flightLevel == "" || flightLevel == null) {
+                $flightLevel.tooltip('show');
+                serviceResult = false;
+            }
+            if (seatOfPlane == "" || seatOfPlane == null) {
+                $seatOfPlane.tooltip('show');
+                serviceResult = false;
+            }
+            if (terminalNumber == "" || terminalNumber == null) {
+                $terminalNumber.tooltip('show');
+                serviceResult = false;
+            }
+            if (province == "" || province == null) {
+                $province.tooltip('show');
+                serviceResult = false;
+            }
+            if (city == "" || city == null) {
+                $city.tooltip('show');
+                serviceResult = false;
+            }
+            return serviceResult;
+        }
+
+        function checkEditAirportForm () {
+            var chineseName = $editChineseName.val();
+            var englishName = $editEnglishName.val();
+            var iataCode = $editIataCode.val();
+            var icaoCode = $editIcaoCode.val();
+            var flightLevel = $editFlightLevel.val();
+            var seatOfPlane = $editSeatOfPlane.val();
+            var terminalNumber = $editTerminalNumber.val();
+            var province = $editProvince.val();
+            var city = $editCity.val();
+            var serviceResult = true;
+            if (chineseName == "" || chineseName == null) {
+                $editChineseName.tooltip('show');
+                serviceResult = false;
+            }
+            if (englishName == "" || englishName == null) {
+                $editEnglishName.tooltip('show');
+                serviceResult = false;
+            }
+            if (iataCode == "" || iataCode == null) {
+                $editIataCode.tooltip('show');
+                serviceResult = false;
+            }
+            if (icaoCode == "" || icaoCode == null) {
+                $editIcaoCode.tooltip('show');
+                serviceResult = false;
+            }
+            if (flightLevel == "" || flightLevel == null) {
+                $editFlightLevel.tooltip('show');
+                serviceResult = false;
+            }
+            if (seatOfPlane == "" || seatOfPlane == null) {
+                $editSeatOfPlane.tooltip('show');
+                serviceResult = false;
+            }
+            if (terminalNumber == "" || terminalNumber == null) {
+                $editTerminalNumber.tooltip('show');
+                serviceResult = false;
+            }
+            if (province == "" || province == null) {
+                $editProvince.tooltip('show');
+                serviceResult = false;
+            }
+            if (city == "" || city == null) {
+                $editCity.tooltip('show');
+                serviceResult = false;
+            }
+            return serviceResult;
+        }
+
+        function addRow(data) {
+            table.row.add([
+                data.chineseName,
+                data.englishName,
+                data.iataCode,
+                data.icaoCode,
+                data.flightLevel,
+                data.seatOfPlane,
+                data.terminalString,
+                data.province + '-' + data.city
+            ]).draw();
+            $("#airportTable tbody td:contains('"+ data.iataCode + "')").parent().attr('value', data.id);
+        }
+
+        var createAirportUrl = $createAirportForm.attr("action");
+        var editAirportUrl = $editAirportForm.attr("action");
+
+        $createAirportBtn.on('click', function () {
+            $createAirportForm.resetForm();
+            $createAirportModal.modal({
+                keyboard: false,
+                backdrop: false
+            });
+        });
+
+        $submitCreateAirportForm.on("click", function () {
+            if (!checkCreateAirportForm()) {
+                return false;
+            }
+
+            $loading.text('正在创建机场，请稍后...');
+            $loadingModal.modal('toggle');
+
+            var data = JSON.stringify(getFormJson("createAirportForm"));
+            console.log(data);
+            console.log(createAirportUrl);
+
+            $.ajax({
+                type: 'POST',
+                url: createAirportUrl,
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    if (data.successful == true) {
+                        $createAirportModal.modal('hide');
+                        addRow(data.object);
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    } else {
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    $tip.text('信息有误');
+                    $tipModal.modal('toggle');
+                }
+            });
+        });
+
+        $submitEditAirportForm.on('click', function () {
+            if (!checkEditAirportForm()) {
+                return false;
+            }
+
+            $loading.text('正在修改机场信息，请稍后...');
+            $loadingModal.modal('toggle');
+
+            var data = JSON.stringify(getFormJson("editAirportForm"));
+            console.log(data);
+            console.log(createAirportUrl);
+
+            $.ajax({
+                type: 'POST',
+                url: editAirportUrl,
+                data: data,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    $loadingModal.modal('toggle');
+                    if (data.successful == true) {
+                        $editAirportModal.modal('hide');
+                        $editAirportBtn.attr('disabled', 'true');
+                        $deleteAirportBtn.attr('disabled', 'true');
+                        table.row('.selected').remove().draw(false);
+                        addRow(data.object);
+                        $tip.text('机场信息修改成功');
+                        $tipModal.modal('toggle');
+                    } else {
+                        $tip.text(data.msg);
+                        $tipModal.modal('toggle');
+                    }
+                },
+                error: function (data) {
+                    $loadingModal.modal('toggle');
+                    $tip.text('信息有误');
+                    $tipModal.modal('toggle');
+                }
+            });
+        });
+
+        $("#airportTable tbody").on( 'click', 'tr[value]', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+                $editAirportBtn.attr('disabled', 'true');
+                $deleteAirportBtn.attr('disabled', 'true');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+                $editAirportBtn.removeAttr('disabled');
+                $deleteAirportBtn.removeAttr('disabled');
+            }
+        } );
+
+        $deleteAirportBtn.on('click', function () {
+            if (confirm("确认删除当前选中的机场吗？")) {
+                var id = parseInt(table.$('tr.selected').attr('value'));
+                $.ajax({
+                    type: 'POST',
+                    url: 'airport/deleteAirport',
+                    data: {
+                        airportId: id
+                    },
+                    dataType: 'json',
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.successful == true) {
+                            table.row('.selected').remove().draw(false);
+                            $editAirportBtn.attr('disabled', 'true');
+                            $deleteAirportBtn.attr('disabled', 'true');
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        } else {
+                            $tip.text(data.msg);
+                            $tipModal.modal('toggle');
+                        }
+                    },
+                    error: function (data) {
+                        $tip.text(data.message);
+                        $tipModal.modal('toggle');
+                    }
+                });
+            }
+        });
+
+        $editAirportBtn.on('click', function () {
+            $editAirportForm.resetForm();
+            $editAirportId.val(table.$('tr.selected').attr('value'));
+            $editChineseName.val($airportTable.find("tr.selected td:eq(0)").text());
+            $editEnglishName.val($airportTable.find("tr.selected td:eq(1)").text());
+            $editIataCode.val($airportTable.find("tr.selected td:eq(2)").text());
+            $editIcaoCode.val($airportTable.find("tr.selected td:eq(3)").text());
+            $editFlightLevel.val($airportTable.find("tr.selected td:eq(4)").text());
+            $editSeatOfPlane.val($airportTable.find("tr.selected td:eq(5)").text());
+            $editTerminalNumber.val($airportTable.find("tr.selected td:eq(6)").text().split(' ').length);
+            var addr = $airportTable.find("tr.selected td:eq(7)").text().split('-');
+            $editProvince.val(addr[0]);
+            fillCity($editProvince, $editCity);
+            $editCity.val(addr[1]);
+            console.log($editAirportId.val());
+            $editAirportModal.modal({
+                keyboard: false,
+                backdrop: false
+            });
+        });
+
+        $loadingModal.modal({
+            show: false,
+            keyboard: false,
+            backdrop: false
+        });
+
+        function createAddressOption(value, content, text) {
+            return '<option value="' + value + '" content="' + content + '">' + text + '</option>';
+        }
+
+        $.getJSON("../address.json", function (data) {
+            console.log(data);
+            if (data == null) {
+                return;
+            }
+            addresses = [];
+            var temp = {
+                name: "直辖市/特别行政区",
+                sub: [],
+                type: 1
+            };
+            $.each(data, function (index, content) {
+                if (content.type == 0) {
+                    temp.sub.push(content);
+                } else {
+                    addresses.push(content);
+                }
+            });
+            temp.sub.splice(temp.sub.length - 1, 1);
+            addresses.splice(1, 0, temp);
+            addresses.splice(addresses.length - 1, 1);
+            console.log(addresses);
+            fillProvince($province, $city);
+            fillProvince($editProvince, $editCity);
+        });
+
+        $province.on('change', function () {
+            fillCity($province, $city);
+        });
+
+        $editProvince.on('change', function () {
+            fillCity($editProvince, $editCity);
+        });
+
+        function fillProvince($p, $c) {
+            $p.empty();
+            $.each(addresses, function (index, content) {
+                if (index == 0) {
+                    $p.append(createAddressOption("", index, content.name));
+                } else {
+                    $p.append(createAddressOption(content.name, index, content.name));
+                }
+            });
+            $c.empty();
+            $c.append(createAddressOption("", 0, addresses[0].sub[0].name));
+        }
+
+        function fillCity($p, $c) {
+            console.log($p.val());
+            var cities = addresses[parseInt($p.find('[value="' + $p.val() + '"]').attr('content'))];
+            console.log($p.find('[value="' + $p.val() + '"]').attr('content'));
+            console.log(parseInt($p.find('[value="' + $p.val() + '"]').attr('content')));
+            console.log(cities);
+            $c.empty();
+            $c.val("");
+            $.each(cities.sub, function (index, content) {
+                if (index == 0) {
+                    $c.append(createAddressOption("", index, content.name));
+                } else {
+                    $c.append(createAddressOption(content.name, index, content.name));
+                }
+            });
+        }
+    });
+
 </script>
 
 </body>

@@ -1,5 +1,6 @@
 package org.neu.cabs.controller;
 
+import lombok.extern.log4j.Log4j;
 import org.neu.cabs.constant.AirplaneState;
 import org.neu.cabs.dto.AirplaneForm;
 import org.neu.cabs.dto.ResponseResult;

@@ -55,10 +55,9 @@ public class AirportServiceImpl implements AirportService {
 
     @Override
     public ServiceResult deleteAirportById(Integer id) {
-        Airport airport = airportRepository.findOne(id);
+        airportRepository.delete(id);
         ServiceResult serviceResult;
-        if (null!=airport){
-            airportRepository.delete(airport);
+        if (airportRepository.findOne(id) == null){
             serviceResult = new ServiceResult(true,"机场信息删除成功！");
         }else {
             serviceResult = new ServiceResult(false,"机场信息删除失败！");
@@ -69,9 +68,9 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public ServiceResult modifyAirport(Airport airport) {
         ServiceResult serviceResult;
-        Airport airportT = airportRepository.save(airport);
-        if (null!=airportT){
-            serviceResult = new ServiceResult(true,"机场信息修改成功！");
+        Airport modifiedAirport = airportRepository.save(airport);
+        if (modifiedAirport != null){
+            serviceResult = new ServiceResult(true,"机场信息修改成功！", "airport", modifiedAirport);
         }else {
             serviceResult = new ServiceResult(false,"机场信息修改失败！");
         }
@@ -81,10 +80,9 @@ public class AirportServiceImpl implements AirportService {
     @Override
     public ServiceResult createAirport(Airport airport) {
         ServiceResult serviceResult;
-
-        if (null==airportRepository.findOne(airport.getId())){
-            airportRepository.save(airport);
-            serviceResult = new ServiceResult(true,"机场信息添加成功！");
+        Airport savedAirport = airportRepository.save(airport);
+        if (savedAirport.getId() != null){
+            serviceResult = new ServiceResult(true,"机场信息添加成功！", "airport", savedAirport);
         }else {
             serviceResult = new ServiceResult(false,"机场信息添加失败！");
         }

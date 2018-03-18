@@ -38,13 +38,10 @@ public class OrderServiceImpl implements OrderService {
     public ServiceResult createOrder(Order order) {
         ServiceResult serviceResult;
 
-        // 在数据库查找是否已经存在该订单
-        Order orderT = orderRepository.findOne(order.getId());
-        if (null==orderT){
-            // 不存在
-            orderRepository.save(order);
-            serviceResult = new ServiceResult(true,"创建订单成功！");
-        }else{ //存在
+        Order savedOrder = orderRepository.save(order);
+        if (savedOrder.getId() != null){
+            serviceResult = new ServiceResult(true,"创建订单成功！", "order", savedOrder);
+        }else{
             serviceResult = new ServiceResult(false,"该订单已经存在！");
         }
         return serviceResult;
@@ -75,9 +72,9 @@ public class OrderServiceImpl implements OrderService {
     public ServiceResult endorseOrder(Order order) {
         ServiceResult serviceResult;
         // 修改后的订单
-        Order orderT = orderRepository.save(order);
-        if (null!=orderT){
-            serviceResult = new ServiceResult(true,"改签成功！");
+        Order savedOrder = orderRepository.save(order);
+        if (null != savedOrder){
+            serviceResult = new ServiceResult(true,"改签成功！", "order", savedOrder);
         }else{
             serviceResult = new ServiceResult(false,"改签失败！");
         }
@@ -115,9 +112,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ServiceResult modifyOrder(Order order) {
         ServiceResult serviceResult;
-        Order orderT = orderRepository.save(order);
-        if (null!=orderT){
-            serviceResult = new ServiceResult(true,"订单修改成功！");
+        Order modifiedOrder = orderRepository.save(order);
+        if (modifiedOrder != null){
+            serviceResult = new ServiceResult(true,"订单修改成功！", "order", modifiedOrder);
         }else{
             serviceResult = new ServiceResult(false,"订单修改失败！");
         }

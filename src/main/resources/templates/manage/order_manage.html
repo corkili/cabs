@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <title th:utext="#{app.management.title}"></title>
 
     <!-- Bootstrap -->
@@ -30,6 +33,63 @@
 </head>
 
 <body class="nav-md">
+
+<!-- tip modal -->
+<div id="tipModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tipModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close close-tip" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="tipModalLabel">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <span id="tip"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2 close-tip" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /tip modal-->
+
+<!-- info modal -->
+<div id="infoModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="infoModalLabel">订单详情</h4>
+            </div>
+            <div class="modal-body">
+                <div style="padding: 5px 20px;">
+                    <table id="infoTable" class="table">
+                        <thead>
+                        <tr>
+                            <th>航班号</th>
+                            <th>航班日期</th>
+                            <th>乘机人</th>
+                            <th>证件</th>
+                            <th>舱位类型</th>
+                            <th>航班费用</th>
+                            <th>机建费用</th>
+                            <th>合计费用</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /info modal-->
+
 <div class="container body">
     <div class="main_container">
         <div class="col-md-3 left_col">
@@ -60,12 +120,17 @@
                             <h3 th:utext="#{app.management.title}"></h3>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 bg-white">
+                    <div class="x_panel">
                         <div class="x_title">
                             <h2>订单信息</h2>
+                            <div class="nav navbar-right panel_toolbox">
+                            </div>
                             <div class="clearfix"></div>
                         </div>
-
                         <div class="x_content">
                             <table id="orderTable" class="table table-bordered jambo_table">
                                 <thead>
@@ -75,38 +140,25 @@
                                     <th>下单用户</th>
                                     <th>订单总金额</th>
                                     <th>订单状态</th>
-                                    <th>订单条目</th>
-                                    <th>操作</th>
+                                    <td>订单详情</td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <form method="post">
-                                            <input type="hidden" name="orderId" value=""/>
-                                            <input class="btn btn-primary btn-xs btn-edit" type="submit" value="查看"/>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form method="post">
-                                            <input type="hidden" name="orderId" value=""/>
-                                            <input class="btn btn-danger btn-xs btn-delete" type="submit" value="编辑"/>
-                                        </form>
-                                    </td>
+                                <!--/*@thymesVar id="orders" type="java.util.List<org.neu.cabs.orm.Order>"*/-->
+                                <tr th:each="order : ${orders}" th:value="${order.id}">
+                                    <td th:text="${order.serialNumber}"></td>
+                                    <td th:text="${#dates.format(order.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                    <td th:text="${order.buyer.realName + '(' + order.buyer.username + ')'}"></td>
+                                    <td th:text="${'￥' + order.totalCost}"></td>
+                                    <td th:text="${order.state.state}"></td>
+                                    <td><button class="btn btn-info order-info" th:value="${order.id}">订单详情</button></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
-                    <div class="clearfix"></div>
-                </div>
 
+                </div>
             </div>
         </div>
         <!-- /page content -->
@@ -120,6 +172,7 @@
 
 <!-- jQuery -->
 <script th:src="@{../vendors/jquery/jquery.min.js}"></script>
+<script th:src="@{../vendors/jquery/jquery.form.js}"></script>
 <!-- Bootstrap -->
 <script th:src="@{../vendors/bootstrap/js/bootstrap.min.js}"></script>
 <!-- FastClick -->
@@ -139,11 +192,73 @@
 
 <!-- Custom Theme Scripts -->
 <script th:src="@{../js/custom.min.js}"></script>
+<script th:src="@{../js/manage.js}"></script>
 
-<script type="text/javascript">
+<script th:inline="javascript">
+
     $(function () {
-        $("#orderTable").DataTable();
-    })
+
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        console.log(header + '=' + token);
+
+        var $orderTable = $("#orderTable");
+        var $tipModal = $("#tipModal");
+        var $tip = $("#tip");
+        var $infoModal = $("#infoModal");
+        var $loading = $("#loading");
+        var $orderInfoBtn = $(".order-info");
+        var $infoTable = $("#infoTable");
+
+        var table = $orderTable.DataTable();
+        
+        function createOrderItemRow(item) {
+            return '<tr><td>' + item.flightNumber + '</td>' +
+                '<td>' + item.flightDate + '</td>' +
+                '<td>' + item.passengerName + '</td>' +
+                '<td>' + item.certificateType + '-' + item.certificateNumber + '</td>' +
+                '<td>' + item.cabinType + '</td>' +
+                '<td>' + '￥' + item.flightCost + '</td>' +
+                '<td>' + '￥' + item.airportBuildCost + '</td>' +
+                '<td>' + '￥' + item.flightCost + item.airportBuildCost + '</td></tr>';
+        }
+        
+        $orderInfoBtn.on('click', function () {
+            var id = $(this).attr("value");
+            $.ajax({
+                type: 'get',
+                url: 'order/' + id,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data.successful == true) {
+                        $infoTable.find("tbody").html("");
+                        $.each(data.object.orderItems, function (index, item) {
+                            $infoTable.find("tbody").append(createOrderItemRow(item));
+                        });
+                    } else {
+                        $tip.text('获取失败');
+                        $tipModal.modal('toggle');
+                    }
+                },
+                error: function (data) {
+                    $tip.text(data.message);
+                    $tipModal.modal('toggle');
+                }
+            });
+        });
+
+        $infoModal.modal({
+            show: false,
+            keyboard: false,
+            backdrop: false
+        });
+    });
+
+
 </script>
 
 </body>

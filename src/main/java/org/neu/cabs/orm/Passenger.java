@@ -17,6 +17,7 @@ import java.util.Date;
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class Passenger {
 
     /**
@@ -48,6 +49,9 @@ public class Passenger {
     @NotNull
     private String certificateNumber;
 
+    /**
+     * 生日
+     */
     @Column
     @Temporal(TemporalType.DATE)
     private Date birthday;

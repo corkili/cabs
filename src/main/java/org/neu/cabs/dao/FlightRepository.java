@@ -16,13 +16,17 @@ import java.util.List;
 public interface FlightRepository extends JpaRepository<Flight, Long> {
     /**
      * 查询某天从出发城市到目的地城市的航班
+     * @param departureProvince 出发省份
      * @param departureCity 出发城市
-     * @param arrivalCity 目的地城市
+     * @param arrivalProvince 到达省份
+     * @param arrivalCity 到达城市
      * @param takeoffDate 出发日期
      * @return 航班列表
      */
-    List<Flight> findAllByDepartureCityAndArrivalCityAndTakeoffDate(
+    List<Flight> findAllByDepartureAddress_ProvinceAndDepartureAddress_CityAndArrivalAddress_ProvinceAndArrivalAddress_CityAndTakeoffDate(
+            Province departureProvince,
             City departureCity,
+            Province arrivalProvince,
             City arrivalCity,
             Date takeoffDate
     );

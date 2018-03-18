@@ -2,10 +2,7 @@ package org.neu.cabs.service.impl;
 
 import org.neu.cabs.dao.FlightRepository;
 import org.neu.cabs.dto.ServiceResult;
-import org.neu.cabs.orm.AirlineCompany;
-import org.neu.cabs.orm.Airport;
-import org.neu.cabs.orm.City;
-import org.neu.cabs.orm.Flight;
+import org.neu.cabs.orm.*;
 import org.neu.cabs.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,9 +29,10 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> searchFlight(City from, City to, Date date) {
+    public List<Flight> searchFlight(Address from, Address to, Date date) {
 
-        return flightRepository.findAllByDepartureCityAndArrivalCityAndTakeoffDate(from,to,date);
+        return flightRepository.findAllByDepartureAddress_ProvinceAndDepartureAddress_CityAndArrivalAddress_ProvinceAndArrivalAddress_CityAndTakeoffDate(
+                from.getProvince(), from.getCity(), to.getProvince(), to.getCity(), date);
     }
 
     @Override
@@ -51,9 +49,9 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public ServiceResult createFlight(Flight flight) {
         ServiceResult serviceResult;
-        Flight flightT = flightRepository.save(flight);
-        if (null!=flightT){
-            serviceResult = new ServiceResult(true,"航班创建成功！");
+        Flight savedFlight = flightRepository.save(flight);
+        if (savedFlight.getId() != null){
+            serviceResult = new ServiceResult(true,"航班创建成功！", "flight", savedFlight);
         }else {
             serviceResult = new ServiceResult(false,"航班创建失败！");
         }
@@ -107,7 +105,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight getFlight(Long id) {
+    public Flight getFlightById(Long id) {
 
         return flightRepository.findOne(id);
     }
@@ -115,9 +113,9 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public ServiceResult modifyFlight(Flight flight) {
         ServiceResult serviceResult;
-        Flight flightT = flightRepository.save(flight);
-        if (null!=flightT){
-            serviceResult = new ServiceResult(true,"航班修改成功！");
+        Flight modifiedFlight = flightRepository.save(flight);
+        if (modifiedFlight != null){
+            serviceResult = new ServiceResult(true,"航班修改成功！", "flight", modifiedFlight);
         }else {
             serviceResult = new ServiceResult(false,"航班修改失败！");
         }
@@ -127,8 +125,8 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public ServiceResult deleteFlightById(Long id) {
         ServiceResult serviceResult;
-        if (null!=flightRepository.findOne(id)){
-            flightRepository.delete(id);
+        flightRepository.delete(id);
+        if (null == flightRepository.findOne(id)){
             serviceResult = new ServiceResult(true,"航班删除成功！");
         }else {
             serviceResult = new ServiceResult(false,"航班删除失败！");

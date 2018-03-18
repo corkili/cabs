@@ -24,4 +24,13 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public SimpleDateFormat dateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd");
     }
+
+    @Bean
+    public SimpleDateFormat timeFormat() {
+        return new SimpleDateFormat("HH:mm");
+    }
+
+    @Bean SimpleDateFormat datetimeFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    }
 }

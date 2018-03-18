@@ -43,6 +43,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
                 admin.setSuperManager(true);
                 admin.setAvailable(true);
                 admin.setCreateTime(new Date());
+                admin.setLastLoginTime(new Date());
                 Set<Role> roles = new HashSet<>();
                 for (Role role : allRoles) {
                     if ("ROLE_ADMIN".equals(role.getName().toUpperCase())
@@ -58,6 +59,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
                 user.setUsername("user");
                 user.setPassword("user");
                 user.setCreateTime(new Date());
+                user.setLastLoginTime(new Date());
                 user.setAvailable(true);
                 Set<Role> roles = new HashSet<>();
                 for (Role role : allRoles) {

@@ -1,10 +1,7 @@
 package org.neu.cabs.service;
 
 import org.neu.cabs.dto.ServiceResult;
-import org.neu.cabs.orm.AirlineCompany;
-import org.neu.cabs.orm.Airport;
-import org.neu.cabs.orm.City;
-import org.neu.cabs.orm.Flight;
+import org.neu.cabs.orm.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +21,7 @@ public interface FlightService {
      * @param date date
      * @return 航班列表
      */
-    List<Flight> searchFlight(City from, City to, Date date);
+    List<Flight> searchFlight(Address from, Address to, Date date);
 
     /**
      * 搜索航班（条件搜索）
@@ -124,7 +121,7 @@ public interface FlightService {
      * @param id 航班ID
      * @return 航班实体
      */
-    Flight getFlight(Long id);
+    Flight getFlightById(Long id);
 
     /**
      * 修改航班信息

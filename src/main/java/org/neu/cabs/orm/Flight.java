@@ -1,6 +1,5 @@
 package org.neu.cabs.orm;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.FetchMode;
 import org.neu.cabs.constant.FlightState;
@@ -160,26 +159,42 @@ public class Flight {
     private Airplane airplane;
 
     /**
-     * 出发城市
+     * 出发地址
      */
-
     @AttributeOverrides(value = {
             @AttributeOverride(
-                    name = "name",
-                    column = @Column(name = "DEPARTURE_CITY"))
+                    name = "province.name",
+                    column = @Column(name = "DEPARTURE_PROVINCE")
+            ),
+            @AttributeOverride(
+                    name = "city.name",
+                    column = @Column(name = "DEPARTURE_CITY")
+            ),
+            @AttributeOverride(
+                    name = "county.name",
+                    column = @Column(name = "DEPARTURE_COUNTY")
+            )
     })
-    private City departureCity;
-
+    private Address departureAddress;
+    
     /**
-     * 到达城市
+     * 到达地址
      */
-
     @AttributeOverrides(value = {
             @AttributeOverride(
-                    name = "name",
-                    column = @Column(name = "ARRIVAL_CITY"))
+                    name = "province.name",
+                    column = @Column(name = "ARRIVAL_PROVINCE")
+            ),
+            @AttributeOverride(
+                    name = "city.name",
+                    column = @Column(name = "ARRIVAL_CITY")
+            ),
+            @AttributeOverride(
+                    name = "county.name",
+                    column = @Column(name = "ARRIVAL_COUNTY")
+            )
     })
-    private City arrivalCity;
+    private Address arrivalAddress;
 
     /**
      * 出发机场

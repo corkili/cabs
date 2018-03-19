@@ -51,7 +51,7 @@ public class CompanyManageController {
         AirlineCompany airlineCompany = new AirlineCompany();
         airlineCompany.setAirplanes(new HashSet<>());
         airlineCompany.setCompanyName(airlineCompanyForm.getCompanyName());
-        airlineCompany.setCompanyCode(airlineCompanyForm.getCompanyCode());
+        airlineCompany.setCompanyCode(airlineCompanyForm.getCompanyCode().toUpperCase());
         airlineCompany.setEstablishTime(dateFormat.parse(airlineCompanyForm.getEstablishTime()));
         ServiceResult serviceResult = airlineCompanyService.createAirlineCompany(airlineCompany);
         return ResponseResult.from(serviceResult, "airlineCompany");
@@ -71,7 +71,7 @@ public class CompanyManageController {
         airlineCompany.setAirplanes(new HashSet<>());
         airlineCompany.setId(airlineCompanyForm.getId());
         airlineCompany.setCompanyName(airlineCompanyForm.getCompanyName());
-        airlineCompany.setCompanyCode(airlineCompanyForm.getCompanyCode());
+        airlineCompany.setCompanyCode(airlineCompanyForm.getCompanyCode().toUpperCase());
         airlineCompany.setEstablishTime(dateFormat.parse(airlineCompanyForm.getEstablishTime()));
         ServiceResult serviceResult = airlineCompanyService.modifyAirlineCompany(airlineCompany);
         return ResponseResult.from(serviceResult, "airlineCompany");

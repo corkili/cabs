@@ -52,14 +52,14 @@
                             <label class="col-sm-3 control-label" for="airplaneSerialNumber">飞机编号 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="airplaneSerialNumber" name="airplaneSerialNumber" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="飞机编号不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" placeholder="格式：A-11-11" title="请输入飞机编号"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="airplaneName">飞机名称 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="airplaneName" name="airplaneName" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="飞机名称不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请输入飞机名称"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -67,7 +67,7 @@
                             <div class="col-sm-9">
                                 <!--/*@thymesVar id="companies" type="java.util.List<org.neu.cabs.orm.AirlineCompany>"*/-->
                                 <select class="form-control" id="belongToCompany" name="belongToCompany"
-                                        title="所属公司不能为空" data-toggle="tooltip" data-placement="right">
+                                        title="请选择所属公司" data-toggle="tooltip" data-placement="right">
                                     <option value="" selected="selected">----请选择----</option>
                                     <!--/*@thymesVar id="company" type="org.neu.cabs.orm.AirlineCompany"*/-->
                                     <option th:each="company : ${companies}" th:value="${company.id}"
@@ -79,7 +79,7 @@
                             <label class="col-sm-3 control-label" for="seatNumber">座位数 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="seatNumber" required="required" name="seatNumber"
-                                       value="" data-toggle="tooltip" data-placement="right" title="座位数不能为空"/>
+                                       value="" data-toggle="tooltip" data-placement="right" title="请输入座位数"/>
                             </div>
                         </div>
                     </form>
@@ -113,14 +113,14 @@
                             <label class="col-sm-3 control-label" for="editAirplaneSerialNumber">飞机编号 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="editAirplaneSerialNumber" name="airplaneSerialNumber" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="飞机编号不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" placeholder="格式：A-33-22" title=" 请输入飞机编号"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="editAirplaneName">飞机名称 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="editAirplaneName" name="airplaneName" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="飞机名称不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请输入飞机名称"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -128,7 +128,7 @@
                             <div class="col-sm-9">
                                 <!--/*@thymesVar id="companies" type="java.util.List<org.neu.cabs.orm.AirlineCompany>"*/-->
                                 <select class="form-control" id="editBelongToCompany" name="belongToCompany"
-                                        title="所属公司不能为空" data-toggle="tooltip" data-placement="right">
+                                        title="请选择所属公司" data-toggle="tooltip" data-placement="right">
                                     <option value="" selected="selected">----请选择----</option>
                                     <option th:each="company : ${companies}" th:value="${company.id}"
                                             th:text="${company.companyName + '(' + company.companyCode + ')'}"></option>
@@ -139,14 +139,14 @@
                             <label class="col-sm-3 control-label" for="editSeatNumber">座位数 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="editSeatNumber" required="required" name="seatNumber"
-                                       value="" data-toggle="tooltip" data-placement="right" title="座位数不能为空"/>
+                                       value="" data-toggle="tooltip" data-placement="right" title="请输入座位数"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="editAirplaneState">飞机状态 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="editAirplaneState" name="state" required="required"
-                                        title="飞机状态不能为空" data-toggle="tooltip" data-placement="right">
+                                        title="请选择飞机状态" data-toggle="tooltip" data-placement="right">
                                     <option value="" selected="selected">----请选择----</option>
                                     <!--/*@thymesVar id="airplaneStates" type="org.neu.cabs.constant.AirplaneState[]"*/-->
                                     <option th:each="state : ${airplaneStates}" th:value="${state.name()}"
@@ -157,8 +157,9 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="editCurrentAirport">停靠机场</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="editCurrentAirport" name="currentAirport">
-                                    <option value="-1" selected="selected">无</option>
+                                <select class="form-control" id="editCurrentAirport" name="currentAirport"  required="required"
+                                        title="请选择停靠机场" data-toggle="tooltip" data-placement="right">
+                                    <option value="-1" selected="selected" >无</option>
                                     <!--/*@thymesVar id="airports" type="java.util.List<org.neu.cabs.orm.Airport>"*/-->
                                     <!--/*@thymesVar id="airport" type="org.neu.cabs.orm.Airport"*/-->
                                     <option th:each="airport : ${airports}" th:value="${airport.id}"
@@ -370,20 +371,31 @@
             var belongToCompany = $belongToCompany.val();
             var seatNumber = $seatNumber.val();
             var serviceResult = true;
+
+            var serialNumReg= /^[A-Z]{1,2}-\d{2,}-\d{1,}$/;
+
             if (airplaneSerialNumber == "" || airplaneSerialNumber == null) {
-                $airplaneName.tooltip('show');
+                $airplaneSerialNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            } else if (!serialNumReg.test(airplaneSerialNumber)){
+                $airplaneSerialNumber.attr('title',"格式错误").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
+
             if (airplaneName == "" || airplaneName == null) {
-                $airplaneName.tooltip('show');
+                $airplaneName.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (belongToCompany == "" || belongToCompany == null) {
-                $belongToCompany.tooltip('show');
+                $belongToCompany.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (seatNumber == "" || seatNumber == null) {
-                $seatNumber.tooltip('show');
+                $seatNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }
+            if (!(seatNumber > 0)){
+                $seatNumber.attr('title',"请输入正整数").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             return serviceResult;
@@ -396,24 +408,33 @@
             var seatNumber = $editSeatNumber.val();
             var state = $editAirplaneState.val();
             var serviceResult = true;
+            var serialNumReg= /^[A-Z]{1,2}-\d{2,}-\d{1,}$/;
+
             if (airplaneSerialNumber == "" || airplaneSerialNumber == null) {
-                $airplaneName.tooltip('show');
+                $editAirplaneSerialNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(!serialNumReg.test(airplaneSerialNumber)){
+                $editAirplaneSerialNumber.attr('title'," 格式错误").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (airplaneName == "" || airplaneName == null) {
-                $editAirplaneName.tooltip('show');
+                $editAirplaneName.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (belongToCompany == "" || belongToCompany == null) {
-                $editBelongToCompany.tooltip('show');
+                $editBelongToCompany.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (seatNumber == "" || seatNumber == null) {
-                $editSeatNumber.tooltip('show');
+                $editSeatNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }
+            if (!(seatNumber > 0)){
+                $editSeatNumber.attr('title',"请输入正整数").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (state == "" || state == null) {
-                $editAirplaneState.tooltip('show');
+                $editAirplaneState.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             return serviceResult;
@@ -617,6 +638,20 @@
             backdrop: false
         });
 
+        $createAirplaneModal.on('hidden.bs.modal', function (){
+            $airplaneSerialNumber.tooltip('hide');
+            $airplaneName.tooltip('hide');
+            $belongToCompany.tooltip('hide');
+            $seatNumber.tooltip('hide');
+        });
+
+        $editAirplaneModal.on('hidden.bs.modal', function (){
+            $editAirplaneSerialNumber.tooltip('hide');
+            $editAirplaneName.tooltip('hide');
+            $editBelongToCompany.tooltip('hide');
+            $editSeatNumber.tooltip('hide');
+            $editAirplaneState.tooltip('hide');
+        });
     });
 
 

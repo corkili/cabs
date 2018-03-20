@@ -54,7 +54,7 @@
                             <label class="col-sm-2 control-label" for="airlineCompany">开设公司 <span class="required">*</span></label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="airlineCompany" name="airlineCompany" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="开设公司不能为空">
+                                       data-toggle="tooltip" data-placement="right" title="请选择开设公司">
                                     <!--/*@thymesVar id="companies" type="java.util.List<org.neu.cabs.orm.AirlineCompany>"*/-->
                                     <option value="">----请选择----</option>
                                     <option th:each="company : ${companies}" th:text="${company.companyName + '(' + company.companyCode + ')'}"
@@ -67,12 +67,12 @@
                             <label class="col-sm-2 control-label" for="flightNumber">航班号 <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" id="flightNumber" name="flightNumber" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="航班号不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请输入航班号" placeholder="格式：MG2871"/>
                             </div>
                             <label class="col-sm-2 control-label" for="takeoffDate">起飞日期 <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="date" class="form-control" id="takeoffDate" name="takeoffDate" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="起飞日期不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请选择起飞日期"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-sm-5">
                                 <select class="form-control" id="departureCity" name="departureCity"
-                                        title="出发地不能为空" data-toggle="tooltip" data-placement="right">
+                                        title="请选择出发地" data-toggle="tooltip" data-placement="right">
                                 </select>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                             </div>
                             <div class="col-sm-5">
                                 <select class="form-control" id="arrivalCity" name="arrivalCity"
-                                        title="到达地不能为空" data-toggle="tooltip" data-placement="right">
+                                        title="请选择到达地" data-toggle="tooltip" data-placement="right">
                                 </select>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                             <label class="col-sm-2 control-label" for="departureAirport">出发机场 <span class="required">*</span></label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="departureAirport" name="departureAirport"
-                                        title="出发机场不能为空" data-toggle="tooltip" data-placement="right">
+                                        title="请选择出发机场" data-toggle="tooltip" data-placement="right">
                                     <!--/*@thymesVar id="airports" type="java.util.List<org.neu.cabs.orm.Airport>"*/-->
                                     <option value="">----请选择----</option>
                                     <th:block th:each="airport : ${airports}">
@@ -118,7 +118,7 @@
                             <label class="col-sm-2 control-label" for="arrivalAirport">到达机场 <span class="required">*</span></label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="arrivalAirport" name="arrivalAirport"
-                                        title="到达机场不能为空" data-toggle="tooltip" data-placement="right">
+                                        title="请选择到达机场" data-toggle="tooltip" data-placement="right">
                                     <!--/*@thymesVar id="airports" type="java.util.List<org.neu.cabs.orm.Airport>"*/-->
                                     <option value="">----请选择----</option>
                                     <th:block th:each="airport : ${airports}">
@@ -133,12 +133,12 @@
                             <label class="col-sm-2 control-label" for="plannedTakeoffTime">起飞时间 <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="time" class="form-control" id="plannedTakeoffTime" name="plannedTakeoffTime" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="计划起飞时间不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请输入计划起飞时间"/>
                             </div>
                             <label class="col-sm-2 control-label" for="voyage">飞行时长 <span class="required">*</span></label>
                             <div class="col-sm-4">
                                 <input type="time" class="form-control" id="voyage" name="voyage" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="预计飞行时长不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请输入预计飞行时长"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -159,7 +159,7 @@
                             <div class="col-sm-3">
                                 <input type="number" class="form-control" required="required"
                                        id="economyCabinSeatNumber" name="economyCabinSeatNumber"
-                                       data-toggle="tooltip" data-placement="right" title="座位数不能为空" />
+                                       data-toggle="tooltip" data-placement="right" title="请输入座位数" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -175,7 +175,7 @@
                             <div class="col-sm-3">
                                 <input type="number" class="form-control" required="required"
                                        id="economyCabinPrice" name="economyCabinPrice"
-                                       data-toggle="tooltip" data-placement="right" title="价格不能为空" />
+                                       data-toggle="tooltip" data-placement="right" title="请输入价格" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -191,14 +191,14 @@
                             <div class="col-sm-3">
                                 <input type="number" class="form-control" required="required"
                                        id="economyCabinDiscount" name="economyCabinDiscount" max="1" min="0"
-                                       data-toggle="tooltip" data-placement="right" title="折扣不能为空" />
+                                       data-toggle="tooltip" data-placement="right" title="请输入折扣" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="flightState">航班状态 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <select class="form-control" id="flightState" name="state" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="航班号不能为空">
+                                       data-toggle="tooltip" data-placement="right" title="请选择航班状态">
                                     <!--/*@thymesVar id="flightStates" type="org.neu.cabs.constant.FlightState[]"*/-->
                                     <option value="">----请选择----</option>
                                     <option th:each="state : ${flightStates}" th:value="${state.name()}" th:text="${state.state}">
@@ -209,7 +209,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="airplane">执飞飞机 </label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="airplane" name="airplane">
+                                <select class="form-control" id="airplane" name="airplane"  required="required"
+                                        data-toggle="tooltip" data-placement="right" title="请选择执飞飞机">
                                     <!--/*@thymesVar id="airplanes" type="java.util.List<org.neu.cabs.orm.Airplane>"*/-->
                                     <option value="">无</option>
                                     <option th:each="airplane : ${airplanes}" th:value="${airplane.id}"
@@ -474,91 +475,135 @@
             var businessCabinDiscount = $businessCabinDiscount.val();
             var economyCabinDiscount = $economyCabinDiscount.val();
             var state = $flightState.val();
+            var airplane = $airplane.val();
             var serviceResult = true;
+            // 匹配航班号的正则表达
+            var flightNumReg = /^[A-Z]{2}\d{4}$/
+
             if (airlineCompany == "" || airlineCompany == null) {
-                $airlineCompany.tooltip('show');
+                $airlineCompany.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (flightNumber == "" || flightNumber == null) {
-                $flightNumber.tooltip('show');
+                $flightNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(!flightNumReg.test(flightNumber)){
+                $flightNumber.attr('title',"格式错误").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (takeoffDate == "" || takeoffDate == null) {
-                $takeoffDate.tooltip('show');
+                $takeoffDate.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (departureProvince == "" || departureProvince == null) {
-                $departureCity.tooltip('show');
+                $departureCity.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (departureCity == "" || departureCity == null) {
-                $arrivalCity.tooltip('show');
+                $arrivalCity.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (arrivalProvince == "" || arrivalProvince == null) {
-                $arrivalCity.tooltip('show');
+                $arrivalCity.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (arrivalCity == "" || arrivalCity == null) {
-                $arrivalCity.tooltip('show');
+                $arrivalCity.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (departureAirport == "" || departureAirport == null) {
-                $departureAirport.tooltip('show');
+                $departureAirport.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (arrivalAirport == "" || arrivalAirport == null) {
-                $arrivalAirport.tooltip('show');
+                $arrivalAirport.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (plannedTakeoffTime == "" || plannedTakeoffTime == null) {
-                $plannedTakeoffTime.tooltip('show');
+                $plannedTakeoffTime.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (voyage == "" || voyage == null) {
-                $voyage.tooltip('show');
+                $voyage.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
+            // 座位数
             if (firstCabinSeatNumber == "" || firstCabinSeatNumber == null) {
-                $economyCabinSeatNumber.tooltip('show');
+                $economyCabinSeatNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(!(firstCabinSeatNumber>=0)){
+                $economyCabinSeatNumber.attr('title',"座位数不能为负").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (businessCabinSeatNumber == "" || businessCabinSeatNumber == null) {
-                $economyCabinSeatNumber.tooltip('show');
+                $economyCabinSeatNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(!(businessCabinSeatNumber>=0)) {
+                $economyCabinSeatNumber.attr('title', "座位数不能为负").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (economyCabinSeatNumber == "" || economyCabinSeatNumber == null) {
-                $economyCabinSeatNumber.tooltip('show');
+                $economyCabinSeatNumber.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(!(economyCabinSeatNumber>=0)){
+                $economyCabinSeatNumber.attr('title',"座位数不能为负").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
+            // 价格
             if (firstCabinPrice == "" || firstCabinPrice == null) {
-                $economyCabinPrice.tooltip('show');
+                $economyCabinPrice.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if (!(firstCabinPrice>=0)){
+                $economyCabinPrice.attr('title',"价格不能为负").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (businessCabinPrice == "" || businessCabinPrice == null) {
-                $economyCabinPrice.tooltip('show');
+                $economyCabinPrice.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if (!(businessCabinPrice>=0)){
+                $economyCabinPrice.attr('title',"价格不能为负").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (economyCabinPrice == "" || economyCabinPrice == null) {
-                $economyCabinPrice.tooltip('show');
+                $economyCabinPrice.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if (!(economyCabinPrice>=0)){
+                $economyCabinPrice.attr('title',"价格不能为负").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
+            // 折扣
             if (firstCabinDiscount == "" || firstCabinDiscount == null) {
-                $economyCabinDiscount.tooltip('show');
+                $economyCabinDiscount.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(firstCabinDiscount>1 || !(firstCabinDiscount>=0)){
+                $economyCabinDiscount.attr('title',"折扣应该在0-1之间").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (businessCabinDiscount == "" || businessCabinDiscount == null) {
-                $economyCabinDiscount.tooltip('show');
+                $economyCabinDiscount.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(businessCabinDiscount>1 || !(businessCabinDiscount>=0)){
+                $economyCabinDiscount.attr('title',"折扣应该在0-1之间").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (economyCabinDiscount == "" || economyCabinDiscount == null) {
-                $economyCabinDiscount.tooltip('show');
+                $economyCabinDiscount.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(economyCabinDiscount>1 || !(economyCabinDiscount>=0)){
+                $economyCabinDiscount.attr('title',"折扣应该在0-1之间").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
+            // 状态
             if (state == "" || state == null) {
-                $flightState.tooltip('show');
+                $flightState.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
+            // 执飞飞机
+            if (airplane == "" || airplane == null) {
+                $airplane.attr('title',"不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }
+
             return serviceResult;
         }
 
@@ -869,6 +914,33 @@
                 }
             });
         }
+
+        $flightModal.on('hidden.bs.modal', function (){
+            $airlineCompany.tooltip('hide');
+            $flightNumber.tooltip('hide');
+            $takeoffDate.tooltip('hide');
+            $departureProvince.tooltip('hide');
+            $departureCity.tooltip('hide');
+            $arrivalProvince.tooltip('hide');
+            $arrivalCity.tooltip('hide');
+            $departureAirport.tooltip('hide');
+            $arrivalAirport.tooltip('hide');
+            $plannedTakeoffTime.tooltip('hide');
+            $voyage.tooltip('hide');
+            $firstCabinSeatNumber.tooltip('hide');
+            $businessCabinSeatNumber.tooltip('hide');
+            $economyCabinSeatNumber.tooltip('hide');
+            $firstCabinPrice.tooltip('hide');
+            $businessCabinPrice.tooltip('hide');
+            $economyCabinPrice.tooltip('hide');
+            $firstCabinDiscount.tooltip('hide');
+            $businessCabinDiscount.tooltip('hide');
+            $economyCabinDiscount.tooltip('hide');
+            $flightState.tooltip('hide');
+            $airplane.tooltip('hide');
+        });
+
+
     });
 
 </script>

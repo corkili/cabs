@@ -52,21 +52,21 @@
                             <label class="col-sm-3 control-label" for="username">用户名 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="username" name="username" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="用户名不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请输入管理员用户名"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="password">密码 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="password" class="form-control" id="password" name="password" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="密码不能为空"/>
+                                       data-toggle="tooltip" data-placement="right" title="请输入管理员密码"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="confirmPassword">重复密码 <span class="required">*</span></label>
                             <div class="col-sm-9">
                                 <input type="password" class="form-control" id="confirmPassword" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="两次输入密码必须相同"/>
+                                       data-toggle="tooltip" data-placement="right" title="请再次输入密码"/>
                             </div>
                         </div>
                     </form>
@@ -314,15 +314,18 @@
             var confirmPassword = $confirmPassword.val();
             var serviceResult = true;
             if (username == "" || username == null) {
-                $password.tooltip('show');
+                $username.attr('title', "用户名不能为空").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (password == "" || password == null) {
-                $password.tooltip('show');
+                $password.attr('title', "密码不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(password.length>16||6>password.length){
+                $password.attr('title', "密码长度应为6-16位").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (confirmPassword != password) {
-                $confirmPassword.tooltip('show');
+                $confirmPassword.attr('title', "两次输入的密码不一致").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             return serviceResult;
@@ -333,11 +336,14 @@
             var confirmPassword = $editConfirmPassword.val();
             var serviceResult = true;
             if (password == "" || password == null) {
-                $password.tooltip('show');
+                $editPassword.attr('title', "密码不能为空").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else if(password.length>16||6>password.length){
+                $editPassword.attr('title', "密码长度应为6-16位").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (confirmPassword != password) {
-                $confirmPassword.tooltip('show');
+                $editConfirmPassword.attr('title', "两次输入的密码不一致").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             return serviceResult;
@@ -565,6 +571,15 @@
             backdrop: false
         });
 
+        $createAdminModal.on('hidden.bs.modal', function () {
+            $username.tooltip('hide');
+            $password.tooltip('hide');
+            $confirmPassword.tooltip('hide');
+        });
+        $editAdminModal.on('hidden.bs.modal', function () {
+            $editPassword.tooltip('hide');
+            $editConfirmPassword.tooltip('hide');
+        });
     });
 
 

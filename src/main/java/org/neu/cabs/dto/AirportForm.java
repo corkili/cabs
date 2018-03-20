@@ -92,8 +92,8 @@ public class AirportForm {
         Airport airport = new Airport();
         airport.setChineseName(form.getChineseName());
         airport.setEnglishName(form.getEnglishName());
-        airport.setIataCode(form.getIataCode());
-        airport.setIcaoCode(form.getIcaoCode());
+        airport.setIataCode(form.getIataCode().toUpperCase());
+        airport.setIcaoCode(form.getIcaoCode().toUpperCase());
         airport.setFlightLevel(form.getFlightLevel());
         airport.setSeatOfPlane(form.getSeatOfPlane());
         airport.setAddress(new Address(form.province, form.city, ""));
@@ -110,8 +110,8 @@ public class AirportForm {
     public static Airport to(AirportForm form, Airport airport) {
         airport.setChineseName(form.getChineseName());
         airport.setEnglishName(form.getEnglishName());
-        airport.setIataCode(form.getIataCode());
-        airport.setIcaoCode(form.getIcaoCode());
+        airport.setIataCode(form.getIataCode().toUpperCase());
+        airport.setIcaoCode(form.getIcaoCode().toUpperCase());
         airport.setFlightLevel(form.getFlightLevel());
         airport.setSeatOfPlane(form.getSeatOfPlane());
         airport.setAddress(new Address(form.province, form.city, ""));

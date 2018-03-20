@@ -328,14 +328,14 @@
             var establishTime = $establishTime.val();
             var serviceResult = true;
             if (companyName == "" || companyName == null) {
-                $companyName.attr('title', "公司名称不能为空").tooltip('fixTitle').tooltip('show');
+                $companyName.attr('title', "请输入公司名称").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             } else if (companyName.length > 50) {
                 $companyName.attr('title', "公司名称长度不能超过50").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (companyCode == "" || companyCode == null) {
-                $companyCode.attr('title', "公司代码不能为空").tooltip('fixTitle').tooltip('show');
+                $companyCode.attr('title', "请输入公司代码").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             } else if (companyCode.length != 2) {
                 $companyCode.attr('title', "公司代码应为2位").tooltip('fixTitle').tooltip('show');
@@ -368,14 +368,14 @@
             var establishTime = $editEstablishTime.val();
             var serviceResult = true;
             if (companyName == "" || companyName == null) {
-                $editCompanyName.attr('title', "公司名称不能为空").tooltip('fixTitle').tooltip('show');
+                $editCompanyName.attr('title', "请输入公司名称").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             } else if (companyName.length > 50) {
                 $editCompanyName.attr('title', "公司名称长度不能超过50").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (companyCode == "" || companyCode == null) {
-                $editCompanyCode.attr('title', "公司代码不能为空").tooltip('fixTitle').tooltip('show');
+                $editCompanyCode.attr('title', "请输入公司代码").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             } else if (companyCode.length != 2) {
                 $editCompanyCode.attr('title', "公司代码应为2位").tooltip('fixTitle').tooltip('show');
@@ -459,7 +459,7 @@
                 error: function (data) {
                     console.log(data);
                     $loadingModal.modal('toggle');
-                    $tip.text('输入的信息有误，请重试');
+                    $tip.text('信息有误，请重试');
                     $tipModal.modal('toggle');
                 }
             });
@@ -504,7 +504,7 @@
                 },
                 error: function (data) {
                     $loadingModal.modal('toggle');
-                    $tip.text('信息有误');
+                    $tip.text('信息有误,请重试');
                     $tipModal.modal('toggle');
                 }
             });

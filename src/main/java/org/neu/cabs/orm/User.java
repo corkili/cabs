@@ -28,7 +28,6 @@ public class User extends BaseUser {
      * 真实姓名
      */
     @Column(length = 50)
-    @NotNull
     private String realName;
 
     /**
@@ -36,14 +35,12 @@ public class User extends BaseUser {
      */
     @Column
     @Enumerated(EnumType.STRING)
-    @NotNull
     private CertificateType certificateType;
 
     /**
      * 证件号
      */
     @Column(length = 30)
-    @NotNull
     private String certificateNumber;
 
     /**
@@ -51,14 +48,12 @@ public class User extends BaseUser {
      */
     @Column
     @Enumerated(EnumType.STRING)
-    @NotNull
     private Sex sex;
 
     /**
      * 生日
      */
     @Column
-    @NotNull
     @Temporal(TemporalType.DATE)
     private Date birthday;
 
@@ -66,21 +61,18 @@ public class User extends BaseUser {
      * 手机号
      */
     @Column(length = 20)
-    @NotNull
     private String phone;
 
     /**
      * 邮箱
      */
     @Column
-    @NotNull
     @Email
     private String email;
 
     /**
      * 地址
      */
-    @NotNull
     private Address address;
 
     /**

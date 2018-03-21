@@ -31,7 +31,6 @@ public class Passenger {
      * 旅客姓名
      */
     @Column(length = 50)
-    @NotNull
     private String passengerName;
 
     /**
@@ -39,13 +38,12 @@ public class Passenger {
      */
     @Column
     @Enumerated(EnumType.STRING)
-    @NotNull
     private CertificateType certificateType;
 
     /**
      * 证件号
      */
-    @Column(length = 30, unique = true)
+    @Column(length = 30)
     @NotNull
     private String certificateNumber;
 
@@ -60,6 +58,5 @@ public class Passenger {
      * 手机号
      */
     @Column(length = 20)
-    @NotNull
     private String phone;
 }

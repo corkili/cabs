@@ -1,15 +1,13 @@
 package org.neu.cabs.service.impl;
 
 import org.neu.cabs.constant.RoleType;
+import org.neu.cabs.constant.Sex;
 import org.neu.cabs.dao.AdminRepository;
 import org.neu.cabs.dao.BaseUserRepository;
 import org.neu.cabs.dao.RoleRepository;
 import org.neu.cabs.dao.UserRepository;
 import org.neu.cabs.dto.ServiceResult;
-import org.neu.cabs.orm.Admin;
-import org.neu.cabs.orm.BaseUser;
-import org.neu.cabs.orm.Role;
-import org.neu.cabs.orm.User;
+import org.neu.cabs.orm.*;
 import org.neu.cabs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -85,6 +83,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public Admin getAdminById(Long id) {
 
         return adminRepository.findOne(id);
@@ -156,10 +159,18 @@ public class UserServiceImpl implements UserService {
             Set<Role> roles = new HashSet<>();
             roles.add(roleRepository.findByName(RoleType.ROLE_USER.name()));
             user.setRoles(roles);
+            user.setCreateTime(new Date());
+            user.setLastLoginTime(new Date());
+            user.setSex(Sex.MAN);
+            user.setBirthday(new Date());
+            user.setAddress(new Address("", "", ""));
+            user.setOrders(new HashSet<>());
+            user.setPassengers(new HashSet<>());
+            user.setAvailable(true);
             User savedUser = baseUserRepository.save(user);
             serviceResult = new ServiceResult(true,"注册成功!", "user", savedUser);
         }else{
-            serviceResult = new ServiceResult(false,"该账号已经存在!");
+            serviceResult = new ServiceResult(false,"用户名已经存在!");
         }
         return serviceResult;
     }

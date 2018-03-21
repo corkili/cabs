@@ -1,0 +1,133 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"/>
+    <title>个人信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta property="qc:admins" content="77103107776157736375" />
+    <meta property="wb:webmaster" content="c4f857219bfae3cb" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta http-equiv="Cache-Control" content="no-transform " />
+    <meta name="keywords" content="土味订票" />
+    <meta name="description" content="土味订票" />
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+    <link rel="stylesheet" th:href="@{css/base.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/common-less-one.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/moco.min.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/common-less.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/profile-less.css}" type="text/css" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        #main {
+            position: absolute;
+            top: -16%;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div id="main">
+    <div class="page-settings">
+        <div class="top">
+        </div>
+        <div class="setting pb10">
+            <div class="nav-tabs pa">
+                <a th:href="@{/personal_view}" class="baseinfo fl active">基本信息</a>
+                <a th:href="@{/personal_edit}" class="countinfo fl">编辑信息</a>
+                <a th:href="@{/personal_traveller}" class="countinfo fl">常用旅客</a>
+                <a th:href="@{/personal_order}" class="countinfo fl">订单查询</a>
+                <div class="cb"></div>
+            </div>
+            <div class="contentBox">
+                <div class="formBox">
+                    <div id="panel1" class="setting-wrap setting-profile">
+
+                    </div>
+                    <div id="panel2" class="setting-wrap setting-profile">
+                        <form>
+                        <div class="wlfg-wrap clearfix ">
+                            <label class="label-name" for="js-portrait">头像：</label>
+                            <div class="rlf-group">
+                                <img class="fl avator-img" id="js-portrait" src="images/crying.jpg" width="180" height="180"/>
+                                <div class="cb"></div>
+                                <p class="rlf-tip-wrap errorHint color-red" ></p>
+                            </div>
+                        </div>
+
+                        <form id="profile" >
+                            <!--/*@thymesVar id="user" type="org.neu.cabs.orm.User"*/-->
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="name">姓名：</label>
+                                <div class="rlf-group">
+                                    <p style="color: black" class="moco-form-control" id="name" th:text="${user.realName}"></p>
+                                </div>
+                            </div>
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="province">地址：</label>
+                                <div class="rlf-group profile-address">
+                                    <p style="color: black" class="moco-form-control" id="province"
+                                       th:text="${user.address.province.name + '-' + user.address.city.name}"></p>
+
+                                </div>
+                            </div>
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="sex" >性别：</label>
+                                <div class="rlf-group">
+                                    <p style="color: black" class="moco-form-control" id="sex" th:text="${user.sex.getSex()}"></p>
+                                </div>
+                            </div>
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="email" >邮箱：</label>
+                                <div class="rlf-group">
+                                    <p style="color: black" class="moco-form-control" id="email" th:text="${user.email}"></p>
+                                </div>
+                            </div>
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="tel" >手机：</label>
+                                <div class="rlf-group">
+                                    <p style="color: black" class="moco-form-control" id="tel" th:text="${user.phone}"></p>
+                                </div>
+                            </div>
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="IDType" >证件类型：</label>
+                                <div class="rlf-group">
+                                    <p style="color: black" class="moco-form-control" id="IDType" th:text="${user.certificateType.getTypeName()}"></p>
+                                </div>
+                            </div>
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="id" >证件号：</label>
+                                <div class="rlf-group">
+                                    <p style="color: black" class="moco-form-control" id="id" th:text="${user.certificateNumber}"></p>
+                                </div>
+                            </div>
+                            <div class="wlfg-wrap clearfix">
+                                <label class="label-name" for="birth" >生日：</label>
+                                <div class="rlf-group">
+                                    <p style="color: black" class="moco-form-control" id="birth" th:text="${#dates.format(user.birthday, 'yyyy-MM-dd')}"></p>
+                                </div>
+                            </div>
+
+                        </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--script-->
+
+</body>
+</html>

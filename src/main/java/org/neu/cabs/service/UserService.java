@@ -50,6 +50,13 @@ public interface UserService {
     User getUserById(Long id);
 
     /**
+     * 获取用户名为username的用户
+     * @param username 用户名
+     * @return 用户
+     */
+    User getUserByUsername(String username);
+
+    /**
      * 获取一个ID为id的管理员的信息
      * @param id 用户ID
      * @return ID为id的管理员信息

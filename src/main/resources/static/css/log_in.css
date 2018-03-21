@@ -1,0 +1,98 @@
+.login-input-box{
+    margin-top: 12px;
+    width: 100%;
+    margin-left: -18px;
+    margin-right: auto;
+    display: inline-block;
+}
+
+.login-input-box input{
+    width: 400px;
+    height: 40px;
+    margin-left: 18px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding-left: 42px;
+}
+
+.login-input-box input:hover{
+    border: 1px solid #ff7d0a;
+}
+
+.login-input-box input:after{
+    border: 1px solid #ff7d0a;
+}
+
+.login-input-box .icon{
+    width: 30px;
+    height: 30px;
+    margin: 6px 4px 6px 24px;
+/*  background-color: #ff7d0a;*/
+    display: inline-block;
+    position: absolute;
+    border-right: 1px solid #dcdcdc;
+}
+
+.login-input-box .icon.icon-user{
+    /*height: 24px;
+    width: 24px;*/
+}
+
+.login-input-box .icon.icon-password{
+    background: url("../assets/images/password.png");
+}
+.remember-box{
+    width: auto;
+    height: auto;
+    margin-left: -300px;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #6a6765;
+}
+.login-button-box{
+    margin-top: 12px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block;
+}
+
+.login-button-box button{
+    background-color: #c73430;
+    color: #fff;
+    font-size: 16px;
+    width: 400px;
+    height: 40px;
+    margin-left: 0px;
+    border: 1px solid #c73430;
+    border-radius: 4px;
+}
+
+.login-button-box button:hover{
+    background-color: #c73430;
+}
+
+.login-button-box button:active{
+    background-color: #c73430;
+}
+
+.logon-box{
+    margin-top: 20px;
+    margin-left:-10px; 
+    text-align: center;
+}
+
+.logon-box a{
+    margin: 30px;
+    color: #4a4744;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.logon-box a:hover{
+    color: #ff7d0a;
+}
+
+.logon-box a:active{
+    color: #ee7204;
+}

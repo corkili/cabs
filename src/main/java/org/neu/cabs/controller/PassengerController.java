@@ -28,7 +28,6 @@ public class PassengerController {
 
     private UserService userService;
 
-
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -41,17 +40,8 @@ public class PassengerController {
         if (roles.contains(RoleType.ROLE_ADMIN.name())) {
             return "redirect:/manage/index";
         } else {
-            Msg msg = new Msg("测试标题", "测试内容", "额外信息，只对管理员显示");
-            model.addAttribute("msg", msg);
             return "index";
         }
-
-    }
-
-    @RequestMapping(value = "/registry", method = {RequestMethod.GET})
-    public String registry(Model model) {
-        model.addAttribute("user", new User());
-        return "registry";
     }
 
     @RequestMapping(value = "/dispatch")
@@ -65,5 +55,20 @@ public class PassengerController {
         } else {
             return "redirect:/index";
         }
+    }
+
+    @RequestMapping(value = { "personal" }, method = RequestMethod.GET)
+    public String personal() {
+        return "personal_info";
+    }
+
+    @RequestMapping(value = { "search" }, method = RequestMethod.GET)
+    public String search() {
+        return "search_flight";
+    }
+
+    @RequestMapping(value = { "about" }, method = RequestMethod.GET)
+    public String about() {
+        return "about_us";
     }
 }

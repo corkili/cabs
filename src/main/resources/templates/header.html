@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<header th:fragment="header">
+    <!-- 这是半透明遮罩 -->
+    <div id="div2" style="display:none; POSITION:absolute;height:20000px;width:20000px;filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5; background-color:#ffffff;z-index:9998;"></div>
+
+    <!-- 这是弹出登录框 -->
+    <div id="win" style="display:none;
+			POSITION:absolute;
+			left:50%;
+			border-radius: 6px;
+			width:450px;
+			height:340px;
+			margin-left:-240px;
+			margin-top:200px;
+			border:1px solid #888;
+			background-color:#F5F5F5;
+			text-align:center;
+			z-index:9999;">
+        <form id="loginForm" role="form" name="form" th:action="@{/login}" method="post">
+            <div style="width:100%;
+					height:70px;
+					margin-bottom: 20px;
+					border-bottom: 1px solid #dcdcdc;">
+                <img th:src="@{images/logo2.png}" style="width:150px;
+						margin-top:10px;"/>
+            </div>
+            <div id="loginMsg" style="padding-top: 0; display: none;">
+            </div>
+            <div class="login-input-box">
+                <img class="icon icon-user" th:src="@{images/user.png}" style="margin-left: 20px;margin-top: 5px;"/>
+                <input type="text" id="username" name="username" placeholder="用户名" data-toggle="tooltip"
+                       title="请输入用户名" data-placement="right"/>
+            </div>
+
+            <div class="login-input-box">
+                <img class="icon icon-user" th:src="@{images/password.png}" style="margin-left: 20px;margin-top: 5px;"/>
+                <input type="password" id="password" name="password" placeholder="密码" data-toggle="tooltip"
+                       title="请输入密码" data-placement="right"/>
+            </div>
+            <!--<div class="remember-box">-->
+            <!--<label>-->
+            <!--<input type="checkbox">&nbsp;Remember Me-->
+            <!--</label>-->
+            <!--</div>-->
+            <div class="login-button-box">
+                <button type="submit">登录</button>
+            </div>
+            <div class="logon-box">
+                <a href="">忘记密码？</a>
+                <a href="javascript:clearMsg();closeLogin();" style="text-decoration:underline;">关闭</a>
+                <a href="javascript:clearMsg();openRegister();">注册</a>
+            </div>
+        </form>
+        <!--<a href="javascript:closeLogin();">关闭登录框</a>-->
+    </div>
+
+
+    <div id="win2" style="display:none;
+			POSITION:absolute;
+			left:50%;
+			border-radius: 6px;
+			width:450px;
+			height:400px;
+			margin-left:-240px;
+			margin-top:200px;
+			border:1px solid #888;
+			background-color:#F5F5F5;
+			text-align:center;
+			z-index:9999;">
+        <form id="registerForm" th:action="@{/registry}" method="post">
+            <div style="width:100%;
+					height:70px;
+					margin-bottom: 20px;
+					border-bottom: 1px solid #dcdcdc;">
+                <img th:src="@{images/logo2.png}" style="width:150px;
+						margin-top:10px;" />
+            </div>
+            <div id="registerMsg" style="padding-top: 0; display: none;">
+            </div>
+            <div class="login-input-box">
+                <img class="icon icon-user" th:src="@{images/user.png}" style="margin-left: 20px;margin-top: 5px;"/>
+                <input type="text" id="registerUsername" name="username" placeholder="用户名" data-toggle="tooltip"
+                    title="用户名长度需在3到18之间" data-placement="right"/>
+            </div>
+
+            <div class="login-input-box">
+                <img class="icon icon-user" th:src="@{images/password.png}" style="margin-left: 20px;margin-top: 5px;"/>
+                <input type="password" id="registerPassword" name="password" placeholder="密码" data-toggle="tooltip"
+                    title="密码长度需在6到32之间" data-placement="right"/>
+            </div>
+
+            <div class="login-input-box">
+                <img class="icon icon-user" th:src="@{images/password.png}" style="margin-left: 20px;margin-top: 5px;"/>
+                <input type="password" id="registerConfirmPassword" placeholder="重复密码" data-toggle="tooltip"
+                       title="两次输入密码需要相同" data-placement="right"/>
+            </div>
+        </form>
+        <div class="login-button-box">
+            <button id="registerBtn">注册</button>
+        </div>
+        <div class="logon-box">
+            <a href="javascript:clearMsg();closeRegister();openLogin();" style="text-decoration:underline;">取消</a>
+        </div>
+        <!-- <a href="javascript:closeLogin();">关闭登录框</a> -->
+    </div>
+    <form id="logoutForm" style="display: none" th:action="@{/logout}" method="post"></form>
+    <div class="container_12">
+        <div class="grid_12">
+            <div class="menu_block">
+                <nav class="horizontal-nav full-width horizontalNav-notprocessed">
+                    <ul id="navBar" class="sf-menu">
+                        <li class="current" content="index"><a th:href="@{/}">土味订票</a></li>
+                        <li content="search_flight"><a th:href="@{/search}">搜索航班</a></li>
+                        <li content="personal_information"><a th:href="@{/personal}">个人信息</a></li>
+                        <li content="about_us"><a th:href="@{/about}">关于我们</a></li>
+                        <li th:if="${session.SPRING_SECURITY_CONTEXT == null}"><a href="javascript:clearMsg();openLogin();">登录</a></li>
+                        <li th:if="${session.SPRING_SECURITY_CONTEXT != null}"><a href="javascript:logout();"><span sec:authentication="name"></span></a></li>
+                        <script type="text/javascript">
+                            function logout() {
+                                if (confirm("确定退出登录吗？")) {
+                                    document.getElementById('logoutForm').submit();
+                                }
+                            }
+                        </script>
+                    </ul>
+                </nav>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="grid_12">
+            <h1>
+                <a th:href="@{/}">
+                    <img th:src="@{images/logo.png}" alt="Your Happy Family"/>
+                </a>
+            </h1>
+        </div>
+    </div>
+    <script>
+        function clearMsg() {
+            $("#registerMsg").text("");
+            $("#registerMsg").hide();
+            $("#loginMsg").text("");
+            $("#loginMsg").hide();
+        }
+        function openLogin(){
+            document.getElementById("win").style.display="";
+            document.getElementById("div2").style.display="";
+        }
+        function closeLogin(){
+            document.getElementById("win").style.display="none";
+            document.getElementById("div2").style.display="none";
+        }
+        function openRegister(){
+            document.getElementById("win").style.display="none";
+            document.getElementById("win2").style.display="";
+        }
+        function closeRegister(){
+            document.getElementById("win2").style.display="none";
+            document.getElementById("div2").style.display="none";
+        }
+    </script>
+    <script>
+        $(function () {
+
+            var $username = $("#username");
+            var $password = $("#password");
+            var $loginForm = $("#loginForm");
+
+            var $registerBtn = $("#registerBtn");
+            var $registerUsername = $("#registerUsername");
+            var $registerPassword = $("#registerPassword");
+            var $registerConfirmPassword = $("#registerConfirmPassword");
+            var $registerForm = $("#registerForm");
+
+            var $loginMsg = $("#loginMsg");
+            var $registerMsg = $("#registerMsg");
+
+            function getFormJson(frm) {  //frm：form表单的id
+                var o = {};
+                var a = $("#"+frm).serializeArray();
+                $.each(a, function() {
+                    if (o[this.name] !== undefined) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [ o[this.name] ];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            }
+
+            function checkLoginForm() {
+                var username = $registerUsername.val();
+                var password = $registerPassword.val();
+                if (username == null || username == "") {
+                    $username.tooltip('show');
+                    return false;
+                } else if (password == null || password == "") {
+                    $password.tooltip('show');
+                    return false;
+                }  else {
+                    return true;
+                }
+            }
+
+            function checkRegisterForm() {
+                var username = $registerUsername.val();
+                var password = $registerPassword.val();
+                var confirm = $registerConfirmPassword.val();
+                if (username == null || username == "" || 3 > username.length || username.length > 18) {
+                    $registerUsername.tooltip('show');
+                    return false;
+                } else if (password == null || password == "" || 6 > password.length || password.length > 32) {
+                    $registerPassword.tooltip('show');
+                    return false;
+                } else if (password != confirm) {
+                    $registerConfirmPassword.tooltip('show');
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            $registerBtn.on('click', function () {
+                if (!checkRegisterForm()) {
+                    return;
+                }
+
+                var url = $registerForm.attr("action");
+                var data = $registerForm.serialize();
+                console.log(data);
+                console.log(data);
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        if (data.successful == true) {
+                            closeRegister();
+                            openLogin();
+                            $loginMsg.text("注册成功~请登录！");
+                            $loginMsg.show();
+                        } else {
+                            $registerMsg.text(data.msg);
+                            $registerMsg.show();
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    },
+                    clearForm: false,
+                    resetForm: false
+                });
+
+            });
+        });
+
+        $(function () {
+            var $navBar = $("#navBar");
+            var page = $("meta[name='page_name']").attr('content');
+            $navBar.find("li").removeClass("current");
+            $navBar.find("li[content='" + page + "']").addClass("current");
+        })
+    </script>
+</header>
+</body>
+</html>

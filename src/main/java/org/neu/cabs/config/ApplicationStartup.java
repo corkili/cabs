@@ -74,7 +74,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
                 user.setCertificateNumber("522123199701050014");
                 user.setSex(Sex.MAN);
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(1997, Calendar.FEBRUARY, 5);
+                calendar.set(1997, Calendar.JANUARY, 5);
                 user.setBirthday(calendar.getTime());
                 user.setPhone("15528235793");
                 user.setEmail("15528235793@163.com");

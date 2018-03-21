@@ -42,11 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login", "/css/**/*", "/js/**/*", "/images/**/*", "/vendors/**/*").permitAll()
+                .antMatchers("/css/**/*", "/js/**/*", "/images/**/*", "/vendors/**/*",
+                        "/booking/**/*", "/fonts/**/*", "/node_modules/**/*").permitAll()
+                .antMatchers("/registry", "/", "/index", "/login", "/personal", "/search", "/about").permitAll()
                 .antMatchers("/manage/**/*").hasAnyRole(RoleType.ROLE_ADMIN.getRole(), RoleType.ROLE_ROOT.getRole())
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").successHandler(successHandler)
-                .failureUrl("/login?error").permitAll()
-                .and().logout().permitAll();
+                .and().formLogin().loginPage("/login").successHandler(successHandler).failureUrl("/login?error").permitAll()
+                .and().headers().frameOptions().sameOrigin()
+                .and().logout().logoutSuccessUrl("/").permitAll();
     }
 }

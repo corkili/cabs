@@ -2,7 +2,7 @@ package org.neu.cabs.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.format.support.FormattingConversionServiceFactoryBean;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -30,7 +30,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return new SimpleDateFormat("HH:mm");
     }
 
-    @Bean SimpleDateFormat datetimeFormat() {
+    @Bean
+    public SimpleDateFormat datetimeFormat() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm");
     }
+
+
 }

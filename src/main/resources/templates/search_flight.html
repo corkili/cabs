@@ -1,0 +1,306 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	<head>
+		<title>搜索航班</title>
+
+		<meta charset="utf-8"/>
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <meta name="page_name" content="search_flight"/>
+
+		<!-- <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script> -->
+
+		<link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}" />
+		
+		<link rel="icon" th:href="@{images/favicon.ico}"/>
+		<link rel="shortcut icon" th:href="@{images/favicon.ico}" />
+		<link rel="stylesheet" th:href="@{css/style.css}"/>
+		<link rel="stylesheet" th:href="@{css/camera.css}"/>
+		<link rel="stylesheet" th:href="@{css/owl.carousel.css}"/>
+		<link rel="stylesheet" th:href="@{booking/css/booking.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{css/log_in.css}"/>
+		<script th:src="@{js/jquery.js}"></script>
+		<style type="text/css">
+		#ChoseCabin1 {
+    		font-size: 14px;
+   			color: #737272;
+    		display: inline-block;
+    		background-color: #e5e5e5;
+    		padding: 5px 26px 4px;
+		}
+		#ChoseCabin2 {
+    		font-size: 14px;
+   			color: #737272;
+    		display: inline-block;
+    		background-color: #e5e5e5;
+    		padding: 5px 26px 4px;
+		}
+		#ChoseCabin1:hover {
+    		background-color: #c73430;
+    		color: #fff;
+		}
+		#ChoseCabin2:hover {
+    		background-color: #c73430;
+    		color: #fff;
+		}
+		</style>
+	</head>
+<body>
+<!--==============================header=================================-->
+<header th:replace="header :: header"></header>
+<!--==============================Content=================================-->
+<div class="container" style="background-color: #fff;height:100px">
+	<!-- <div class="col-lg-10 col-lg-offset-1" > -->
+	<form id="bookingForm" method="post" th:action="@{search}">
+		<div class="col-lg-3" style="margin-left: 25px;"><!-- style="padding: 100px 100px 10px;" col-lg-offset-1-->
+			<div class="input-group" style="top: 20px;">
+				<input type="text" class="form-control text1" style="height:80px " id="departure" name="departure" list="departureList"/>
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default" style="height:80px;width:120px;" onclick="$('#departure').focus();">出发地
+					</button>
+                    <datalist id="departureList"></datalist>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-3">
+			<div class="input-group" style="top: 20px;">
+				<input type="text" class="form-control text1" style="height:80px" id="arrival" name="arrival" list="arrivalList"/>
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-default" style="height:80px;width:120px;" onclick="$('#arrival').focus();">目的地
+					</button>
+                    <datalist id="arrivalList"></datalist>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="col-lg-2" style="background-color: #fff">
+			<label class="tmDatepicker" style="height:60px">
+				<input type="text" name="date" id="date" data-constraints="@NotEmpty @Required @Date" style="height:80px;" placeholder="出发日期"/>
+			</label>
+			<div class="clear"></div>
+		</div>
+		<div class="tmRadio col-lg-2">
+			<p>舱位</p>
+			<input name="cabin" type="radio" value="FISRT" id="tmRadio0" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' checked="checked"/>
+			<span>头等舱</span>
+			<br/>
+			<input name="cabin" type="radio"  value="ECONOMY" id="tmRadio1" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' />
+			<span>经济舱</span>
+		</div>
+		<a id="searchSubmit" class="btn col-lg-2" data-type="submit" style="height:80px; line-height: 65px;width:150px;margin: -15px 0 0 20px">搜索</a>
+	</form>
+</div>
+
+<div class="content">
+	<div class="container_12">
+		<div class="banners">
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img1.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">NEW ZEALAND</div>
+						<div class="price">from<span>$ 1.200</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img2.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">GOA</div>
+						<div class="price">from<span>$ 1.500</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img3.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">FRANCE</div>
+						<div class="price">from<span>$ 1.600</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img4.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">CANADA</div>
+						<div class="price">from<span>$ 2000</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img5.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">TURKEY</div>
+						<div class="price">from<span>$ 1.500</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img6.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">EGYPT</div>
+						<div class="price">from<span>$ 1.500</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img7.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">JAPAN</div>
+						<div class="price">from<span>$ 1000</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+			<div class="grid_4">
+				<div class="banner">
+					<img th:src="@{images/page2_img8.jpg}" alt=""/>
+					<div class="label">
+						<div class="title">BRAZIL</div>
+						<div class="price">from<span>$ 1.700</span></div>
+						<a href="#">LEARN MORE</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--==============================footer=================================-->
+<footer th:replace="footer :: footer">
+
+</footer>
+
+<script th:src="@{js/bootstrap.min.js}"></script>
+<script th:src="@{js/jquery-migrate-1.2.1.js}"></script>
+<script th:src="@{js/script.js}"></script>
+<script th:src="@{js/superfish.js}"></script>
+<script th:src="@{js/jquery.ui.totop.js}"></script>
+<script th:src="@{js/jquery.equalheights.js}"></script>
+<script th:src="@{js/jquery.mobilemenu.js}"></script>
+<script th:src="@{js/jquery.easing.1.3.js}"></script>
+<script th:src="@{js/owl.carousel.js}"></script>
+<script th:src="@{booking/js/booking.js}"></script>
+<script th:src="@{js/camera.js}"></script>
+<script th:src="@{js/jquery.mobile.customized.min.js}"></script>
+<script>
+    $(document).ready(function(){
+
+        $("#searchSubmit").on('click', function () {
+            var departure = $("#departure").val()
+            var arrival = $("#arrival").val();
+            var date = $("#date").val();
+            var cabin = $("[name='cabin']:checked").val();
+            alert(departure + ' ' + arrival + ' ' + date + ' ' + cabin);
+            $("#bookingForm").submit();
+        });
+
+        function createOption(value) {
+            return '<option value="' + value + '"></option>';
+        }
+
+        $.ajax({
+           url: 'address.json',
+           method: 'get',
+           success: function (data) {
+               console.log(data);
+               if (data == null) {
+                   return;
+               }
+               var addresses = [];
+               var temp = {
+                   name: "直辖市/特别行政区",
+                   sub: [{
+                       name: "请选择",
+                       sub: []
+                   }],
+                   type: 1
+               };
+               $.each(data, function (index, content) {
+                   if (content.type == 0) {
+                       temp.sub.push(content);
+                   } else {
+                       addresses.push(content);
+                   }
+               });
+               temp.sub.splice(temp.sub.length - 1, 1);
+               addresses.splice(1, 0, temp);
+               addresses.splice(addresses.length - 1, 1);
+               console.log(addresses);
+
+               var addrArray = [];
+
+               $.each(addresses, function (pi, p) {
+                   if (pi != 0) {
+                       if (pi == 1) {
+                           $.each(p.sub, function (ci, c) {
+                               if (!(ci == 0 || c.name == '其他')) {
+                                   addrArray.push(c.name);
+                               }
+                           })
+                       } else {
+                           $.each(p.sub, function (ci, c) {
+                               if (!(ci == 0 || c.name == '其他')) {
+                                   addrArray.push(p.name + '-' + c.name);
+                               }
+                           })
+                       }
+                   }
+               });
+               console.log(addrArray);
+               $.each(addrArray, function (i, a) {
+                    $("#departureList,#arrivalList").append(createOption(a));
+               });
+
+           }
+        });
+
+        jQuery('#camera_wrap').camera({
+            loader: false,
+            pagination: false ,
+            minHeight: '444',
+            thumbnails: false,
+            height: '48.375%',
+            caption: true,
+            navigation: true,
+            fx: 'mosaic'
+        });
+        /*carousel*/
+        var owl=$("#owl");
+        owl.owlCarousel({
+            items : 2, //10 items above 1000px browser width
+            itemsDesktop : [995,2], //5 items between 1000px and 901px
+            itemsDesktopSmall : [767, 2], // betweem 900px and 601px
+            itemsTablet: [700, 2], //2 items between 600 and 0
+            itemsMobile : [479, 1], // itemsMobile disabled - inherit from itemsTablet option
+            navigation : true,
+            pagination : false
+        });
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
+<script>
+    $(function (){
+        $('#bookingForm').bookingForm({
+            ownerEmail: '#'
+        });
+    })
+</script>
+</body>
+</html>

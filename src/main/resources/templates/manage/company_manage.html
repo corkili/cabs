@@ -35,7 +35,8 @@
 <body class="nav-md">
 
 <!-- create company modal -->
-<div id="createCompanyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createCompanyModalLabel" aria-hidden="true">
+<div id="createCompanyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createCompanyModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -46,27 +47,32 @@
             <div class="modal-body">
 
                 <div style="padding: 5px 20px;">
-                    <form id="createCompanyForm" method="post" th:action="@{company/createCompany}" data-parsley-validate=""
+                    <form id="createCompanyForm" method="post" th:action="@{company/createCompany}"
+                          data-parsley-validate=""
                           class="form-horizontal form-label-left" role="form">
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="companyName">公司名称 <span class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="companyName" name="companyName" required="required"
-                                    data-toggle="tooltip" data-placement="right" title="公司名称不能为空"/>
+                                <input type="text" class="form-control" id="companyName" name="companyName"
+                                       required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入公司名称"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label" for="companyCode">公司代码 <span class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="text" style="text-transform: uppercase" class="form-control" id="companyCode" name="companyCode" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="公司代码不能为空" />
+                                <input type="text" style="text-transform: uppercase" class="form-control"
+                                       id="companyCode" name="companyCode" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入公司代码"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="establishTime">成立时间 <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label" for="establishTime">成立时间 <span
+                                    class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" id="establishTime" required="required" name="establishTime"
-                                       value="" data-toggle="tooltip" data-placement="right" title="成立时间不能为空"/>
+                                <input type="date" class="form-control" id="establishTime" required="required"
+                                       name="establishTime"
+                                       value="" data-toggle="tooltip" data-placement="right" title="请选择成立时间"/>
                                 <!--<input type="hidden" id="establishTime" name="establishTime" />-->
                             </div>
                         </div>
@@ -83,7 +89,8 @@
 <!-- /create company modal-->
 
 <!-- edit company modal -->
-<div id="editCompanyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
+<div id="editCompanyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editCompanyModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -94,28 +101,35 @@
             <div class="modal-body">
 
                 <div style="padding: 5px 20px;">
-                    <form id="editCompanyForm" method="post" th:action="@{company/modifyCompany}" data-parsley-validate=""
+                    <form id="editCompanyForm" method="post" th:action="@{company/modifyCompany}"
+                          data-parsley-validate=""
                           class="form-horizontal form-label-left" role="form">
-                        <input type="hidden" id="editCompanyId" name="id" value="" />
+                        <input type="hidden" id="editCompanyId" name="id" value=""/>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="editCompanyName">公司名称 <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label" for="editCompanyName">公司名称 <span
+                                    class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="editCompanyName" name="companyName" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="公司名称不能为空"/>
+                                <input type="text" class="form-control" id="editCompanyName" name="companyName"
+                                       required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入公司名称"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="editCompanyCode">公司代码 <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label" for="editCompanyCode">公司代码 <span
+                                    class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="text" maxlength="3" class="form-control" id="editCompanyCode" name="companyCode" required="required"
-                                       data-toggle="tooltip" data-placement="right" title="公司代码不能为空"/>
+                                <input type="text" maxlength="3" style="text-transform: uppercase" class="form-control" id="editCompanyCode"
+                                       name="companyCode" required="required"
+                                       data-toggle="tooltip" data-placement="right" title="请输入公司代码"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label" for="editEstablishTime">成立时间 <span class="required">*</span></label>
+                            <label class="col-sm-3 control-label" for="editEstablishTime">成立时间 <span
+                                    class="required">*</span></label>
                             <div class="col-sm-9">
-                                <input type="date" class="form-control" id="editEstablishTime" required="required" name="establishTime"
-                                       value="" data-toggle="tooltip" data-placement="right" title="成立时间不能为空"/>
+                                <input type="date" class="form-control" id="editEstablishTime" required="required"
+                                       name="establishTime"
+                                       value="" data-toggle="tooltip" data-placement="right" title="请选择成立时间"/>
                             </div>
                         </div>
                     </form>
@@ -153,7 +167,8 @@
 <!-- /tip modal-->
 
 <!-- loading modal -->
-<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+<div id="loadingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -175,11 +190,12 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a th:href="@{index}" class="site_title"><i class="fa fa-paw"></i> <span th:utext="#{app.management.title}"></span></a>
+                    <a th:href="@{index}" class="site_title"><i class="fa fa-paw"></i> <span
+                            th:utext="#{app.management.title}"></span></a>
                 </div>
 
                 <div class="clearfix"></div>
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div th:replace="manage/sidebar :: sidebar"></div>
@@ -306,42 +322,81 @@
 
         var table = $companyTable.DataTable();
 
-        function checkCreateCompanyForm () {
+        function checkCreateCompanyForm() {
             var companyName = $companyName.val();
             var companyCode = $companyCode.val();
             var establishTime = $establishTime.val();
             var serviceResult = true;
             if (companyName == "" || companyName == null) {
-                $companyName.tooltip('show');
+                $companyName.attr('title', "请输入公司名称").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            } else if (companyName.length > 50) {
+                $companyName.attr('title', "公司名称长度不能超过50").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (companyCode == "" || companyCode == null) {
-                $companyCode.tooltip('show');
+                $companyCode.attr('title', "请输入公司代码").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
+            } else if (companyCode.length != 2) {
+                $companyCode.attr('title', "公司代码应为2位").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else{
+                var reg= /^[A-Za-z]+$/;
+                if(!reg.test(companyCode)){
+                    $companyCode.attr('title', "公司代码应为2位字母").tooltip('fixTitle').tooltip('show');
+                    serviceResult = false;
+                }
             }
             if (establishTime == "" || establishTime == null) {
-                $establishTime.tooltip('show');
+                $establishTime.attr('title', "请选择成立日期").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
+            } else {
+                var selectDay = new Date(establishTime);
+                var nowDay = new Date();
+                if (selectDay > nowDay) {
+                    $establishTime.attr('title', "建立日期有误请重试").tooltip('fixTitle').tooltip('show');
+                    serviceResult = false;
+                }
             }
             return serviceResult;
         }
 
-        function checkEditCompanyForm () {
+
+        function checkEditCompanyForm() {
             var companyName = $editCompanyName.val();
             var companyCode = $editCompanyCode.val();
             var establishTime = $editEstablishTime.val();
             var serviceResult = true;
             if (companyName == "" || companyName == null) {
-                $editCompanyName.tooltip('show');
+                $editCompanyName.attr('title', "请输入公司名称").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            } else if (companyName.length > 50) {
+                $editCompanyName.attr('title', "公司名称长度不能超过50").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
             }
             if (companyCode == "" || companyCode == null) {
-                $editCompanyCode.tooltip('show');
+                $editCompanyCode.attr('title', "请输入公司代码").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
+            } else if (companyCode.length != 2) {
+                $editCompanyCode.attr('title', "公司代码应为2位").tooltip('fixTitle').tooltip('show');
+                serviceResult = false;
+            }else{
+                var reg= /^[A-Za-z]+$/;
+                if(!reg.test(companyCode)){
+                    $editCompanyCode.attr('title', "公司代码应为2位字母").tooltip('fixTitle').tooltip('show');
+                    serviceResult = false;
+                }
             }
             if (establishTime == "" || establishTime == null) {
-                $editEstablishTime.tooltip('show');
+                $editEstablishTime.attr('title', "请选择成立日期").tooltip('fixTitle').tooltip('show');
                 serviceResult = false;
+            } else {
+                var selectDay = new Date(establishTime);
+                var nowDay = new Date();
+                if (selectDay > nowDay) {
+                    $editEstablishTime.attr('title', "建立日期有误请重试").tooltip('fixTitle').tooltip('show');
+                    serviceResult = false;
+                }
             }
             return serviceResult;
         }
@@ -353,7 +408,7 @@
                 formatDate(data.establishTime),
                 data.airplanes.length
             ]).draw();
-            $("#companyTable tbody td:contains('"+ data.companyName + "')").parent().attr('value', data.id);
+            $("#companyTable tbody td:contains('" + data.companyName + "')").parent().attr('value', data.id);
         }
 
         var createCompanyUrl = $createCompanyForm.attr("action");
@@ -385,7 +440,7 @@
                 data: data,
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
                 success: function (data) {
@@ -404,7 +459,7 @@
                 error: function (data) {
                     console.log(data);
                     $loadingModal.modal('toggle');
-                    $tip.text('信息有误');
+                    $tip.text('信息有误，请重试');
                     $tipModal.modal('toggle');
                 }
             });
@@ -428,7 +483,7 @@
                 data: data,
                 dataType: 'json',
                 contentType: 'application/json; charset=UTF-8',
-                beforeSend: function(xhr) {
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
                 success: function (data) {
@@ -449,14 +504,14 @@
                 },
                 error: function (data) {
                     $loadingModal.modal('toggle');
-                    $tip.text('信息有误');
+                    $tip.text('信息有误,请重试');
                     $tipModal.modal('toggle');
                 }
             });
         });
 
-        $("#companyTable tbody").on( 'click', 'tr[value]', function () {
-            if ( $(this).hasClass('selected') ) {
+        $("#companyTable tbody").on('click', 'tr[value]', function () {
+            if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
                 $editCompanyBtn.attr('disabled', 'true');
                 $deleteCompanyBtn.attr('disabled', 'true');
@@ -467,7 +522,7 @@
                 $editCompanyBtn.removeAttr('disabled');
                 $deleteCompanyBtn.removeAttr('disabled');
             }
-        } );
+        });
 
         $deleteCompanyBtn.on('click', function () {
             if (confirm("确认删除当前选中的公司吗？")) {
@@ -479,7 +534,7 @@
                         companyId: id
                     },
                     dataType: 'json',
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         xhr.setRequestHeader(header, token);
                     },
                     success: function (data) {
@@ -520,6 +575,17 @@
             show: false,
             keyboard: false,
             backdrop: false
+        });
+
+        $createCompanyModal.on('hidden.bs.modal', function () {
+            $companyName.tooltip('hide');
+            $companyCode.tooltip('hide');
+            $establishTime.tooltip('hide');
+        });
+        $editCompanyModal.on('hidden.bs.modal', function () {
+            $editCompanyName.tooltip('hide');
+            $editCompanyCode.tooltip('hide');
+            $editEstablishTime.tooltip('hide');
         });
 
     });

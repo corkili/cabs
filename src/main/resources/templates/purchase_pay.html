@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{img/apple-icon.png}" />
+	<link rel="icon" type="image/png" th:href="@{img/favicon.png}" />
+
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<title>土味订票</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+	<!-- CSS Files -->
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{css/paper-bootstrap-wizard.css}" rel="stylesheet" />
+
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet"/>
+	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'/>
+	<link th:href="@{css/themify-icons.css}" rel="stylesheet"/>
+	<style>
+		.logo-container{
+			left: 50px;
+			position: absolute;
+			top: 20px;
+			z-index: 3;
+		}
+		.logo-container .logo{
+			overflow: hidden;
+			border-radius: 50%;
+			border: 1px solid #333333;
+			width: 60px;
+			float: left;
+		}
+		.logo-container .brand{
+			font-size: 18px;
+			color: #FFFFFF;
+			line-height: 20px;
+			float: left;
+			margin-left: 10px;
+			margin-top: 10px;
+			width: 60px
+		}
+		td{
+			color: white;
+		}
+	</style>
+</head>
+
+<body>
+
+<!--   Big container   -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <!--/*@thymesVar id="flight" type="org.neu.cabs.orm.Flight"*/-->
+            <!--/*@thymesVar id="order" type="org.neu.cabs.orm.Order"*/-->
+            <form id="payOrderForm" th:action="@{payOrder}" method="post">
+                <div class="row" style="padding-top: 100px; padding-bottom: 100px;">
+                    <div class="row">
+                        <div style="text-align: center;"><img src="img/logo2.png" height="100px" width="300px"/></div>
+                    </div>
+                    <div class="row">
+                        <br/>
+                        <input type="hidden" name="o" th:value="${order.id}" />
+                        <center>
+                            <table style="background-color: #C73430;border-radius: 6px;width: 500px" >
+                                <tr>
+                                    <td colspan="3" style="text-align: center">
+                                        <h4 th:text="${flight.departureAirport.chineseName + flight.departureTerminal.terminalName + '→' + flight.arrivalAirport.chineseName + flight.arrivalTerminal.terminalName}"></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 20px">
+                                        <p><b th:text="${#dates.format(flight.plannedTakeoffTime, 'yyyy-MM-dd HH:mm')}"></b></p>
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p th:text="${((flight.plannedArrivalTime.getTime() - flight.plannedTakeoffTime.getTime()) / 1000 / 3600) + 'h' + ((flight.plannedArrivalTime.getTime() - flight.plannedTakeoffTime.getTime()) / 60 % 60) + 'min'}">2h40min</p>
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p><b th:text="${#dates.format(flight.plannedArrivalTime, 'yyyy-MM-dd HH:mm')}"></b></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 50px">
+                                        <p></p>
+                                    </td>
+                                    <td style="padding-left: 62px">
+
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p><b th:text="${'机建：￥' + #numbers.formatDecimal(order.getOrderItems().iterator().next().getAirportBuildCost(), 1, 2)}"></b></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 50px">
+                                        <p></p>
+                                    </td>
+                                    <td style="padding-left: 62px">
+
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p><b th:text="${'机票：￥' + #numbers.formatDecimal(order.getOrderItems().iterator().next().getFlightCost(), 1, 2)}"></b></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 50px">
+                                        <p></p>
+                                    </td>
+                                    <td style="padding-left: 62px">
+
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p><b th:text="${'人数：×' + order.getOrderItems().size()}"></b></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 50px">
+                                        <p></p>
+                                    </td>
+                                    <td style="padding-left: 50px">
+
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p><b th:text="${'总金额：￥' + #numbers.formatDecimal(order.getTotalCost(), 1, 2)}"></b></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                        <br/>
+                        <center><h5 class="info-text"><b>你只能用支付宝，谢谢</b></h5></center>
+                        <div class="row">
+                            <center><img src="img/pay.jpg"/></center>
+                        </div>
+                        <br/><br/>
+                    </div>
+                    <div class="row">
+                        <div class="pull-right">
+                            <input type='submit' id="finish" class='btn btn-finish btn-fill btn-success btn-wd' name='finish' style="border: none" value='完成' />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div> <!-- row -->
+    <div id="bottom" style="display: none"></div>
+</div> <!--  big container -->
+
+</body>
+<!--   Core JS Files   -->
+<script th:src="@{js/jquery-2.2.4.min.js}" type="text/javascript"></script>
+<script th:src="@{js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{js/jquery.bootstrap.wizard.js}" type="text/javascript"></script>
+<script th:src="@{js/paper-bootstrap-wizard.js}" type="text/javascript"></script>
+<script th:src="@{js/jquery.validate.min.js}" type="text/javascript"></script>
+
+</html>

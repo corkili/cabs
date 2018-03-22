@@ -16,6 +16,13 @@ import java.util.List;
  * @author 李浩然
  */
 public interface OrderService {
+
+    /**
+     * 获得所有订单
+     * @return 订单列表
+     */
+    List<Order> getAllOrders();
+
     /**
      * 创建订单
      * @param order 订单实体
@@ -35,9 +42,14 @@ public interface OrderService {
      * @param orderId 订单ID
      * @return 订单实体
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name, T(org.neu.cabs.constant.RoleType).ROLE_USER.name)")
-    @PostAuthorize("returnObject.buyer.username == authentication.name || hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
     Order getOrderById(Long orderId);
+
+    /**
+     * 获取流水号为orderSerialNumber的订单
+     * @param orderSerialNumber 订单流水号
+     * @return 订单实体
+     */
+    Order getOrderBySerialNumber(String orderSerialNumber);
 
     /**
      * 改签机票订单
@@ -59,7 +71,6 @@ public interface OrderService {
      * @param end 结束时间
      * @return 订单列表
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
     List<Order> getOrderByDateRange(Date start, Date end);
 
     /**
@@ -69,7 +80,6 @@ public interface OrderService {
      * @param pageable 分页参数
      * @return 订单列表
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
     Page<Order> getOrderByDateRange(Date start, Date end, Pageable pageable);
 
     /**
@@ -77,6 +87,5 @@ public interface OrderService {
      * @param order 订单实体
      * @return 服务结果
      */
-    @PreAuthorize("hasAnyRole(T(org.neu.cabs.constant.RoleType).ROLE_ADMIN.name)")
     ServiceResult modifyOrder(Order order);
 }

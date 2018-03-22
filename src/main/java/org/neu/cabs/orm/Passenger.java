@@ -15,7 +15,6 @@ import java.util.Date;
 @Table(name = "PASSENGER")
 @Setter
 @Getter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class Passenger {

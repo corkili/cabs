@@ -47,32 +47,17 @@
 	<div id="camera_wrap" class="">
 		<div data-src="images/slide.jpg">
 			<div class="caption fadeIn">
-				<h2>LONDON</h2>
-				<div class="price">
-					FROM
-					<span>$1000</span>
-				</div>
-				<a href="#">LEARN MORE</a>
+
 			</div>
 		</div>
 		<div data-src="images/slide1.jpg">
 			<div class="caption fadeIn">
-				<h2>Maldives</h2>
-				<div class="price">
-					FROM
-					<span>$2000</span>
-				</div>
-				<a href="#">LEARN MORE</a>
+
 			</div>
 		</div>
 		<div data-src="images/slide2.jpg">
 			<div class="caption fadeIn">
-				<h2>Venice</h2>
-				<div class="price">
-					FROM
-					<span>$1600</span>
-				</div>
-				<a href="#">LEARN MORE</a>
+
 			</div>
 		</div>
 	</div>
@@ -84,9 +69,7 @@
 			<div class="banner">
 				<img th:src="@{images/ban_img1.jpg}" alt=""/>
 				<div class="label">
-					<div class="title">Barcelona</div>
-					<div class="price">FROM<span>$ 1000</span></div>
-					<a href="#">LEARN MORE</a>
+
 				</div>
 			</div>
 		</div>
@@ -94,9 +77,7 @@
 			<div class="banner">
 				<img th:src="@{images/ban_img2.jpg}" alt=""/>
 				<div class="label">
-					<div class="title">GOA</div>
-					<div class="price">FROM<span>$ 1.500</span></div>
-					<a href="#">LEARN MORE</a>
+
 				</div>
 			</div>
 		</div>
@@ -104,44 +85,46 @@
 			<div class="banner">
 				<img th:src="@{images/ban_img3.jpg}" alt=""/>
 				<div class="label">
-					<div class="title">PARIS</div>
-					<div class="price">FROM<span>$ 1.600</span></div>
-					<a href="#">LEARN MORE</a>
+
 				</div>
 			</div>
 		</div>
 		<div class="clear"></div>
 		<div class="grid_6">
-			<h3>Booking Form</h3>
-			<form id="bookingForm">
+			<h3>搜索航班</h3>
+			<form id="bookingForm" method="post" th:action="@{search}">
 				<div class="fl1">
 					<div class="tmInput">
-						<input name="Country" placeHolder="Depature:" type="text" data-constraints="@NotEmpty @Required"/>
+						<input type="text" class="form-control text1" id="departure" name="departure" placeholder="出发地"
+							   list="departureList" data-toggle="tooltip" title="请选择列表中的地名" />
+						<datalist id="departureList"></datalist>
 					</div>
 				</div>
 				<div class="fl1">
 					<div class="tmInput mr0">
-						<input name="Hotel" placeHolder="Destination:" type="text" data-constraints="@NotEmpty @Required"/>
+						<input type="text" class="form-control text1" id="arrival" name="arrival" list="arrivalList"
+							   data-toggle="tooltip" title="请选择列表中的地名" placeholder="目的地"/>
+						<datalist id="arrivalList"></datalist>
 					</div>
 				</div>
 				<div class="clear"></div>
-				<strong>Data</strong>
+				<strong>出发日期</strong>
 				<label class="tmDatepicker">
-					<input type="text" name="Check-in" placeHolder='' data-constraints="@NotEmpty @Required @Date"/>
+					<input type="text" name="date" id="date" data-constraints="@NotEmpty @Required @Date" placeholder="出发日期"  data-toggle="tooltip" title="请选择今天以后的日期"/>
 				</label>
 				<div class="clear"></div>
 				<div class="tmRadio">
-					<p>Cabin</p>
-					<input name="Comfort" type="radio" id="tmRadio0" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' checked="checked"/>
-					<span>First Class</span>
-					<input name="Comfort" type="radio" id="tmRadio1" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' />
-					<span>Economy Class</span>
+					<p>舱位类型</p>
+					<input name="cabin" type="radio" value="FIRST" id="tmRadio0" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])'/>
+					<span>头等舱</span>
+					<input name="cabin" type="radio"  value="ECONOMY" id="tmRadio1" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' checked="checked" />
+					<span>经济舱</span>
 				</div>
-				<a href="#" class="btn" data-type="submit" style="width:84px;">Search</a>
+				<a href="#" id="searchSubmit" class="btn" data-type="submit" style="width:84px;">搜索</a>
 			</form>
 		</div>
 		<div class="grid_5 prefix_1">
-			<h3>Welcome</h3>
+			<h3>欢迎使用土味订票</h3>
 			<img th:src="@{images/page1_img1.jpg}" alt="" class="img_inner fleft"/>
 		</div>
 	</div>
@@ -194,6 +177,104 @@
     $(function() {
         $('#bookingForm input, #bookingForm textarea').placeholder();
     });
+
+    $(function () {
+        var addrArray = [];
+
+        $("#searchSubmit").on('click', function () {
+            var departure = $("#departure").val();
+            var arrival = $("#arrival").val();
+            var date = $("#date").val();
+            var cabin = $("[name='cabin']:checked").val();
+            var result = true;
+            var curDate = new Date();
+            var month = (curDate.getMonth() + 1) + '';
+            var day = curDate.getDate() + '';
+            var year = curDate.getFullYear() + '';
+            if (2 > month.length) month = '0' + month;
+            if (2 > day.length) day = '0' + day;
+            curDate = new Date([year,month,day].join('-'));
+            if (date == "" || date == null) {
+                date = [month,day,year].join('/');
+                $("#date").val(date);
+            }
+            var d = date.split('/');
+            date = d[2] + '-' + d[0] + '-' + d[1];
+            if (0 > addrArray.indexOf(departure)) {
+                $("#departure").tooltip('show');
+                result = false;
+            }
+            if (0 > addrArray.indexOf(arrival)) {
+                $("#arrival").tooltip('show');
+                result = false;
+            }
+            if (curDate > new Date(date)) {
+                $("#date").tooltip('show');
+                result = false;
+            }
+            if (result) {
+                $("#bookingForm").submit();
+            }
+        });
+
+        function createOption(value) {
+            return '<option value="' + value + '"></option>';
+        }
+
+        $.ajax({
+            url: 'address.json',
+            method: 'get',
+            success: function (data) {
+                console.log(data);
+                if (data == null) {
+                    return;
+                }
+                var addresses = [];
+                var temp = {
+                    name: "直辖市/特别行政区",
+                    sub: [{
+                        name: "请选择",
+                        sub: []
+                    }],
+                    type: 1
+                };
+                $.each(data, function (index, content) {
+                    if (content.type == 0) {
+                        temp.sub.push(content);
+                    } else {
+                        addresses.push(content);
+                    }
+                });
+                temp.sub.splice(temp.sub.length - 1, 1);
+                addresses.splice(1, 0, temp);
+                addresses.splice(addresses.length - 1, 1);
+                console.log(addresses);
+
+                $.each(addresses, function (pi, p) {
+                    if (pi != 0) {
+                        if (pi == 1) {
+                            $.each(p.sub, function (ci, c) {
+                                if (!(ci == 0 || c.name == '其他')) {
+                                    addrArray.push(c.name);
+                                }
+                            })
+                        } else {
+                            $.each(p.sub, function (ci, c) {
+                                if (!(ci == 0 || c.name == '其他')) {
+                                    addrArray.push(p.name + '-' + c.name);
+                                }
+                            })
+                        }
+                    }
+                });
+                console.log(addrArray);
+                $.each(addrArray, function (i, a) {
+                    $("#departureList,#arrivalList").append(createOption(a));
+                });
+
+            }
+        });
+    })
 </script>
 
 </body>

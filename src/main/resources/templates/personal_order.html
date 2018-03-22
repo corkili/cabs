@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <title>Personal</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"/>
+    <meta name="renderer" content="webkit"/>
     <meta property="qc:admins" content="77103107776157736375" />
     <meta property="wb:webmaster" content="c4f857219bfae3cb" />
     <meta http-equiv="Access-Control-Allow-Origin" content="*" />
     <meta http-equiv="Cache-Control" content="no-transform " />
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <meta name="keywords" content="土味订票" />
     <meta name="description" content="土味订票" />
 
 
-    <link rel="stylesheet" href="css/base.css" type="text/css" />
-    <link rel="stylesheet" href="css/common-less-one.css" type="text/css" />
-    <link rel="stylesheet" href="css/moco.min.css" type="text/css" />
-    <link rel="stylesheet" href="css/common-less.css" type="text/css" />
-    <link rel="stylesheet" href="css/profile-less.css" type="text/css" />
-    <link rel="stylesheet" href="css/button.css" type="text/css">
-    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" th:href="@{css/base.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/common-less-one.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/moco.min.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/common-less.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/profile-less.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{css/button.css}" type="text/css"/>
+    <script th:src="@{node_modules/sweetalert2/dist/sweetalert2.min.js}"></script>
+    <link rel="stylesheet" th:href="@{node_modules/sweetalert2/dist/sweetalert2.min.css}"/>
 
 
     <style>
@@ -44,100 +48,66 @@
         </div>
         <div class="setting pb10">
             <div class="nav-tabs pa">
-                <a href="Personal.html" class="countinfo fl" style="padding-left: 30px">基本信息</a>
-                <a href="Edit.html" class="countinfo fl">编辑信息</a>
-                <a href="Traveller.html" class="countinfo fl">常用旅客</a>
-                <a href="Order.html" class="baseinfo fl active">订单查询</a>
+                <a th:href="@{/personal_view}" class="baseinfo fl">基本信息</a>
+                <a th:href="@{/personal_edit}" class="countinfo fl">编辑信息</a>
+                <a th:href="@{/personal_traveller}" class="countinfo fl">常用旅客</a>
+                <a th:href="@{/personal_order}" class="countinfo fl active">订单查询</a>
                 <div class="cb"></div>
             </div>
             <div class="contentBox">
-                <div id="header">
-                    <div class="page-container" id="nav">
-                        <ul class="nav-item" style="margin:0 auto;width: 700px;">
-                            <li style="padding-left: 30px">
-                                <a target="_self">流水号</a>
-                            </li>
-                            <li style="padding-left: 50px">
-                                <a target="_self">订单金额</a>
-                            </li>
-                            <li style="padding-left: 50px">
-                                <a target="_self">创建时间</a>
-                            </li>
-                            <li style="padding-left: 50px">
-                                <a  target="_self">状态</a>
-                            </li>
-
-                        </ul>
-
-                    </div>
-                </div>
-                <br />
+                <br/>
                 <div>
-                        <table style="margin: 0.5% 0 0 12%" rules=rows >
-                            <tr>
-                                <td width="172" height="50">
-                                    1234567891111
-                                </td>
-                                <td width="148">
-                                    $1000.00
-                                </td>
-                                <td width="147">
-                                    2000-01-01
-                                </td>
-                                <td width="115">
-                                    完成交易
-                                </td>
-                                <td>
-                                    <a href="#" onclick="details()" class="button button-raised button-pill button-inverse" style="text-align: right" target="_self">订单详情</a>
-                                </td>
+                    <center>
+                        <table style="margin: 0 0 0 0; text-align: center;" rules="rows" width="850">
+                            <thead>
+                            <tr style="background-color: #0f0f0f;color: #f0f0f0; font-size:20px">
+                                <td height="60">流水号</td>
+                                <td>订单金额</td>
+                                <td>创建时间</td>
+                                <td colspan="2">状态</td>
                             </tr>
-                            <tr>
+                            </thead>
+                            <tbody>
+                            <!--/*@thymesVar id="orders" type="java.util.List<org.neu.cabs.orm.Order>"*/-->
+                            <tr th:each="order : ${orders}">
                                 <td height="50">
-                                    1234567891111
+                                    <a th:text="${order.serialNumber}"
+                                        th:href="${'view/' + order.serialNumber}" target="_blank"></a>
                                 </td>
-                                <td>
-                                    $1000.00
+                                <td th:text="${'￥' + #numbers.formatDecimal(order.totalCost, 1, 2)}">
                                 </td>
-                                <td>
-                                    2000-01-01
+                                <td th:text="${#dates.format(order.createTime, 'yyyy-MM-dd HH:mm:ss')}">
                                 </td>
-                                <td>
-                                    完成交易
+                                <td th:if="${order.getState().getState().equals('未支付')}">
+                                    <a th:text="${order.getState().getState()}"
+                                        th:href="${'payOrder?o=' + order.id}"
+                                        target="_blank">
+                                    </a>
                                 </td>
-                                <td>
-                                    <a href="#" onclick="details()" class="button button-raised button-pill button-inverse" style="text-align: right" target="_self">订单详情</a>
+                                <td th:if="${not order.getState().getState().equals('未支付')}"
+                                    th:text="${order.getState().getState()}">
                                 </td>
-                            </tr>
-                            <tr>
-                                <td height="50">
-                                    1234567891111
-                                </td>
-                                <td>
-                                    $1000.00
-                                </td>
-                                <td>
-                                    2000-01-01
-                                </td>
-                                <td>
-                                    完成交易
-                                </td>
-                                <td>
-                                    <a href="#" onclick="details()" class="button button-raised button-pill button-inverse" style="text-align: right" target="_self">订单详情</a>
+                                <td th:if="${order.getState().getState().equals('已支付') or order.getState().getState().equals('已出票') or order.getState().getState().equals('未支付')}">
+                                    <a th:href="${'endorse?o=' + order.id}" target="_blank">改签</a>
+                                    /
+                                    <a th:href="${'refund?o=' + order.id}" target="_blank">退签</a>
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
+                    </center>
 
-                        <!--<a href="" class="button button-raised button-pill button-inverse">删除订单</a>-->
+                    <!--<a href="" class="button button-raised button-pill button-inverse">删除订单</a>-->
                     <br />
                     <br />
                     <br />
-                    <p class="paging" align="center" >
-                        <a href="" style="color: gray">&lt;&lt; 首页 </a>
-                        <a href="" style="color: gray">    &lt; 上一页 </a>
-                        <strong>第 页/共 页</strong>
-                        <a href=" " style="color: gray">下一页 &gt;</a>
-                        <a href="" style="color: gray">末页 &gt;&gt;</a>
-                    </p>
+                    <!--<p class="paging" align="center" >-->
+                        <!--<a href="" style="color: gray">&lt;&lt; 首页 </a>-->
+                        <!--<a href="" style="color: gray">    &lt; 上一页 </a>-->
+                        <!--<strong>第 页/共 页</strong>-->
+                        <!--<a href="" style="color: gray">下一页 &gt;</a>-->
+                        <!--<a href="" style="color: gray">末页 &gt;&gt;</a>-->
+                    <!--</p>-->
                     <br />
                     <br />
                 </div>
@@ -147,7 +117,7 @@
 </div>
 
 <!--script-->
-<script src="js/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script th:src="@{js/jquery-3.3.1.min.js}" type="text/javascript"></script>
 
 <script type="text/javascript">
     function details() {

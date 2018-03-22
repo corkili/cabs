@@ -17,7 +17,6 @@ import java.util.Set;
 @Table(name = "ORDERS")
 @Setter
 @Getter
-@EqualsAndHashCode
 @NoArgsConstructor
 public class Order {
     /**
@@ -67,7 +66,7 @@ public class Order {
     /**
      * 下单人
      */
-    @ManyToOne(cascade = { CascadeType.MERGE})
+    @ManyToOne(cascade = { CascadeType.MERGE })
     @JoinColumn(name = "BUYER_ID")
     @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private User buyer;

@@ -21,6 +21,7 @@
 		<link rel="stylesheet" th:href="@{css/owl.carousel.css}"/>
 		<link rel="stylesheet" th:href="@{booking/css/booking.css}"/>
 		<link rel="stylesheet" type="text/css" th:href="@{css/log_in.css}"/>
+        <link rel="stylesheet" th:href="@{vendors/font-awesome/css/font-awesome.min.css}" />
 		<script th:src="@{js/jquery.js}"></script>
 		<style type="text/css">
 		#ChoseCabin1 {
@@ -56,7 +57,8 @@
 	<form id="bookingForm" method="post" th:action="@{search}">
 		<div class="col-lg-3" style="margin-left: 25px;"><!-- style="padding: 100px 100px 10px;" col-lg-offset-1-->
 			<div class="input-group" style="top: 20px;">
-				<input type="text" class="form-control text1" style="height:80px " id="departure" name="departure" list="departureList"/>
+				<input type="text" class="form-control text1" style="height:80px " id="departure" name="departure"
+                       list="departureList" data-toggle="tooltip" title="请选择列表中的地名"/>
 				<div class="input-group-btn">
 					<button type="button" class="btn btn-default" style="height:80px;width:120px;" onclick="$('#departure').focus();">出发地
 					</button>
@@ -66,9 +68,10 @@
 		</div>
 		<div class="col-lg-3">
 			<div class="input-group" style="top: 20px;">
-				<input type="text" class="form-control text1" style="height:80px" id="arrival" name="arrival" list="arrivalList"/>
+				<input type="text" class="form-control text1" style="height:80px" id="arrival" name="arrival" list="arrivalList"
+                       data-toggle="tooltip" title="请选择列表中的地名"/>
 				<div class="input-group-btn">
-					<button type="button" class="btn btn-default" style="height:80px;width:120px;" onclick="$('#arrival').focus();">目的地
+					<button type="button" class="btn btn-default" style="height:80px;width:120px;" onclick="$('#arrival').focus();" data-toggle="tooltip">目的地
 					</button>
                     <datalist id="arrivalList"></datalist>
 				</div>
@@ -77,16 +80,17 @@
 		<br/>
 		<div class="col-lg-2" style="background-color: #fff">
 			<label class="tmDatepicker" style="height:60px">
-				<input type="text" name="date" id="date" data-constraints="@NotEmpty @Required @Date" style="height:80px;" placeholder="出发日期"/>
+				<input type="text" name="date" id="date" data-constraints="@NotEmpty @Required @Date"
+                       style="height:80px;" placeholder="出发日期"  data-toggle="tooltip" title="请选择今天以后的日期"/>
 			</label>
 			<div class="clear"></div>
 		</div>
 		<div class="tmRadio col-lg-2">
 			<p>舱位</p>
-			<input name="cabin" type="radio" value="FISRT" id="tmRadio0" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' checked="checked"/>
+			<input name="cabin" type="radio" value="FIRST" id="tmRadio0" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])'/>
 			<span>头等舱</span>
 			<br/>
-			<input name="cabin" type="radio"  value="ECONOMY" id="tmRadio1" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' />
+			<input name="cabin" type="radio"  value="ECONOMY" id="tmRadio1" data-constraints='@RadioGroupChecked(name="Comfort", groups=[RadioGroup])' checked="checked" />
 			<span>经济舱</span>
 		</div>
 		<a id="searchSubmit" class="btn col-lg-2" data-type="submit" style="height:80px; line-height: 65px;width:150px;margin: -15px 0 0 20px">搜索</a>
@@ -96,88 +100,45 @@
 <div class="content">
 	<div class="container_12">
 		<div class="banners">
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img1.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">NEW ZEALAND</div>
-						<div class="price">from<span>$ 1.200</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img2.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">GOA</div>
-						<div class="price">from<span>$ 1.500</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img3.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">FRANCE</div>
-						<div class="price">from<span>$ 1.600</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
-			<div class="clear"></div>
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img4.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">CANADA</div>
-						<div class="price">from<span>$ 2000</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img5.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">TURKEY</div>
-						<div class="price">from<span>$ 1.500</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img6.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">EGYPT</div>
-						<div class="price">from<span>$ 1.500</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
-			<div class="clear"></div>
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img7.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">JAPAN</div>
-						<div class="price">from<span>$ 1000</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
-			<div class="grid_4">
-				<div class="banner">
-					<img th:src="@{images/page2_img8.jpg}" alt=""/>
-					<div class="label">
-						<div class="title">BRAZIL</div>
-						<div class="price">from<span>$ 1.700</span></div>
-						<a href="#">LEARN MORE</a>
-					</div>
-				</div>
-			</div>
+            <!--/*@thymesVar id="flights" type="java.util.List<org.neu.cabs.orm.Flight>"*/-->
+            <!--/*@thymesVar id="cabin" type="java.lang.String"*/-->
+            <div class="grid_12" th:if="${flights.size() == 0}">
+                <div class="banner">
+                    <div class="label">
+                        <img  width="100" height="100" th:src="@{images/crying.jpg}"/>
+                        <div class="title" style="color: #0f0f0f">未搜索到任何航班</div>
+                    </div>
+                </div>
+            </div>
+            <th:block th:each="flight : ${flights}">
+                <div class="grid_4">
+                    <div class="banner">
+                        <img th:src="${'images/page2_img'+ (flightStat.index % 8 + 1) + '.jpg'}" alt=""/>
+                        <div class="label">
+                            <div class="title" th:text="${flight.flightNumber}"></div>
+                            <div class="title" th:text="${#dates.format(flight.plannedTakeoffTime, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div class="title" th:text="${flight.departureAirport.chineseName + flight.departureTerminal.getTerminalName()}"></div>
+                            <div class="price"><i class="fa fa-plane fa-4x"></i></div>
+                            <div class="title" th:text="${flight.arrivalAirport.chineseName + flight.arrivalTerminal.getTerminalName()}"></div>
+                            <div class="price">
+                                <span th:if="${cabin.equals('FIRST')}" th:text="${'头等舱 ￥' + (#numbers.formatDecimal(flight.firstCabinPrice * flight.firstCabinDiscount, 1, 2))}"></span>
+                                <span th:if="${cabin.equals('ECONOMY')}" th:text="${'经济舱￥' + (#numbers.formatDecimal(flight.economyCabinPrice * flight.economyCabinDiscount, 1, 2))}"></span>
+                            </div>
+                            <th:block th:if="${session.ENDORSE_ORDER == null}">
+								<a th:if="${session.SPRING_SECURITY_CONTEXT != null}"
+								   th:href="${'purchase?f=' + (flight.id) + '&amp;&amp;cab=' + (cabin)}" target="_blank">预定</a>
+								<a th:if="${session.SPRING_SECURITY_CONTEXT == null}" href="javascript:clearMsg();openLogin();">预定</a>
+							</th:block>
+							<th:block th:if="${session.ENDORSE_ORDER != null}">
+								<a th:if="${session.SPRING_SECURITY_CONTEXT != null}"
+								   th:href="${'endorseOrder?f=' + (flight.id) + '&amp;&amp;cab=' + (cabin)}" target="_blank">改签</a>
+								<a th:if="${session.SPRING_SECURITY_CONTEXT == null}" href="javascript:clearMsg();openLogin();">改签</a>
+							</th:block>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${flightStat.index % 2 == 0 and flightStat.index != 0}" class="clear"></div>
+            </th:block>
 		</div>
 	</div>
 </div>
@@ -201,13 +162,42 @@
 <script>
     $(document).ready(function(){
 
+        var addrArray = [];
+
         $("#searchSubmit").on('click', function () {
-            var departure = $("#departure").val()
+            var departure = $("#departure").val();
             var arrival = $("#arrival").val();
             var date = $("#date").val();
             var cabin = $("[name='cabin']:checked").val();
-            alert(departure + ' ' + arrival + ' ' + date + ' ' + cabin);
-            $("#bookingForm").submit();
+            var result = true;
+            var curDate = new Date();
+            var month = (curDate.getMonth() + 1) + '';
+            var day = curDate.getDate() + '';
+            var year = curDate.getFullYear() + '';
+            if (2 > month.length) month = '0' + month;
+            if (2 > day.length) day = '0' + day;
+            curDate = new Date([year,month,day].join('-'));
+            if (date == "" || date == null) {
+                date = [month,day,year].join('/');
+                $("#date").val(date);
+            }
+            var d = date.split('/');
+            date = d[2] + '-' + d[0] + '-' + d[1];
+            if (0 > addrArray.indexOf(departure)) {
+                $("#departure").tooltip('show');
+                result = false;
+            }
+            if (0 > addrArray.indexOf(arrival)) {
+                $("#arrival").tooltip('show');
+                result = false;
+            }
+            if (curDate > new Date(date)) {
+                $("#date").tooltip('show');
+                result = false;
+            }
+            if (result) {
+                $("#bookingForm").submit();
+            }
         });
 
         function createOption(value) {
@@ -242,8 +232,6 @@
                addresses.splice(1, 0, temp);
                addresses.splice(addresses.length - 1, 1);
                console.log(addresses);
-
-               var addrArray = [];
 
                $.each(addresses, function (pi, p) {
                    if (pi != 0) {

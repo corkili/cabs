@@ -338,7 +338,7 @@ header h1 a img {
     position: absolute;
     text-align: center;
     left: 0;
-    top: 50%;
+    top: 22%;
     margin-top: -38px;
     right: 0;
     text-transform: uppercase;
@@ -346,7 +346,7 @@ header h1 a img {
 
 
 .banner .label .title {
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 14px;
     text-transform: uppercase;
 }

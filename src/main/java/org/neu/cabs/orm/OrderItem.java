@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "ORDER_ITEM")
 @Setter
 @Getter
-@EqualsAndHashCode
 @NoArgsConstructor
 public class OrderItem {
 
@@ -68,7 +67,7 @@ public class OrderItem {
     /**
      * 乘客
      */
-    @ManyToOne(cascade = { CascadeType.MERGE })
+    @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinColumn(name = "PASSENGER_ID")
     @org.hibernate.annotations.Fetch(value = FetchMode.JOIN)
     private Passenger passenger;

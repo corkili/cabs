@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{img/apple-icon.png}" />
+	<link rel="icon" type="image/png" th:href="@{img/favicon.png}" />
+
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<title>土味订票</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+	<!-- CSS Files -->
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{css/paper-bootstrap-wizard.css}" rel="stylesheet" />
+
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet"/>
+	<link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'/>
+	<link th:href="@{css/themify-icons.css}" rel="stylesheet"/>
+	<style>
+		.logo-container{
+			left: 50px;
+			position: absolute;
+			top: 20px;
+			z-index: 3;
+		}
+		.logo-container .logo{
+			overflow: hidden;
+			border-radius: 50%;
+			border: 1px solid #333333;
+			width: 60px;
+			float: left;
+		}
+		.logo-container .brand{
+			font-size: 18px;
+			color: #FFFFFF;
+			line-height: 20px;
+			float: left;
+			margin-left: 10px;
+			margin-top: 10px;
+			width: 60px
+		}
+		td{
+			color: white;
+		}
+	</style>
+</head>
+
+<body>
+
+<!--   Big container   -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <!--/*@thymesVar id="flight" type="org.neu.cabs.orm.Flight"*/-->
+            <!--/*@thymesVar id="user" type="org.neu.cabs.orm.User"*/-->
+            <!--/*@thymesVar id="error" type="java.lang.String"*/-->
+            <form id="orderForm" method="post" th:action="@{purchaseOrder}">
+                <div class="row" style="padding-top: 100px; padding-bottom: 100px;">
+                    <div class="row">
+                        <div style="text-align: center;"><img src="img/logo2.png" height="100px" width="300px"/></div>
+                    </div>
+                    <th:block th:if="${error != null}">
+                        <div class="row">
+                            <br/>
+                            <center>
+                                <h5 class="info-text"><b th:text="${'发生错误：' + error + '请重试！'}"></b> </h5>
+                            </center>
+                        </div>
+                    </th:block>
+                    <div class="row">
+                        <br/>
+                        <center>
+                            <input type="hidden" name="f" th:value="${flight.id}" />
+                            <!--/*@thymesVar id="cabin" type="java.lang.String"*/-->
+                            <input type="hidden" name="cab" th:value="${cabin}"/>
+                            <table style="background-color: #C73430;border-radius: 6px;width: 500px" >
+                                <tr>
+                                    <td colspan="3" style="text-align: center">
+                                        <h4 th:text="${flight.departureAirport.chineseName + flight.departureTerminal.terminalName + '→' + flight.arrivalAirport.chineseName + flight.arrivalTerminal.terminalName}"></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 20px">
+                                        <p><b th:text="${#dates.format(flight.plannedTakeoffTime, 'yyyy-MM-dd HH:mm')}"></b></p>
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p th:text="${((flight.plannedArrivalTime.getTime() - flight.plannedTakeoffTime.getTime()) / 1000 / 3600) + 'h' + ((flight.plannedArrivalTime.getTime() - flight.plannedTakeoffTime.getTime()) / 60 % 60) + 'min'}">2h40min</p>
+                                    </td>
+                                    <td style="padding-left: 30px">
+                                        <p><b th:text="${#dates.format(flight.plannedArrivalTime, 'yyyy-MM-dd HH:mm')}"></b></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                        <br/>
+                        <center>
+                            <h5 class="info-text"><b>乘客信息</b> </h5>
+                        </center>
+                        <div class="row" id="passengers">
+                            <div class="row">
+                                <div class="col-sm-5 col-sm-offset-1">
+                                    <div class="form-group">
+                                        <img src="img/account.png" height="25px" width="25px"/>
+                                        <label>姓名:</label>
+                                        <input type="text" class="form-control" name="name" th:value="${user.realName}"
+                                               placeholder="请输入姓名" required="required"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <img src="img/tel.png" height="25px" width="25px"/>
+                                        <label>生日：</label><br/>
+                                        <input type="date" class="form-control" name="birthday" th:value="${#dates.format(user.birthday, 'yyyy-MM-dd')}"
+                                               placeholder="请输入生日"  required="required"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-sm-offset-1">
+                                    <div class="form-group">
+                                        <img src="img/cart.png" height="25px" width="25px"/>
+                                        <label>身份证类型：</label>
+                                        <select class="form-control" name="certificateType"  required="required" th:value="${user.certificateType.name()}">
+                                            <option disabled="" selected="">- 选择类型 -</option>
+                                            <option value="CHINA_IDENTITY_CARD">中华人民共和国居民身份证</option>
+                                            <option value="passport">护照</option>
+                                            <option value="MILITARY_CARD">军人证</option>
+                                            <option value="HVPS">回乡证</option>
+                                            <option value="MTP">台胞证</option>
+                                            <option value="BOOKLET">户口簿</option>
+                                            <option value="BIRTH_CERTIFICATE">出生证明</option>
+                                            <option value="FOREIGNERS_ID_CARD">外国人永久居住身份证</option>
+                                            <option value="OTHER">其他</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <img src="img/id.png" height="25px" width="25px"/>
+                                        <label>身份证号码：</label>
+                                        <input type="text" class="form-control" name="certificateNumber" th:value="${user.certificateNumber}"
+                                               placeholder="请输入身份证"  required="required"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <a id="addPassenger" style="padding-left: 62px" href="#bottom">添加用户</a>
+                        <!--<a style="padding-left: 456px">选择常旅客</a>-->
+                    </div>
+                    <div class="row">
+                        <div class="pull-right">
+                            <input type="submit" class='btn btn-next btn-fill btn-success btn-wd' name='next' style="border: none" value='提交' />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> <!-- row -->
+    <div id="bottom" style="display: none"></div>
+</div> <!--  big container -->
+
+</body>
+<!--   Core JS Files   -->
+<script th:src="@{js/jquery-2.2.4.min.js}" type="text/javascript"></script>
+<script th:src="@{js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{js/jquery.bootstrap.wizard.js}" type="text/javascript"></script>
+<script th:src="@{js/paper-bootstrap-wizard.js}" type="text/javascript"></script>
+<script th:src="@{js/jquery.validate.min.js}" type="text/javascript"></script>
+
+<script>
+    $(function () {
+
+        $("#addPassenger").on('click', function () {
+            var row = '<div class="row"><hr/>' +
+                ' <div class="col-sm-5 col-sm-offset-1">' +
+                '     <div class="form-group">' +
+                '         <img src="img/account.png" height="25px" width="25px"/>' +
+                '         <label>姓名:</label>' +
+                '         <input type="text" class="form-control" name="name" placeholder="请输入姓名" required="required"/>' +
+                '     </div>' +
+                ' </div>' +
+                ' <a href="#bottom" class="delete-btn">&times;</a>' +
+                ' <div class="col-sm-5">' +
+                '     <div class="form-group">' +
+                '         <img src="img/tel.png" height="25px" width="25px"/>' +
+                '         <label>生日：</label><br/>' +
+                '         <input type="date" class="form-control" name="birthday" placeholder="请输入生日" required="required"/>' +
+                '     </div>' +
+                ' </div>' +
+                ' <div class="col-sm-5 col-sm-offset-1">' +
+                '     <div class="form-group">' +
+                '         <img src="img/cart.png" height="25px" width="25px"/>' +
+                '         <label>身份证类型：</label>' +
+                '         <select class="form-control" name="certificateType" required="required">' +
+                '<option disabled="" selected="">- 选择类型 -</option>' +
+                '<option value="CHINA_IDENTITY_CARD">中华人民共和国居民身份证</option>' +
+                '<option value="passport">护照</option>' +
+                '<option value="MILITARY_CARD">军人证</option>' +
+                '<option value="HVPS">回乡证</option>' +
+                '<option value="MTP">台胞证</option>' +
+                '<option value="BOOKLET">户口簿</option>' +
+                '<option value="BIRTH_CERTIFICATE">出生证明</option>' +
+                '<option value="FOREIGNERS_ID_CARD">外国人永久居住身份证</option>' +
+                '<option value="OTHER">其他</option>' +
+                '         </select>' +
+                '     </div>' +
+                ' </div>' +
+                ' <div class="col-sm-5">' +
+                '     <div class="form-group">' +
+                '         <img src="img/id.png" height="25px" width="25px"/>' +
+                '         <label>身份证号码：</label>' +
+                '         <input type="text" class="form-control" name="certificateNumber" placeholder="请输入身份证" required="required"/>' +
+                '     </div>' +
+                ' </div>' +
+                '          </div>';
+            $("#passengers").append(row);
+            $(".delete-btn").unbind('click');
+            $(".delete-btn").bind('click', function () {
+                $(this).parent().remove();
+            })
+        });
+
+    });
+</script>
+</html>

@@ -1,5 +1,6 @@
 package org.neu.cabs.service.impl;
 
+import org.neu.cabs.constant.CertificateType;
 import org.neu.cabs.constant.RoleType;
 import org.neu.cabs.constant.Sex;
 import org.neu.cabs.dao.AdminRepository;
@@ -167,6 +168,11 @@ public class UserServiceImpl implements UserService {
             user.setOrders(new HashSet<>());
             user.setPassengers(new HashSet<>());
             user.setAvailable(true);
+            user.setCertificateType(CertificateType.CHINA_IDENTITY_CARD);
+            user.setCertificateNumber("");
+            user.setPhone("");
+            user.setEmail("");
+            user.setRealName("");
             User savedUser = baseUserRepository.save(user);
             serviceResult = new ServiceResult(true,"注册成功!", "user", savedUser);
         }else{

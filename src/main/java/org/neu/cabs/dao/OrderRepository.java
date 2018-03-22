@@ -32,6 +32,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      */
     Page<Order> findAllByCreateTimeBetween(Date start, Date end, Pageable pageable);
 
-
+    /**
+     * 获取流水号为orderSerialNumber的订单
+     * @param serialNumber 订单流水号
+     * @return 订单实体
+     */
+    Order findBySerialNumber(String serialNumber);
 
 }

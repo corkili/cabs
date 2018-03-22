@@ -35,7 +35,9 @@
 	<div class="container_12">
 		<div class="grid_12">
 			<h3>个人界面</h3>
-			<div th:if="${session.SPRING_SECURITY_CONTEXT == null}"><a href="javascript:clearMsg();openLogin();">请先登录</a></div>
+			<div th:if="${session.SPRING_SECURITY_CONTEXT == null}"><a href="javascript:clearMsg();openLogin();">请先登录</a>
+			<strong style="color: #E74C3C" th:if="${error != null}" th:text="${error}"></strong>
+			</div>
 			<iframe th:if="${session.SPRING_SECURITY_CONTEXT != null}" id="personIframe" th:src="@{/personal_view}"
 					onload="changeFrameHeight()" width="100%" height="100%" frameborder="0" scrolling="no">
 			</iframe>

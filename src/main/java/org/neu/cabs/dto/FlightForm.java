@@ -190,7 +190,7 @@ public class FlightForm {
         form.setFlightNumber(flight.getFlightNumber());
         form.setTakeoffDate(new SimpleDateFormat("yyyy-MM-dd").format(flight.getTakeoffDate()));
         form.setPlannedTakeoffTime(new SimpleDateFormat("HH:mm").format(flight.getPlannedTakeoffTime()));
-        long diff = flight.getPlannedArrivalTime().getTime() - flight.getPlannedTakeoffTime().getTime();
+        long diff = (flight.getPlannedArrivalTime().getTime() - flight.getPlannedTakeoffTime().getTime()) / 1000;
         form.setVoyage(diff / 3600 + ":" + diff / 60 % 60);
         form.setPlannedArrivalTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(flight.getPlannedArrivalTime()));
         form.setBusinessCabinSeatNumber(flight.getBusinessCabinSeatNumber());

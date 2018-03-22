@@ -80,7 +80,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        
                         </tbody>
                     </table>
                 </div>
@@ -221,7 +220,7 @@
                 '<td>' + item.cabinType + '</td>' +
                 '<td>' + '￥' + item.flightCost + '</td>' +
                 '<td>' + '￥' + item.airportBuildCost + '</td>' +
-                '<td>' + '￥' + item.flightCost + item.airportBuildCost + '</td></tr>';
+                '<td>' + '￥' + (parseInt(item.flightCost) + parseInt(item.airportBuildCost)) + '</td></tr>';
         }
         
         $orderInfoBtn.on('click', function () {
@@ -234,11 +233,12 @@
                 },
                 success: function (data) {
                     console.log(data);
-                    if (data.successful == true) {
+                    if (data.id != null || data.id != "") {
                         $infoTable.find("tbody").html("");
-                        $.each(data.object.orderItems, function (index, item) {
+                        $.each(data.orderItems, function (index, item) {
                             $infoTable.find("tbody").append(createOrderItemRow(item));
                         });
+                        $infoModal.modal('show');
                     } else {
                         $tip.text('获取失败');
                         $tipModal.modal('toggle');
@@ -253,8 +253,8 @@
 
         $infoModal.modal({
             show: false,
-            keyboard: false,
-            backdrop: false
+            keyboard: true,
+            backdrop: true
         });
     });
 

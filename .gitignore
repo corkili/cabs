@@ -1,6 +1,7 @@
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
+/target/
+.mvn
+.mvnw*
+.mvnw.cmd
 
 ### STS ###
 .apt_generated
@@ -9,6 +10,7 @@
 .project
 .settings
 .springBeans
+.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
@@ -17,9 +19,9 @@
 *.ipr
 
 ### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/

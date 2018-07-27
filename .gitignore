@@ -1,7 +1,12 @@
 /target/
+
+### MAVEN ###
 .mvn
 .mvnw*
 .mvnw.cmd
+
+### MAC ###
+*.DS_Store
 
 ### STS ###
 .apt_generated
